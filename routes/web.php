@@ -10,6 +10,8 @@ use App\Http\Controllers\QuestionController;
 use App\Http\Controllers\SemesterController;
 use App\Http\Controllers\QceformController;
 use App\Http\Controllers\UserController;
+
+use App\Http\Controllers\QCEevalformController;
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -60,20 +62,11 @@ Route::prefix('/users')->group(function () {
     Route::get('/list/fetch/ajaxuser', [UserController::class, 'getUserRead'])->name('getUserRead');
 });
 
+Route::prefix('/form/eval')->group(function () {
+    Route::get('/fac/view', [QCEevalformController::class, 'evalformStore'])->name('evalformStore');
+});
+
 Route::get('/', function () {
     return view('layouts.masterlayouts');
 });
 
-Route::post('/scan-plant', function (Request $request) {
-    // Extract image data from request
-    $imageData = $request->input('image');
-
-    // Simulate AI processing (Replace this with an actual AI model/API)
-    $fakeResults = [
-        "diagnosis" => "Leaf Spot Disease",
-        "confidence" => rand(60, 80), // Fake confidence level
-        "solution" => "Apply fungicide and reduce watering."
-    ];
-
-    return response()->json($fakeResults);
-})->name('scan.plant');
