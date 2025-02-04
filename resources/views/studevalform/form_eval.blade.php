@@ -38,6 +38,16 @@
             width: 100%;
             border-radius: 5px;
         }
+        #cpsulogoImage {
+            display: none; /* Default: Hidden */
+        }
+
+        @media (max-width: 768px) { 
+            #cpsulogoImage {
+                display: block !important; /* Ensure it's shown on mobile */
+            }
+        }
+
         .progress-section {
             display: flex;
             align-items: center;
@@ -184,7 +194,7 @@
                     </ul>
                 </div>
 
-                <div class="" style="z-index: 999">
+                <div id="cpsulogoImage" style="z-index: 999">
                     <img src="{{ asset('template/img/cpsulogov4.png') }}" style="width:80px;" class="center-top">
                 </div>
 
@@ -477,6 +487,23 @@
             $('.required-input').on('input', checkInputs);
             checkInputs(); // Initial check in case inputs have default values
         });
+        
+        document.addEventListener("DOMContentLoaded", function() {
+            function toggleAlertImage() {
+                const alertImage = document.getElementById("cpsulogoImage");
+                if (!alertImage) return; // Prevents errors if element is missing
+
+                if (window.innerWidth <= 768) {
+                    alertImage.style.display = "block"; // Show on mobile
+                } else {
+                    alertImage.style.display = "none"; // Hide on larger screens
+                }
+            }
+
+            toggleAlertImage(); // Run on page load
+            window.addEventListener("resize", toggleAlertImage); // Run on window resize
+        });
+
     </script>
 </body>
 </html>

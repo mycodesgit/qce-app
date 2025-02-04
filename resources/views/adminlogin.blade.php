@@ -93,7 +93,7 @@
                             <h5 class="login-box-msg text-light">LOGIN</h5>
 
                             <div>
-                                <form action="" method="post">
+                                <form action="{{ route('empstudlogin') }}" method="post">
                                     @csrf
 
                                     @if(session('error'))

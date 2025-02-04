@@ -40,6 +40,14 @@ return [
             'driver' => 'session',
             'provider' => 'users',
         ],
+        'supervisor' => [
+            'driver' => 'session',
+            'provider' => 'faculty',
+        ],
+        'student' => [
+            'driver' => 'session',
+            'provider' => 'student',
+        ],
     ],
 
     /*
@@ -63,6 +71,15 @@ return [
         'users' => [
             'driver' => 'eloquent',
             'model' => App\Models\EvaluationDB\User::class,
+        ],
+        'supervisor' => [
+            'driver' => 'eloquent',
+            'model' => App\Models\ScheduleDB\Faculty::class,
+        ],
+
+        'student' => [
+            'driver' => 'eloquent',
+            'model' => App\Models\EnrollmentDB\KioskUser::class,
         ],
 
         // 'users' => [
