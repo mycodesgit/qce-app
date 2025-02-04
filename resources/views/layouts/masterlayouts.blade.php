@@ -13,6 +13,9 @@
     <link rel="stylesheet" href="{{ asset('template/plugins/fontawesome-free-V6/css/all.min.css') }}">
     <!-- Theme style -->
     <link rel="stylesheet" href="{{ asset('template/dist/css/qce-style.css') }}">
+    @if(request()->routeIs('previewStore'))
+        <link rel="stylesheet" href="{{ asset('template/dist/css/track-style.css') }}">
+    @endif
     <!-- Toastr -->
     <link rel="stylesheet" href="{{ asset('template/plugins/toastr/toastr.min.css') }}">
     <!-- SweetAlert2 -->
@@ -67,19 +70,22 @@
                     <a href="#" class="nav-link">Contact</a>
                 </li> --}}
             </ul>
-            
-            <ul class="navbar-nav ml-auto">
-                <li class="nav-item">
-                    <a class="nav-link" data-widget="fullscreen" href="#" role="button">
-                        <i class="fas fa-expand-arrows-alt" style="color: #ffffff;"></i>
-                    </a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" data-widget="control-sidebar" data-slide="true" href="#" role="button">
-                        <i class="fas fa-th-large" style="color: #ffffff;"></i>
-                    </a>
-                </li>
-            </ul>
+            @if(request()->routeIs('previewStore'))
+
+            @else
+                <ul class="navbar-nav ml-auto">
+                    <li class="nav-item">
+                        <a class="nav-link" data-widget="fullscreen" href="#" role="button">
+                            <i class="fas fa-expand-arrows-alt" style="color: #ffffff;"></i>
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" data-widget="control-sidebar" data-slide="true" href="#" role="button">
+                            <i class="fas fa-th-large" style="color: #ffffff;"></i>
+                        </a>
+                    </li>
+                </ul>
+            @endif
         </nav>
 
         <aside class="main-sidebar sidebar-dark-primary elevation-4" style="background-color: #222d32;">
@@ -172,6 +178,27 @@
     <script src="{{ asset('js/validation/manage/catValidation.js') }}"></script>
     <script src="{{ asset('js/validation/manage/questValidation.js') }}"></script>
     <script src="{{ asset('js/validation/manage/semesterValidation.js') }}"></script>
+
+    <!-- Validation -->
+    <script src="{{ asset('js/validation/evalstud/evalValidation.js') }}"></script>
+
+    <script>
+        $(document).ready(function () {
+            function checkInputs() {
+                let allFilled = true;
+                $('.required-input').each(function () {
+                    if ($(this).val().trim() === '') {
+                        allFilled = false;
+                        return false; // Break out of loop
+                    }
+                });
+                $('#next-btn').prop('disabled', !allFilled);
+            }
+            
+            $('.required-input').on('input', checkInputs);
+            checkInputs(); // Initial check in case inputs have default values
+        });
+    </script>
 
 </body>
 </html>

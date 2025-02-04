@@ -27,4 +27,16 @@ class QCEevalformController extends Controller
 
         return view('studevalform.form_eval', compact('question'));
     }
+
+    public function previewStore()
+    {
+        $question = QCEquestion::join('qcecategory', 'qcequestion.catName_id', '=', 'qcecategory.id')
+                ->select('qcecategory.catName', 'qcequestion.id', 'qcequestion.questiontext')
+                ->orderBy('qcecategory.catName') // Order categories
+                ->orderBy('qcequestion.id') // Order questions properly
+                ->get()
+                ->groupBy('catName');
+
+        return view('studevalform.preview', compact('question'));
+    }
 }

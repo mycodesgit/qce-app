@@ -3,39 +3,55 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title></title>
+    <meta name="csrf-token" content="{{ csrf_token() }}">
+    
+    <title>CPSU OFES V.1.0</title>
 
     <!-- Google Font: Source Sans Pro -->
     <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700&display=fallback">
     <!-- Font Awesome Icons -->
     <link rel="stylesheet" href="{{ asset('template/plugins/fontawesome-free-V6/css/all.min.css') }}">
-    <!-- Theme style -->
-    <link rel="stylesheet" href="{{ asset('template/dist/css/qce-style.css') }}">
     <!-- icheck bootstrap -->
     <link rel="stylesheet" href="{{ asset('template/plugins/icheck-bootstrap/icheck-bootstrap.min.css') }}">
+    <!-- Toastr -->
+    <link rel="stylesheet" href="{{ asset('template/plugins/toastr/toastr.min.css') }}">
+    <!-- SweetAlert2 -->
+    <link rel="stylesheet" href="{{ asset('template/plugins/sweetalert2-theme-bootstrap-4/bootstrap-4.min.css') }}">
+    <!-- Select2 -->
+    <link rel="stylesheet" href="{{ asset('template/plugins/select2/css/select2.min.css') }}">
+    <link rel="stylesheet" href="{{ asset('template/plugins/select2-bootstrap4-theme/select2-bootstrap4.min.css') }}">
+    <!-- Theme style -->
+    <link rel="stylesheet" href="{{ asset('template/dist/css/qce-style.css') }}">
+    <link rel="stylesheet" href="{{ asset('template/dist/css/track-style.css') }}">
+    <link rel="stylesheet" href="{{ asset('template/dist/css/upload-image.css') }}">
     <!-- Logo  -->
     <link rel="shortcut icon" type="" href="{{ asset('template/img/CPSU_L.png') }}">
-
     <style>
+        .sidebar-dark-primary .nav-sidebar>.nav-item>.nav-link.active, .sidebar-light-primary .nav-sidebar>.nav-item>.nav-link.active{
+            background-color: #4c8968 !important ;
+            color: white !important;
+        }
         #alertImage {
             background: url('{{ asset('template/img/formheader.jpg') }}') no-repeat center center;
             background-size: cover;
             height: 100%;
             width: 100%;
+            border-radius: 5px;
         }
-
-        .form-control {
-            border: none;
-            border-bottom: 2px solid #ccc;
-            border-radius: 0;
-            box-shadow: none;
-            width: 50%;
-            outline: none;
-            padding: 5px 0;
+        .progress-section {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            border-radius: 20px !important;
         }
-
-        .form-control:focus {
-            border-bottom-color: green;
+        .progress-container {
+            display: flex;
+            align-items: center;
+            border-radius: 20px !important;
+        }
+        .progress-bar {
+            transition: width 0.3s ease;
+            border-radius: 20px !important;
         }
 
         .card-body label {
@@ -63,7 +79,7 @@
         .radio-group a {
             display: flex;
             align-items: center;
-            gap: 5px; /* Space between radio and text */
+            gap: 2px; /* Space between radio and text */
             font-size: 1.2em;
             font-weight: bold;
             cursor: pointer;
@@ -104,12 +120,6 @@
             color: white; /* White text */
             border-color: #28a745;
         }
-        .center-top {
-            position: absolute;
-            top: 10px;
-            left: 50%;
-            transform: translateX(-50%);
-        }
 
         /* Category Title */
         .category-title {
@@ -119,24 +129,24 @@
             padding: 10px;
             border-bottom: 2px solid #ccc;
         }
-
-        /* Card Container */
-        .card {
-            margin-bottom: 15px;
-            border: 1px solid #ddd;
-            border-radius: 8px;
-            padding: 15px;
-            /*background: #f9f9f9;*/
-        }
     </style>
 </head>
-<body class="hold-transition layout-top-nav layout-navbar-fixed text-sm">
+<body class="hold-transition sidebar-mini layout-fixed layout-navbar-fixed text-sm">
+
     <div class="wrapper">
-        <!-- Navbar -->
         <nav class="main-header navbar navbar-expand-md navbar-light" style="background-color: #04401f">
             <div class="container-fluid">
-                <div href="" class="" style="color: #fff;font-family: Courier;">
-                    CPSU QCE V.1.0
+                <a href="" class="" style="color: #fff;font-family: Courier;">
+                    {{-- CPSU OFES V.1.0 --}}
+                </a>
+
+                <div class="" id="navbarCollapse">
+                    <!-- Left navbar links -->
+                    <ul class="navbar-nav">
+                        <li class="nav-item">
+                            <a class="nav-link" data-widget="pushmenu" href="#" role="button"><i class="fas fa-bars" style="color: #fff"></i></a>
+                        </li>
+                    </ul>
                 </div>
 
                 <div class="" style="z-index: 999">
@@ -146,109 +156,105 @@
                 <ul class="order-1 order-md-3 navbar-nav navbar-no-expand ml-auto">
                     <li class="nav-item">
                         <a class="nav-link" data-widget="control-sidebar" data-slide="true" href="#" role="button" style="color: #fff">
-                            
+                             
                         </a>
                     </li>
                 </ul>
             </div>
         </nav>
-        <!-- /.navbar -->
 
-        <!-- Content Wrapper. Contains page content -->
-        <div class="content-wrapper">
-            <div class="content-header">
-                <div class="container"></div>
+        <aside class="main-sidebar sidebar-dark-primary elevation-4" style="background-color: #222d32;">
+            <a href="index3.html" class="brand-link" style="background-color: #1f5036;">
+                <img src="{{ asset('template/img/CPSU_L.png') }}" alt="AdminLTE Logo" class="brand-image img-circle elevation-3" style="opacity: .8">
+                <span class="brand-text font-weight-light">Faculty QCE</span>
+            </a>
+
+            <div class="sidebar">
+                <div class="user-panel mt-3 pb-3 mb-3 d-flex">
+                    <div class="image">
+                        <img src="{{ asset('template/img/user.png') }}" class="img-circle elevation-2" alt="User Image">
+                    </div>
+                    <div class="info">
+                        <a href="#" class="d-block">Admin Level</a>
+                        <span style="font-size: 10pt; color: #ccc;">
+                            <i class="fa fa-circle text-success" style="font-size: 8pt"></i> Administrator
+                        </span>
+                    </div>
+                </div>
+
+                @include('menu.sidebar')
+                
             </div>
-            <!-- /.content-header -->
+        </aside>
 
-            <!-- Main content -->
+        <div class="content-wrapper" style="background-color: #daf1ea !important">
             <div class="content">
-                <div class="container">
-                    <div class="row d-flex justify-content-center align-items-center">
-                        <div class="col-lg-8 mx-auto">
-                            <div class="alert alert-default alert-dismissible" id="alertImage">
-                                <h1><br><br></h1>
-                            </div>
-
-                            @if(session('success'))
-                                <div class="alert alert-success" style="font-size: 12pt;">
-                                    <i class="fas fa-check"></i> {{ session('success') }}
-                                </div>
-                                @endif
-
-                                @if(session('error'))
-                                <div class="alert alert-danger" style="font-size: 12pt;">
-                                    <i class="fas fa-exclamation-triangle"></i> {{ session('error') }}
-                                </div>
-                            @endif
-                            <div class="card card-success card-outline card-tabs">
-                                <div class="card-body">
-                                    <h1></h1>
-                                    <p>Please evaluate the following items by selecting the appropriate checkboxes according to the legend below:</p>
-                                    <p><center><strong>(1) Poor &nbsp;&nbsp;&nbsp;&nbsp; (2) Fair  &nbsp;&nbsp;&nbsp;&nbsp;(3) Satisfactory &nbsp;&nbsp; &nbsp;&nbsp; (4) Very Satisfactory  &nbsp;&nbsp; &nbsp;&nbsp; (5) Outstanding</strong></center></p>
+                <div class="">
+                    <div class="row" style="padding-top: 15px;">
+                        <div class="col-lg-6 offset-lg-3 col-lg-offset-4 col-lg-center px-3">
+                            <div class="card">
+                                <div class="card-body" id="alertImage">
+                                    
                                 </div>
                             </div>
 
-                            <form method="post" action="" onsubmit="return checkForm(this);">
+                            <form method="post" action="" enctype="multipart/form-data" id="admissionApply">
                                 @csrf
-
-                                <input type="hidden" name="title_id" value="">
-
-                                <div class="card">
-                                    <div class="card-body">
-                                        <label>Rating Period:</label>
-                                        <input type="text" name="name" class="form-control" placeholder="Rating Period" required>
+                                
+                                <div id="card-1">
+                                    <p>
+                                        @if(Session::has('success'))
+                                            <div class="alert alert-success" id="alert">{{ Session::get('success')}} {{ Session::get('admission_id')}}</div>
+                                        @elseif (Session::has('fail'))
+                                            <div class="alert alert-danger" id="alert">{{Session::get('fail')}}</div>
+                                        @endif
+                                    </p>
+                                    <div class="card card-secondary card-outline text-center">
+                                        <div class="card-body">
+                                            <div class="col-md-12">
+                                                <center>
+                                                    <h6><strong>Appendix A</strong></h6>
+                                                    <h6>
+                                                        <strong>The QCE of the NBC No. 461<br>Instrument for Instruction/Teaching Effectiveness</strong>
+                                                    </h6>
+                                                </center>
+                                            </div>
+                                        </div>
                                     </div>
-                                </div>
 
-                                <div class="card">
-                                    <div class="card-body">
-                                        <label>Name of Faculty:</label>
-                                        <input type="text" name="name" class="form-control" placeholder="Name of Faculty" required>
-                                    </div>
-                                </div>
-
-                                <div class="card">
-                                    <div class="card-body">
-                                        <label>Academic Rank:</label>
-                                        <input type="text" name="name" class="form-control" placeholder="Academic Rank:" required>
-                                    </div>
-                                </div>
-
-                                <div class="card">
-                                    <div class="card-body">
-                                        <label>Evaluators:</label><br>
-                                        <div class="row">
-                                            <div class="col-sm-6">
-                                                <div class="form-group clearfix">
-                                                    <div class="icheck-success d-inline">
-                                                        <input type="radio" id="radioPrimary1self" name="r1">
-                                                        <label for="radioPrimary1self">
-                                                            Self
-                                                        </label>
-                                                    </div>
-                                                    <div class="icheck-success d-inline">
-                                                        <input type="radio" id="radioPrimary2student" name="r1">
-                                                        <label for="radioPrimary2student">
-                                                            Student
-                                                        </label>
+                                    <div class="card">
+                                        <div class="card-body">
+                                            <div class="form-group">
+                                                <div class="form-row">
+                                                    <div class="col-md-12">
+                                                        <label>Rating Period:</label>
+                                                        <input type="text" name="name" class="form-control required-input" placeholder="Rating Period" value="Februay - June" required>
                                                     </div>
                                                 </div>
                                             </div>
+                                        </div>
+                                    </div>
 
-                                            <div class="col-sm-6">
-                                                <div class="form-group clearfix">
-                                                    <div class="icheck-success d-inline">
-                                                        <input type="radio" id="radioPrimary1peer" name="r1">
-                                                        <label for="radioPrimary1peer">
-                                                            Peer
-                                                        </label>
+                                    <div class="card">
+                                        <div class="card-body">
+                                            <div class="form-group">
+                                                <div class="form-row">
+                                                    <div class="col-md-12">
+                                                        <label>Name of Faculty:</label>
+                                                        <input type="text" name="name" class="form-control required-input" placeholder="Name of Faculty" value="Faculty 1" required>
                                                     </div>
-                                                    <div class="icheck-success d-inline">
-                                                        <input type="radio" id="radioPrimary2supervisor" name="r1">
-                                                        <label for="radioPrimary2supervisor">
-                                                            Supervisor
-                                                        </label>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="card">
+                                        <div class="card-body">
+                                            <div class="form-group">
+                                                <div class="form-row">
+                                                    <div class="col-md-12">
+                                                        <label>Academic Rank:</label>
+                                                        <input type="text" name="name" class="form-control required-input" placeholder="Academic Rank:" value="Instructor I" required>
                                                     </div>
                                                 </div>
                                             </div>
@@ -256,61 +262,127 @@
                                     </div>
                                 </div>
 
-                                @foreach ($question as $catName => $questions)
-                                    <div class="category-section">
-                                        <h4 class="category-title">{{ $catName }}</h4>
-                                        @foreach($questions as $dataformlinksquestions)
-                                            <input type="hidden" name="question[]" value="{{ $dataformlinksquestions->id }}">
-                                            <div class="card">
-                                                <div class="card-body">
-                                                    <h5 class="card-title">
-                                                        {{ $loop->iteration }}.) {{ $dataformlinksquestions->questiontext }}
-                                                    </h5>
-                                                    <p class="card-text mt-5"></p>
-                                                    <div class="radio-group">
-                                                        @for ($i = 1; $i <= 5; $i++)
-                                                            <a href="#" class="card-link text-dark">
-                                                                <input type="radio" id="radio-{{ $i }}-{{ $dataformlinksquestions->id }}" name="question_rate[{{ $dataformlinksquestions->id }}]" value="{{ $i }}" required>
-                                                                <label for="radio-{{ $i }}-{{ $dataformlinksquestions->id }}">{{ $i }}</label>
-                                                            </a>
-                                                        @endfor
+                                <div id="card-2" style="display: none;">
+                                    <div class="card">
+                                        <div class="card-header">
+                                            <h5 class="card-title m-0">Personal Information</h5>
+                                        </div>
+                                    </div>
+
+                                    <div class="card">
+                                        <div class="card-body">
+                                            <div class="">
+                                                <label>Evaluators:</label><br>
+                                                <div class="form-row">
+                                                    <div class="col-sm-6">
+                                                        <div class="form-group clearfix">
+                                                            <div class="icheck-success d-inline">
+                                                                <input type="radio" id="radioPrimary1self" name="r1">
+                                                                <label for="radioPrimary1self">
+                                                                    Self
+                                                                </label>
+                                                            </div>
+                                                            <div class="icheck-success d-inline">
+                                                                <input type="radio" id="radioPrimary2student" name="r1">
+                                                                <label for="radioPrimary2student">
+                                                                    Student
+                                                                </label>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-sm-6">
+                                                        <div class="form-group clearfix">
+                                                            <div class="icheck-success d-inline">
+                                                                <input type="radio" id="radioPrimary1peer" name="r1">
+                                                                <label for="radioPrimary1peer">
+                                                                    Peer
+                                                                </label>
+                                                            </div>
+                                                            <div class="icheck-success d-inline">
+                                                                <input type="radio" id="radioPrimary2supervisor" name="r1">
+                                                                <label for="radioPrimary2supervisor">
+                                                                    Supervisor
+                                                                </label>
+                                                            </div>
+                                                        </div>
                                                     </div>
                                                 </div>
                                             </div>
-                                        @endforeach
+                                        </div>
                                     </div>
-                                @endforeach    
-                                
-                                <div class="card">
-                                    <div class="card-body">
-                                        <p>Comments:</p>
-                                        <input type="text" name="feedback" class="form-control" placeholder="Your Answer" required>
+
+                                    @foreach ($question as $catName => $questions)
+                                        <div class="category-section">
+                                            <div class="card" style="">
+                                                <div class="card-body">
+                                                    <h4 class="category-title">{{ $catName }}</h4>
+                                                </div>
+                                            </div>
+                                            @foreach($questions as $dataformlinksquestions)
+                                                <input type="hidden" name="question[]" value="{{ $dataformlinksquestions->id }}">
+                                                <div class="card">
+                                                    <div class="card-body">
+                                                        <h5 class="card-title">
+                                                            {{ $loop->iteration }}.) {{ $dataformlinksquestions->questiontext }}
+                                                        </h5>
+                                                        <p class="card-text mt-5"></p>
+                                                        <div class="radio-group">
+                                                            @for ($i = 1; $i <= 5; $i++)
+                                                                <a href="#" class="card-link text-dark">
+                                                                    <input type="radio" id="radio-{{ $i }}-{{ $dataformlinksquestions->id }}" name="question_rate[{{ $dataformlinksquestions->id }}]" value="{{ $i }}" required>
+                                                                    <label for="radio-{{ $i }}-{{ $dataformlinksquestions->id }}">{{ $i }}</label>
+                                                                </a>
+                                                            @endfor
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            @endforeach
+                                        </div>
+                                    @endforeach
+                                </div>
+
+                                <div id="card-3" style="display: none;">
+                                    <div class="card">
+                                        <div class="card-body">
+                                            <div class="form-group">
+                                                <div class="form-row">
+                                                    <div class="col-md-12">
+                                                        <label>Comments:</label>
+                                                        <input type="text" name="feedback" class="form-control" placeholder="Your comments here">
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
                                     </div>
                                 </div>
 
-                                <button type="submit" class="btn btn-success btn-md"  onclick="this.disabled=true; this.form.submit();">
-                                    <i class="fas fa-save"></i> Submit
-                                </button>
+                                <div class="progress-section d-flex align-items-center justify-content-between mt-3">
+                                    <button type="button" class="btn btn-default" id="back-btn" onclick="prevCard(currentCard - 1)" style="display: none;">Back</button>
+                                    <button type="button" class="btn btn-primary" id="next-btn" onclick="nextCard(currentCard + 1)" style="display: none;" disabled>Next</button>
+                                    {{-- <button type="button" class="btn btn-info" id="ok-btn">OK</button> --}}
+                                    <button type="submit" class="btn btn-primary" id="submit-btn" style="display: none;">Submit</button>
+
+                                    <div class="progress-container d-flex align-items-center">
+                                        <div class="progress" style="width: 60%; margin-right: 10px; background-color: gray; border-radius: 20px;">
+                                            <div id="progress-bar" class="progress-bar bg-primary" role="progressbar" style="width: 0%;" aria-valuemin="0" aria-valuemax="100"></div>
+                                        </div>
+                                        <span id="progress-text">Page 1 of <span id="total-pages"></span></span>
+                                    </div>
+
+                                    <a href="#" onclick="clearForm()" class="btn btn-default" style="color: #5e5df0; text-decoration: underline;">Clear form</a>
+                                </div>
+                                <br><br>
                             </form>
-                            <br><br><br><br>
                         </div>
                     </div>
                 </div>
             </div>
         </div>
-        <!-- /.content-wrapper -->
-
-        <!-- Main Footer -->
-        <!-- <footer class="main-footer">
-            <div class="float-right d-none d-sm-inline">
-                Anything you want
-            </div>
-            <strong>Copyright &copy; 2014-2021 <a href="https://adminlte.io">AdminLTE.io</a>.</strong> All rights reserved.
-        </footer> -->
+        <footer class="main-footer text-sm text-center" style="background-color: #daf1ea; border-top: none;">
+            <div class="float-right d-none d-sm-inline "></div>
+            <i class="text-dark">CPSU OFES V.1.0: Maintained and Managed by Management Information System Office (MISO) under the Leadership of Dr. Aladino C. Moraca Copyright © 2025 CPSU, All Rights Reserved</i>
+        </footer>
     </div>
-    <!-- ./wrapper -->
-
-    
 
     <!-- jQuery -->
     <script src="{{ asset('template/plugins/jquery/jquery.min.js') }}"></script>
@@ -318,12 +390,39 @@
     <script src="{{ asset('template/plugins/bootstrap/js/bootstrap.bundle.min.js') }}"></script>
     <!-- AdminLTE App -->
     <script src="{{ asset('template/dist/js/qce.min.js') }}"></script>
+    <!-- Select2 -->
+    <script src="{{ asset('template/plugins/select2/js/select2.full.min.js') }}"></script>
+
+    <!-- jquery-validation -->
+    <script src="{{ asset('template/plugins/jquery-validation/jquery.validate.min.js') }}"></script>
+    <script src="{{ asset('template/plugins/jquery-validation/additional-methods.min.js') }}"></script>
+    <!-- Toastr -->
+    <script src="{{ asset('template/plugins/toastr/toastr.min.js') }}"></script>
+    <!-- SweetAlert2 -->
+    <script src="{{ asset('template/plugins/sweetalert2/sweetalert2.min.js') }}"></script>
+    <!-- Moment -->
+    <script src="{{ asset('template/plugins/moment/moment.min.js') }}"></script>
+
+    <!-- Validation -->
+    <script src="{{ asset('js/validation/evalstud/evalValidation.js') }}"></script>
 
     <script>
-        function checkForm(form) {
-            form.querySelector('button[type="submit"]').disabled = true;
-            return true;
-        }
+        $(document).ready(function () {
+            function checkInputs() {
+                let allFilled = true;
+                $('.required-input').each(function () {
+                    if ($(this).val().trim() === '') {
+                        allFilled = false;
+                        return false; // Break out of loop
+                    }
+                });
+                $('#next-btn').prop('disabled', !allFilled);
+            }
+            
+            $('.required-input').on('input', checkInputs);
+            checkInputs(); // Initial check in case inputs have default values
+        });
     </script>
 </body>
 </html>
+   

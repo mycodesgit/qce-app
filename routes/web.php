@@ -64,6 +64,7 @@ Route::prefix('/users')->group(function () {
 
 Route::prefix('/form/eval')->group(function () {
     Route::get('/fac/view', [QCEevalformController::class, 'evalformStore'])->name('evalformStore');
+    Route::get('/fac/preview', [QCEevalformController::class, 'previewStore'])->name('previewStore');
 });
 
 Route::get('/', function () {

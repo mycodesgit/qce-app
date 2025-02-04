@@ -60,6 +60,15 @@
         </li>
 
         <li class="nav-item ripple-effect">
+            <a href="{{ route('evalformStore') }}" class="nav-link  {{$current_route=='evalformStore'?'active':''}}">
+                <i class="nav-icon fas fa-file"></i>
+                <p>
+                    Preview
+                </p>
+            </a>
+        </li>
+
+        <li class="nav-item ripple-effect">
             <a href="{{ route('userStore') }}" class="nav-link  {{$current_route=='userStore'?'active':''}}">
                 <i class="nav-icon fas fa-users"></i>
                 <p>
