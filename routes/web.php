@@ -67,7 +67,7 @@ Route::prefix('/form/eval')->group(function () {
     Route::get('/fac/preview', [QCEevalformController::class, 'previewStore'])->name('previewStore');
 });
 
-Route::get('/', function () {
-    return view('layouts.masterlayouts');
+Route::get('/login', function () {
+    return view('adminlogin');
 });
 
