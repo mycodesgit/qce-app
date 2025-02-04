@@ -129,6 +129,41 @@
             padding: 10px;
             border-bottom: 2px solid #ccc;
         }
+        #table {
+            margin-top: 10px;
+            font-family: Arial;
+            border-collapse: collapse;
+            width: 100%;
+            border: 1px solid #000;
+        }
+        #table td {
+            vertical-align: center !important;
+            text-align: left;
+            border: 1px solid #000;
+            font-size: 9pt;
+        } 
+        #table th {
+            border: 1px solid #000;
+            padding: 1px;
+            font-weight: normal !important;
+        }
+        .sticky-column {
+          position: sticky;
+          top: 50px;
+          height: 5vh;
+        }
+        .scrolling-column {
+          overflow-y: auto;
+        }
+        #evaluator {
+            margin-top: 230px; /* Default for larger screens */
+        }
+        @media (max-width: 768px) { 
+            #evaluator {
+                margin-top: 335px !important;
+            }
+        }
+
     </style>
 </head>
 <body class="hold-transition sidebar-mini layout-fixed layout-navbar-fixed text-sm">
@@ -263,13 +298,33 @@
                                 </div>
 
                                 <div id="card-2" style="display: none;">
-                                    <div class="card">
-                                        <div class="card-header">
-                                            <h5 class="card-title m-0">Personal Information</h5>
+                                    <div class="sticky-column" style="z-index: 999">
+                                        <div class="card">
+                                            <div class="card-body">
+                                                <label>Instruction: Please evaluate the faculty using the scale below. Encircle your rating.</label>
+                                                <table id="table">
+                                                    <thead>
+                                                        <tr>
+                                                            <th width="10%"><strong>Scale</strong></th>
+                                                            <th width="28%"><strong>Descriptive Rating</strong></th>
+                                                            <th><strong>Qualitative Description</strong></th>
+                                                        </tr>
+                                                    </thead>
+                                                    <tbody>
+                                                        @foreach($inst as $datainst)
+                                                            <tr>
+                                                                <td style="padding-left: 7px; font-weight: bold;">{{ $datainst->inst_scale }}</td>
+                                                                <td style="font-weight: bold;"><center>{{ $datainst->inst_descRating }}</center></td>
+                                                                <td>{{ $datainst->inst_qualDescription }}</td>
+                                                            </tr>
+                                                        @endforeach
+                                                    </tbody>
+                                                </table>
+                                            </div>
                                         </div>
                                     </div>
 
-                                    <div class="card">
+                                    <div id="evaluator" class="card" style="">
                                         <div class="card-body">
                                             <div class="">
                                                 <label>Evaluators:</label><br>
@@ -322,11 +377,11 @@
                                                 <input type="hidden" name="question[]" value="{{ $dataformlinksquestions->id }}">
                                                 <div class="card">
                                                     <div class="card-body">
-                                                        <h5 class="card-title">
+                                                        <h5 class="card-title text-bold">
                                                             {{ $loop->iteration }}.) {{ $dataformlinksquestions->questiontext }}
                                                         </h5>
                                                         <p class="card-text mt-5"></p>
-                                                        <div class="radio-group">
+                                                        <div class="radio-group" style="margin-top: 5px">
                                                             @for ($i = 1; $i <= 5; $i++)
                                                                 <a href="#" class="card-link text-dark">
                                                                     <input type="radio" id="radio-{{ $i }}-{{ $dataformlinksquestions->id }}" name="question_rate[{{ $dataformlinksquestions->id }}]" value="{{ $i }}" required>
@@ -348,7 +403,7 @@
                                                 <div class="form-row">
                                                     <div class="col-md-12">
                                                         <label>Comments:</label>
-                                                        <input type="text" name="feedback" class="form-control" placeholder="Your comments here">
+                                                        <textarea class="form-control" rows="4" placeholder="Your comments here"></textarea>
                                                     </div>
                                                 </div>
                                             </div>

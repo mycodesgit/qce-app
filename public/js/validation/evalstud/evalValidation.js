@@ -75,5 +75,20 @@ document.querySelectorAll(`#card-${totalCards} input, #card-${totalCards} select
     field.addEventListener('input', checkLastCardCompletion);
 });
 
+function adjustCard2Margin() {
+    const card2 = document.getElementById("evaluator");
+
+    if (window.innerWidth <= 768) { // Small screens
+        card2.style.marginTop = "350px";
+    } else { // Default for larger screens
+        card2.style.marginTop = "230px";
+    }
+}
+
+// Run the function on page load and when resizing the window
+window.addEventListener("load", adjustCard2Margin);
+window.addEventListener("resize", adjustCard2Margin);
+
+
 // Initialize the progress bar on page load
 updateProgressBar();
