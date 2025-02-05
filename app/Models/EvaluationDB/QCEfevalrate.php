@@ -18,9 +18,11 @@ class QCEfevalrate extends Model
         'ratingfromto',
         'qcefacID',
         'qcefacname',
-        'qceevaluator'
+        'qceevaluator',
         'question',
         'question_rate',
-        'qcecomments'
+        'qcecomments',
+        'evaluatorname',
+        'evaluatorID'
     ];
 }

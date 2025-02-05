@@ -66,6 +66,7 @@ Route::group(['middleware'=>['login_empauth']],function(){
     Route::prefix('/conf')->group(function () {
         Route::get('/qce-form/pdf', [QceformController::class, 'indexformpdf'])->name('indexformpdf');
         Route::get('/qce-form/pdf/form/view', [QceformController::class, 'qceformprintpdf'])->name('qceformprintpdf');
+        Route::get('/qce-form/pdf/form/view/rated', [QceformController::class, 'qceformprintpdfrated'])->name('qceformprintpdfrated');
     });
 
     Route::prefix('/users')->group(function () {
@@ -78,6 +79,7 @@ Route::group(['middleware'=>['login_empauth']],function(){
 
     Route::prefix('/form/eval')->group(function () {
         Route::get('/fac/view', [QCEevalformController::class, 'evalformStore'])->name('evalformStore');
+        Route::post('/fac/view/rate/fac', [QCEevalformController::class, 'facevalrateformCreate'])->name('facevalrateformCreate');
         Route::get('/fac/preview', [QCEevalformController::class, 'previewStore'])->name('previewStore');
     });
 });

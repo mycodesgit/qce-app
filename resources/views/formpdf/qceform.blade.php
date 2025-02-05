@@ -31,7 +31,7 @@
                         </div>
                         <div class="card-body">
                             <div class="">
-                                <iframe src="{{ route('qceformprintpdf') }}" style="width: 100%; height: 800px;" frameborder="0" class="mt-3"></iframe>
+                                <iframe src="{{ route('qceformprintpdfrated') }}" style="width: 100%; height: 800px;" frameborder="0" class="mt-3"></iframe>
                             </div>
                         </div>
                     </div>

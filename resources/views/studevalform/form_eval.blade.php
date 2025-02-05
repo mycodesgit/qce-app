@@ -243,7 +243,7 @@
                                 </div>
                             </div>
 
-                            <form method="post" action="" enctype="multipart/form-data" id="admissionApply">
+                            <form method="post" action="{{ route('facevalrateformCreate') }}" enctype="multipart/form-data" id="admissionApply">
                                 @csrf
                                 
                                 <div id="card-1">
@@ -273,7 +273,7 @@
                                                 <div class="form-row">
                                                     <div class="col-md-12">
                                                         <label>Rating Period:</label>
-                                                        <input type="text" name="name" class="form-control required-input" placeholder="Rating Period" value="Februay - June" required>
+                                                        <input type="text" name="schlyear" class="form-control required-input" placeholder="Rating Period" value="Februay - June" required>
                                                     </div>
                                                 </div>
                                             </div>
@@ -286,7 +286,7 @@
                                                 <div class="form-row">
                                                     <div class="col-md-12">
                                                         <label>Name of Faculty:</label>
-                                                        <input type="text" name="name" class="form-control required-input" placeholder="Name of Faculty" value="Faculty 1" required>
+                                                        <input type="text" name="qcefacname" class="form-control required-input" placeholder="Name of Faculty" value="Faculty 1" required>
                                                     </div>
                                                 </div>
                                             </div>
@@ -342,13 +342,13 @@
                                                     <div class="col-sm-6">
                                                         <div class="form-group clearfix">
                                                             <div class="icheck-success d-inline">
-                                                                <input type="radio" id="radioPrimary1self" name="r1">
+                                                                <input type="radio" id="radioPrimary1self" name="qceevaluator">
                                                                 <label for="radioPrimary1self">
                                                                     Self
                                                                 </label>
                                                             </div>
                                                             <div class="icheck-success d-inline">
-                                                                <input type="radio" id="radioPrimary2student" name="r1">
+                                                                <input type="radio" id="radioPrimary2student" name="qceevaluator">
                                                                 <label for="radioPrimary2student">
                                                                     Student
                                                                 </label>
@@ -358,13 +358,13 @@
                                                     <div class="col-sm-6">
                                                         <div class="form-group clearfix">
                                                             <div class="icheck-success d-inline">
-                                                                <input type="radio" id="radioPrimary1peer" name="r1">
+                                                                <input type="radio" id="radioPrimary1peer" name="qceevaluator">
                                                                 <label for="radioPrimary1peer">
                                                                     Peer
                                                                 </label>
                                                             </div>
                                                             <div class="icheck-success d-inline">
-                                                                <input type="radio" id="radioPrimary2supervisor" name="r1">
+                                                                <input type="radio" id="radioPrimary2supervisor" name="qceevaluator">
                                                                 <label for="radioPrimary2supervisor">
                                                                     Supervisor
                                                                 </label>
@@ -413,7 +413,7 @@
                                                 <div class="form-row">
                                                     <div class="col-md-12">
                                                         <label>Comments:</label>
-                                                        <textarea class="form-control" rows="4" placeholder="Your comments here"></textarea>
+                                                        <textarea class="form-control" rows="4" placeholder="Your comments here" name="qcecomments"></textarea>
                                                     </div>
                                                 </div>
                                             </div>
