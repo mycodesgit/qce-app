@@ -185,10 +185,11 @@
 						<td style="font-weight: bold; text-align: right;">Total Score:</td>
 					    <td colspan="5" style="text-align: left; font-weight: bold; padding-left: 10px"> {{ $sectionTotal  }}</td>
 					</tr>
+					
+					{{-- Grand Total Row (Only for Last Category) --}}
 					@php
 		                $grandTotal += $sectionTotal;
 		            @endphp
-					{{-- Grand Total Row (Only for Last Category) --}}
 					@if ($catName == $lastCategory)
 					    <tr>
 					    	<td style="font-weight: bold; text-align: right;">GRAND TOTAL:</td>
@@ -206,7 +207,7 @@
 		    <label style="font-weight: bold;">Comments:</label>
 		    <div class="comment-lines">
 		        @php
-		            $comments = explode("\n", wordwrap($facrated->first()->qcecomments, 60, "\n", true));
+		            $comments = explode("\n", wordwrap($facrated->first()->qcecomments, 500, "\n", true));
 		        @endphp
 		        @for($i = 0; $i < 4; $i++)
 		            <div class="line">
