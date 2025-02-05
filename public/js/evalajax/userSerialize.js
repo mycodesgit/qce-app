@@ -4,23 +4,20 @@ toastr.options = {
     "positionClass": "toast-bottom-left"
 };
 $(document).ready(function() {
-    $('#addSemester').submit(function(event) {
+    $('#addUser').submit(function(event) {
         event.preventDefault();
         var formData = $(this).serialize();
 
         $.ajax({
-            url: semesterCreateRoute,
+            url: userCreateRoute,
             type: "POST",
             data: formData,
             success: function(response) {
                 if(response.success) {
                     toastr.success(response.message);
                     console.log(response);
-                    $(document).trigger('semesterAdded');
-                    $('input[name="qceschlyear"]').val('');
-                    $('textarea[name="qcesemester"]').val('');
-                    $('input[name="qceratingfrom"]').val('');
-                    $('input[name="qceratingto"]').val('');
+                    $(document).trigger('userAdded');
+                    $('#modal-user').modal('hide');
                 } else {
                     toastr.error(response.message);
                     console.log(response);
@@ -45,18 +42,54 @@ $(document).ready(function() {
         searching: true,
         paging: true,
         "columns": [
-            { 
+            {
                 data: null,
                 render: function(data, type, row) {
                     var firstname = data.fname;
                     var middleInitial = data.mname ? data.mname.substr(0, 1) + '.' : '';
-                    var lastNameWithExt = data.lname + (data.ext !== 'N/A' ? ' ' + data.ext : '');
+                    var lastNameWithExt = data.lname;
+
+                    // Check if ext exists and is not 'N/A' or null
+                    if (data.ext && data.ext !== 'N/A' && data.ext !== null) {
+                        lastNameWithExt += ' ' + data.ext;
+                    }
+
                     return firstname + ' ' + middleInitial + ' ' + lastNameWithExt;
                 }
             },
-            {data: 'role'},
+            {
+                data: 'role',
+                render: function(data, type, row) {
+                    if (data == 0) {
+                        return '<span class="badge badge-warning">Administrator</span>';
+                    } else if (data == 1) {
+                        return '<span class="badge badge-info" style="color: #2b2b2b">Administer QA</span>';
+                    } else if (data == 2) {
+                        return '<span class="badge badge-secondary" style="color: #eee">Administer QA Staff</span>';
+                    } else if (data == 3) {
+                        return 'Administer Result';
+                    } else if (data == 4) {
+                        return 'Administer Result Staff';
+                    } else {
+                        return data;
+                    }
+                }
+            },
             {data: 'email'},
-            {data: 'campus'},
+            {
+                data: 'campus',
+                render: function(data, type, row) {
+                    if (data == 'MC') {
+                        return 'Main';
+                    } else if (data == 'VC') {
+                        return 'Victorias';
+                    } else if (data == 'SCC') {
+                        return 'San Carlos';
+                    } else {
+                        return data;
+                    }
+                }
+            },
             {data: 'resetcount'},
             {
                 data: 'id',
@@ -84,7 +117,7 @@ $(document).ready(function() {
             $(row).attr('id', 'tr-' + data.id); 
         }
     });
-    $(document).on('semesterAdded', function() {
+    $(document).on('userAdded', function() {
         dataTable.ajax.reload();
     });
 });

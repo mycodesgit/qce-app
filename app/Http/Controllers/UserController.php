@@ -6,6 +6,9 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Facades\Redirect;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Config;
+use Illuminate\Support\Facades\Crypt;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Str;
 use Carbon\Carbon;
@@ -34,19 +37,18 @@ class UserController extends Controller
                 'lname' => 'required',
                 'fname' => 'required',
                 'mname' => 'required',
-                'username' => 'required|string|min:5|unique:users,username',
+                'email' => 'required',
                 'password' => 'required|string|min:5',
-                'off_id' => 'required',
+                'dept' => 'required',
                 'role' => 'required',
-                'gender' => 'required',
-                'campus_id' => 'required',
+                'campus' => 'required',
             ]);
 
-            $userName = $request->input('username'); 
-            $existingUser = User::where('username', $userName)->first();
+            $emailName = $request->input('email'); 
+            $existingEmail = User::where('email', $emailName)->first();
 
-            if ($existingUser) {
-                return redirect()->route('userRead')->with('error', 'User already exists!');
+            if ($existingEmail) {
+                return response()->json(['error' => true, 'message' => 'User already exists'], 404);
             }
 
             try {
@@ -54,18 +56,17 @@ class UserController extends Controller
                     'lname' => $request->input('lname'),
                     'fname' => $request->input('fname'),
                     'mname' => $request->input('mname'),
-                    'username' => $userName,
+                    'email' => $emailName,
                     'password' => Hash::make($request->input('password')),
-                    'off_id' => $request->input('off_id'),
+                    'dept' => $request->input('dept'),
                     'role' => $request->input('role'),
-                    'gender' => $request->input('gender'),
-                    'campus_id' => $request->input('campus_id'),
+                    'campus' => $request->input('campus'),
                     'remember_token' => Str::random(60),
                 ]);
 
-                return redirect()->route('userRead')->with('success', 'User stored successfully!');
+                return response()->json(['success' => true, 'message' => 'User stored successfully'], 200);
             } catch (\Exception $e) {
-                return redirect()->route('userRead')->with('error', 'Failed to store user!');
+                return response()->json(['error' => true, 'message' => 'Failed to store User'], 404);
             }
         }
     }

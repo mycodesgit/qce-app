@@ -25,6 +25,10 @@ use App\Http\Controllers\QCEevalformController;
 */
 
 Route::group(['middleware'=>['guest']],function(){
+    Route::get('/', function () {
+        return view('adminlogin');
+    });
+
     Route::get('/login', [LoginController::class,'login'])->name('login');
     Route::post('/log/success/emp/stud', [LoginController::class,'empstudlogin'])->name('empstudlogin');
 });
@@ -67,6 +71,7 @@ Route::group(['middleware'=>['login_empauth']],function(){
     Route::prefix('/users')->group(function () {
         Route::get('/list/view', [UserController::class, 'userStore'])->name('userStore');
         Route::get('/list/fetch/ajaxuser', [UserController::class, 'getUserRead'])->name('getUserRead');
+        Route::post('/list/fetch/insert', [UserController::class,'userCreate'])->name('userCreate');
     });
 
     Route::prefix('/form/eval')->group(function () {
@@ -75,7 +80,5 @@ Route::group(['middleware'=>['login_empauth']],function(){
     });
 });
 
-// Route::get('/login', function () {
-//     return view('adminlogin');
-// });
+
 

@@ -178,9 +178,9 @@
     <script src="{{ asset('js/validation/manage/catValidation.js') }}"></script>
     <script src="{{ asset('js/validation/manage/questValidation.js') }}"></script>
     <script src="{{ asset('js/validation/manage/semesterValidation.js') }}"></script>
-
-    <!-- Validation -->
-    <script src="{{ asset('js/validation/evalstud/evalValidation.js') }}"></script>
+    @if(request()->routeIs('previewStore'))
+        <script src="{{ asset('js/validation/evalstud/evalValidation.js') }}"></script>
+    @endif
 
     <script>
         $(document).ready(function () {
@@ -199,6 +199,26 @@
             checkInputs(); // Initial check in case inputs have default values
         });
     </script>
+    <script>
+        $(document).ready(function() {
+            @if(session('error'))
+                toastr.error("{{ session('error') }}", "Error", {
+                    closeButton: true,
+                    progressBar: true,
+                    positionClass: "toast-bottom-left",
+                    timeOut: 5000
+                });
+            @endif
 
+            @if(session('success'))
+                toastr.success("{{ session('success') }}", "Success", {
+                    closeButton: true,
+                    progressBar: true,
+                    positionClass: "toast-bottom-left",
+                    timeOut: 10000
+                });
+            @endif
+        });
+    </script>
 </body>
 </html>

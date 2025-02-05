@@ -29,6 +29,7 @@
                                 <button type="button" class="btn btn-success btn-sm" data-toggle="modal" data-target="#modal-user">
                                     <i class="fas fa-user-plus"></i> Add New
                                 </button>
+                                @include('modal.useradd-modal')
                             </h5>
                         </div>
                         <div class="card-body">
@@ -112,7 +113,7 @@
 
 <script>
     var userReadRoute = "{{ route('getUserRead') }}";
-    var semesterCreateRoute = "{{ route('semesterCreate') }}";
+    var userCreateRoute = "{{ route('userCreate') }}";
     var semesterUpdateRoute = "{{ route('semesterUpdate', ['id' => ':id']) }}";
     var semesterDeleteRoute = "{{ route('semesterDelete', ['id' => ':id']) }}";
 </script>

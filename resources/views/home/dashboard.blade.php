@@ -21,14 +21,6 @@
     <div class="content">
         <div class="container-fluid">
             <div class="row">
-                <div class="col-lg-12">
-                    @if(Session::has('success'))
-                        <div class="alert alert-success">{{ Session::get('success')}}</div>
-                    @elseif (Session::has('error'))
-                        <div class="alert alert-danger">{{Session::get('error')}}</div>
-                    @endif
-                </div>
-                
                 <div class="col-lg-3 col-6">
                     <div class="small-box bg-info">
                         <div class="inner">

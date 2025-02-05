@@ -10,6 +10,9 @@
 
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css" integrity="sha384-rbsA2VBKQhggwzxH7pPCaAqO46MgnOM80zW1RWuH61DGLwZJEdK2Kadq2F9CUG65" crossorigin="anonymous">
     {{-- <link rel="stylesheet" href="style.css"> --}}
+    <!-- Toastr -->
+    <link rel="stylesheet" href="{{ asset('template/plugins/toastr/toastr.min.css') }}">
+    <!-- Logo -->
     <link rel="shortcut icon" type="" href="{{ asset('template/img/CPSU_L.png') }}">
 
     <style type="text/css">
@@ -106,9 +109,10 @@
         
             <div class="col-md-6 right-box">
                 <div class="row align-items-center">
-                    <div class="header-text mb-4">
+                    <div class="header-text mb-4 text-center">
                          <h2>Hello,Again</h2>
-                         <p>We are happy to have you back.</p>
+                         <p>Sign in to start your session</p>
+
                     </div>
                     <form action="{{ route('empstudlogin') }}" method="post">
                         @csrf
@@ -136,5 +140,34 @@
             <span style="font-size: 9pt; text-align: center; margin-top: 10px;">Maintained and Managed by Management Information System Office (MISO) under the Leadership of Dr. Aladino C. Moraca.</span>
         </div>
     </div>
+
+    <!-- jQuery -->
+    <script src="{{ asset('template/plugins/jquery/jquery.min.js') }}"></script>
+    <!-- Moment -->
+    <script src="{{ asset('template/plugins/moment/moment.min.js') }}"></script>
+    <!-- Toastr -->
+    <script src="{{ asset('template/plugins/toastr/toastr.min.js') }}"></script>
+
+    <script>
+        $(document).ready(function() {
+            @if(session('error'))
+                toastr.error("{{ session('error') }}", "Error", {
+                    closeButton: false,
+                    progressBar: true,
+                    positionClass: "toast-top-right",
+                    timeOut: 10000
+                });
+            @endif
+
+            @if(session('success'))
+                toastr.success("{{ session('success') }}", "Success", {
+                    closeButton: false,
+                    progressBar: true,
+                    positionClass: "toast-top-right",
+                    timeOut: 10000
+                });
+            @endif
+        });
+    </script>
 </body>
 </html>
