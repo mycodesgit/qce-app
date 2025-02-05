@@ -100,9 +100,29 @@
                         <img src="{{ asset('template/img/user.png') }}" class="img-circle elevation-2" alt="User Image">
                     </div>
                     <div class="info">
-                        <a href="#" class="d-block">Admin Level</a>
+                        <a href="#" class="d-block">
+                            @auth('web')
+                                @if(in_array(Auth::guard('web')->user()->role, [0, 1, 2, 3, 4]))
+                                    {{ Auth::guard('web')->user()->fname }} {{ Auth::guard('web')->user()->lname }}
+                                @endif
+                            @endauth
+                        </a>
                         <span style="font-size: 10pt; color: #ccc;">
-                            <i class="fa fa-circle text-success" style="font-size: 8pt"></i> Administrator
+                            <i class="fa fa-circle text-success" style="font-size: 8pt"></i> 
+                            @php
+                                $roles = [
+                                    0 => 'Administrator',
+                                    1 => 'Administer QA',
+                                    2 => 'Administer QA Staff',
+                                    3 => 'Administer Result',
+                                    4 => 'Administer Result Staff',
+                                ];
+                            @endphp
+                            @auth('web')
+                                @if(in_array(Auth::guard('web')->user()->role, array_keys($roles)))
+                                    {{ $roles[Auth::guard('web')->user()->role] }}
+                                @endif
+                            @endauth
                         </span>
                     </div>
                 </div>

@@ -72,6 +72,8 @@ Route::group(['middleware'=>['login_empauth']],function(){
         Route::get('/list/view', [UserController::class, 'userStore'])->name('userStore');
         Route::get('/list/fetch/ajaxuser', [UserController::class, 'getUserRead'])->name('getUserRead');
         Route::post('/list/fetch/insert', [UserController::class,'userCreate'])->name('userCreate');
+        Route::post('/list/fetch/update', [UserController::class,'userUpdate'])->name('userUpdate');
+        Route::post('/list/fetch/delete{id}', [UserController::class,'userDelete'])->name('userDelete');
     });
 
     Route::prefix('/form/eval')->group(function () {

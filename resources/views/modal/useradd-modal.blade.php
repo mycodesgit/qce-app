@@ -48,12 +48,12 @@
                             
                             <div class="col-md-4">
                                 <label><span class="badge badge-secondary">Email</span></label>
-                                <input type="text" name="email" placeholder="Enter Email" class="form-control form-control-sm">
+                                <input type="email" name="email" placeholder="Enter Email" class="form-control form-control-sm">
                             </div>
 
                             <div class="col-md-4">
                                 <label><span class="badge badge-secondary">Password:</span></label>
-                                <input type="password" name="password" placeholder="Enter Password" class="form-control form-control-sm">
+                                <input type="password" name="password" placeholder="Enter Password" value="password123" class="form-control form-control-sm">
                             </div>
                         </div>
                     </div>

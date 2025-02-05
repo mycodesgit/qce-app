@@ -67,9 +67,9 @@ $(document).ready(function() {
                     } else if (data == 2) {
                         return '<span class="badge badge-secondary" style="color: #eee">Administer QA Staff</span>';
                     } else if (data == 3) {
-                        return 'Administer Result';
+                        return '<span class="badge badge-success" style="color: #222">Administer Result</span>';
                     } else if (data == 4) {
-                        return 'Administer Result Staff';
+                        return '<span class="badge badge-success" style="color: #222">Administer Result Staff</span>';
                     } else {
                         return data;
                     }
@@ -98,10 +98,10 @@ $(document).ready(function() {
                         var dropdown = '<div class="d-inline-block">' +
                             '<a class="btn btn-primary btn-sm dropdown-toggle dropdown-icon" data-toggle="dropdown"></a>' +
                             '<div class="dropdown-menu">' +
-                            '<a href="#" class="dropdown-item btn-semesteredit" data-id="' + row.id + '" data-schlyear="' + row.qceschlyear + '" data-semester="' + row.qcesemester + '" data-qceratingfrom="' + row.qceratingfrom + '" data-qceratingto="' + row.qceratingto + '" data-qcesemstat="' + row.qcesemstat + '">' +
+                            '<a href="#" class="dropdown-item btn-useredit" data-id="' + row.id + '" data-fname="' + row.fname + '" data-mname="' + row.mname + '" data-lname="' + row.lname + '" data-ext="' + row.ext + '" data-email="' + row.email + '" data-campus="' + row.campus + '" data-dept="' + row.dept + '" data-role="' + row.role + '">' +
                             '<i class="fas fa-pen"></i> Edit' +
                             '</a>' +
-                            '<button type="button" value="' + data + '" class="dropdown-item semester-delete">' +
+                            '<button type="button" value="' + data + '" class="dropdown-item user-delete">' +
                             '<i class="fas fa-trash"></i> Delete' +
                             '</button>' +
                             '</div>' +
@@ -122,30 +122,36 @@ $(document).ready(function() {
     });
 });
 
-$(document).on('click', '.btn-semesteredit', function() {
+$(document).on('click', '.btn-useredit', function() {
     var id = $(this).data('id');
-    var schlyear = $(this).data('schlyear');
-    var semester = $(this).data('semester');
-    var ratingFrom = $(this).data('qceratingfrom');
-    var ratingTo = $(this).data('qceratingto');
-    var semstat = $(this).data('qcesemstat');
+    var fname = $(this).data('fname');
+    var mname = $(this).data('mname');
+    var lname = $(this).data('lname');
+    var ext = $(this).data('ext');
+    var email = $(this).data('email');
+    var campus = $(this).data('campus');
+    var dept = $(this).data('dept');
+    var role = $(this).data('role');
 
-    $('#editSemesterId').val(id);
-    $('#editSchlyearName').val(schlyear);
-    $('#editSemesterName').val(semester);
-    $('#editRatingfrom').val(ratingFrom);
-    $('#editRatingto').val(ratingTo);
-    $('#editSemstat').val(semstat);
+    $('#edituserId').val(id);
+    $('#edituserfname').val(fname);
+    $('#editusermname').val(mname);
+    $('#edituserlname').val(lname);
+    $('#edituserext').val(ext);
+    $('#edituseremail').val(email);
+    $('#editusercamp').val(campus);
+    $('#edituserdept').val(dept);
+    $('#edituserrole').val(role);
     
-    $('#editSemesterModal').modal('show');
+    $('#edituserModal').modal('show');
 });
 
-$('#editSemesterForm').submit(function(event) {
+$('#edituserForm').submit(function(event) {
     event.preventDefault();
     var formData = $(this).serialize();
 
     $.ajax({
-        url: semesterUpdateRoute,
+        url: userUpdateRoute,
         type: "POST",
         data: formData,
         headers: {
@@ -154,8 +160,8 @@ $('#editSemesterForm').submit(function(event) {
         success: function(response) {
             if(response.success) {
                 toastr.success(response.message);
-                $('#editSemesterModal').modal('hide');
-                $(document).trigger('semesterAdded');
+                $('#edituserModal').modal('hide');
+                $(document).trigger('userAdded');
             } else {
                 toastr.error(response.message);
             }
@@ -167,7 +173,7 @@ $('#editSemesterForm').submit(function(event) {
     });
 });
 
-$(document).on('click', '.semester-delete', function(e) {
+$(document).on('click', '.user-delete', function(e) {
     var id = $(this).val();
     $.ajaxSetup({
         headers: {
@@ -186,7 +192,7 @@ $(document).on('click', '.semester-delete', function(e) {
         if (result.isConfirmed) {
             $.ajax({
                 type: "POST",
-                url: semesterDeleteRoute.replace(':id', id),
+                url: userDeleteRoute.replace(':id', id),
                 success: function(response) {
                     $("#tr-" + id).delay(1000).fadeOut();
                     Swal.fire({

@@ -70,4 +70,51 @@ class UserController extends Controller
             }
         }
     }
+
+    public function userUpdate(Request $request) 
+    {
+        $request->validate([
+            'id' => 'required',
+            'lname' => 'required',
+            'fname' => 'required',
+            'mname' => 'required',
+            'email' => 'required',
+            'dept' => 'required',
+            'role' => 'required',
+            'campus' => 'required',
+        ]);
+
+        try {
+            $emailName = $request->input('email'); 
+            $existingEmail = User::where('email', $emailName)
+                            ->where('id', '!=', $request->input('id'))
+                            ->first();
+
+            if ($existingEmail) {
+                return response()->json(['error' => true, 'message' => 'User already exists'], 404);
+            }
+
+            $qceuser = User::findOrFail($request->input('id'));
+            $qceuser->update([
+                'lname' => $request->input('lname'),
+                'fname' => $request->input('fname'),
+                'mname' => $request->input('mname'),
+                'email' => $emailName,
+                'dept' => $request->input('dept'),
+                'role' => $request->input('role'),
+                'campus' => $request->input('campus'),
+        ]);
+            return response()->json(['success' => true, 'message' => 'User update successfully'], 200);
+        } catch (\Exception $e) {
+            return response()->json(['error' => true, 'message' => 'Failed to Update User'], 404);
+        }
+    }
+
+    public function userDelete($id) 
+    {
+        $qceuser = User::find($id);
+        $qceuser->delete();
+
+        return response()->json(['success'=> true, 'message'=>'Deleted Successfully',]);
+    }
 }
