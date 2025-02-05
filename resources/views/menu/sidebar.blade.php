@@ -14,6 +14,15 @@
             </a>
         </li>
 
+        <li class="nav-item ripple-effect">
+            <a href="" class="nav-link">
+                <i class="nav-icon fas fa-calendar-alt"></i>
+                <p>
+                    Calendar
+                </p>
+            </a>
+        </li>
+
         @if(in_array(Auth::guard('web')->user()->role, [0, 1, 2]))
             <li class="nav-item {{ $current_route == 'instructionStore' || $current_route == 'categoryStore' || $current_route == 'questionStore' || $current_route == 'semesterStore' ? 'menu-open' : '' }}">
                 <a href="starter.html" class="nav-link">
@@ -85,13 +94,28 @@
 
         <li class="nav-header text-gray">Reports</li>
 
-        <li class="nav-item ripple-effect">
+        <li class="nav-item">
             <a href="starter.html" class="nav-link">
-                <i class="nav-icon fas fa-file-excel"></i>
+                <i class="nav-icon fas fa-laptop-code"></i>
                 <p>
                     Reports
+                    <i class="right fas fa-angle-left"></i>
                 </p>
             </a>
+            <ul class="nav nav-treeview">
+                <li class="nav-item">
+                    <a href="" class="nav-link">
+                        <i class="fas fa-file-pdf nav-icon"></i>
+                        <p>QCE Submissions Print</p>
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a href="" class="nav-link">
+                        <i class="fas fa-file-excel nav-icon"></i>
+                        <p>QS Student Satisfaction</p>
+                    </a>
+                </li>
+            </ul>
         </li>
     </ul>
 </nav>
