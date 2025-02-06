@@ -15,6 +15,11 @@ class LoginController extends Controller
         return view('adminlogin');
     }
 
+    public function studentLogin()
+    {
+        return view('studlogin');
+    }
+
     public function empstudlogin(Request $request)
     {
         $request->validate([
@@ -35,10 +40,10 @@ class LoginController extends Controller
         //     'password' => $request->password,
         // ]);
 
-        // $validatedStudent = auth()->guard('student')->attempt([
-        //     'studid' => $request->studid,
-        //     'password' => $request->password,
-        // ]);
+        $validatedStudent = auth()->guard('kioskstudent')->attempt([
+            'studid' => $request->studid,
+            'password' => $request->password,
+        ]);
         //dd($validatedStudent);
 
         // if(\Auth::guard('web')->check()) {
@@ -53,9 +58,9 @@ class LoginController extends Controller
         // elseif($validatedFaculty) {
         //     return redirect()->route('homefaculty')->with('success', 'You have successfully logged in.');
         // } 
-        // elseif($validatedStudent) {
-        //     return redirect()->route('kioskhome')->with('success', 'You have successfully logged in.');
-        // } 
+        elseif($validatedStudent) {
+            return redirect()->route('dash')->with('success', 'You have successfully logged in.');
+        } 
         else {
             return redirect()->back()->with('error', 'Invalid Credentials');
         }

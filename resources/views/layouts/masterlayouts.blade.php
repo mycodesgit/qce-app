@@ -13,6 +13,7 @@
     <link rel="stylesheet" href="{{ asset('template/plugins/fontawesome-free-V6/css/all.min.css') }}">
     <!-- Theme style -->
     <link rel="stylesheet" href="{{ asset('template/dist/css/qce-style.css') }}">
+    <link rel="stylesheet" href="{{ asset('template/dist/css/custom.css') }}">
     @if(request()->routeIs('previewStore'))
         <link rel="stylesheet" href="{{ asset('template/dist/css/track-style.css') }}">
     @endif
@@ -49,6 +50,14 @@
         .btn-primary{
             background-color: #1f5036 !important;
             border: #1f5036 !important;
+        }
+        .folder-icon {
+            transition: transform 0.3s ease-in-out, color 0.3s ease-in-out;
+        }
+
+        .folder-icon:hover {
+            transform: scale(1.1);  /* Enlarge the icon on hover */
+            color: #000;  /* Change color when hovered */
         }
     </style>
 </head>
@@ -106,6 +115,12 @@
                                     {{ Auth::guard('web')->user()->fname }} {{ Auth::guard('web')->user()->lname }}
                                 @endif
                             @endauth
+
+                            @auth('kioskstudent')
+                                @if(Auth::guard('kioskstudent')->user()->role == 'Student')
+                                    {{ Auth::guard('kioskstudent')->user()->studid }} {{ Auth::guard('kioskstudent')->user()->lname }}
+                                @endif
+                            @endauth
                         </a>
                         <span style="font-size: 10pt; color: #ccc;">
                             <i class="fa fa-circle text-success" style="font-size: 8pt"></i> 
@@ -121,6 +136,11 @@
                             @auth('web')
                                 @if(in_array(Auth::guard('web')->user()->role, array_keys($roles)))
                                     {{ $roles[Auth::guard('web')->user()->role] }}
+                                @endif
+                            @endauth
+                            @auth('kioskstudent')
+                                @if(Auth::guard('kioskstudent')->user()->role == 'Student')
+                                    {{ Auth::guard('kioskstudent')->user()->role }}
                                 @endif
                             @endauth
                         </span>

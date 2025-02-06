@@ -11,8 +11,10 @@ class DashboardController extends Controller
     {
         if(\Auth::guard('web')->check()) {
             return 'web';
-        } elseif(\Auth::guard('faculty')->check()) {
-            return 'faculty';
+        // } elseif(\Auth::guard('faculty')->check()) {
+        //     return 'faculty';
+        } elseif(\Auth::guard('kioskstudent')->check()) {
+            return 'kioskstudent';
         }
     }
 
@@ -33,10 +35,12 @@ class DashboardController extends Controller
 
         if (\Auth::guard('web')->check()) {
             auth()->guard('web')->logout();
-            //auth()->guard('faculty')->logout();
             return redirect()->route('login')->with('success', 'You have been Successfully Logged Out');
+        } elseif (\Auth::guard('kioskstudent')->check()) {
+            auth()->guard('kioskstudent')->logout();
+            return redirect()->route('studentLogin')->with('success', 'You have been Successfully Logged Out');
         } else {
-            return redirect()->route('dash')->with('error', 'No authenticated user to log out');
+            return redirect()->route('home')->with('error', 'No authenticated user to log out');
         }
 
     }

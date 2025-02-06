@@ -245,7 +245,14 @@
 
                             <form method="post" action="{{ route('facevalrateformCreate') }}" enctype="multipart/form-data" id="admissionApply">
                                 @csrf
-                                
+
+                                <input type="hidden" name="qceschlyearsemID" value="{{ $currsem->first()->id }}">
+                                <input type="hidden" name="schlyear" value="{{ $currsem->first()->qceschlyear }}">
+                                <input type="hidden" name="semester" value="{{ $currsem->first()->qcesemester }}">
+                                <input type="hidden" name="qcefacID" value="{{ request('qcefacID') }}">
+                                <input type="hidden" name="evaluatorname" value="{{ Auth::guard('kioskstudent')->user()->student->fname }} {{ Auth::guard('kioskstudent')->user()->student->lname }}">
+                                <input type="hidden" name="evaluatorID" value="{{ Auth::guard('kioskstudent')->user()->id }}">
+
                                 <div id="card-1">
                                     <p>
                                         @if(Session::has('success'))
@@ -273,7 +280,7 @@
                                                 <div class="form-row">
                                                     <div class="col-md-12">
                                                         <label>Rating Period:</label>
-                                                        <input type="text" name="schlyear" class="form-control required-input" placeholder="Rating Period" value="Februay - June" required>
+                                                        <input type="text" name="schlyear" class="form-control required-input" placeholder="Rating Period" value="{{ $currsem->first()->qceratingfrom }} - {{ $currsem->first()->qceratingto }}" required readonly>
                                                     </div>
                                                 </div>
                                             </div>
@@ -286,7 +293,7 @@
                                                 <div class="form-row">
                                                     <div class="col-md-12">
                                                         <label>Name of Faculty:</label>
-                                                        <input type="text" name="qcefacname" class="form-control required-input" placeholder="Name of Faculty" value="Faculty 1" required>
+                                                        <input type="text" name="qcefacname" class="form-control required-input" placeholder="Name of Faculty" value="{{ request('qcefacname') }}" required readonly>
                                                     </div>
                                                 </div>
                                             </div>

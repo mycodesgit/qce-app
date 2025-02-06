@@ -44,9 +44,9 @@ return [
             'driver' => 'session',
             'provider' => 'faculty',
         ],
-        'student' => [
+        'kioskstudent' => [
             'driver' => 'session',
-            'provider' => 'student',
+            'provider' => 'kioskstudent',
         ],
     ],
 
@@ -77,7 +77,7 @@ return [
             'model' => App\Models\ScheduleDB\Faculty::class,
         ],
 
-        'student' => [
+        'kioskstudent' => [
             'driver' => 'eloquent',
             'model' => App\Models\EnrollmentDB\KioskUser::class,
         ],

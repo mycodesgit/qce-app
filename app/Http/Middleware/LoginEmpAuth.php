@@ -21,10 +21,10 @@ class LoginEmpAuth
         if (auth()->guard('web')->check()) {
             $userRole = auth()->guard('web')->user()->role;
             
-        // } elseif (auth()->guard('student')->check()) {
-        //     if ($request->is('emp/admission') || $request->is('emp/admission/*') || $request->is('enmod/enrollment') || $request->is('enmod/enrollment/*')) {
-        //         return redirect()->route('kioskhome')->with('error', 'No permission to access this page');
-        //     }
+        } elseif (auth()->guard('kioskstudent')->check()) {
+            if ($request->is('emp/admission') || $request->is('emp/admission/*') || $request->is('enmod/enrollment') || $request->is('enmod/enrollment/*')) {
+                return redirect()->route('dash')->with('error', 'No permission to access this page');
+            }
         }else {
             return redirect()->route('login')->with('error', 'You have to sign in first to access this page');
         }

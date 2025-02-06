@@ -26,10 +26,11 @@ use App\Http\Controllers\QCEevalformController;
 
 Route::group(['middleware'=>['guest']],function(){
     Route::get('/', function () {
-        return view('adminlogin');
+        return view('studlogin');
     });
 
-    Route::get('/login', [LoginController::class,'login'])->name('login');
+    Route::get('/emp/admin/login', [LoginController::class,'login'])->name('login');
+    Route::get('/student/signin', [LoginController::class,'studentLogin'])->name('studentLogin');
     Route::post('/log/success/emp/stud', [LoginController::class,'empstudlogin'])->name('empstudlogin');
 });
 
@@ -77,9 +78,13 @@ Route::group(['middleware'=>['login_empauth']],function(){
         Route::post('/list/fetch/delete{id}', [UserController::class,'userDelete'])->name('userDelete');
     });
 
-    Route::prefix('/form/eval')->group(function () {
+    Route::prefix('/form/fac')->group(function () {
+        Route::get('/evaluation/select', [QCEevalformController::class, 'evalsubjfacStore'])->name('evalsubjfacStore');
+
+
         Route::get('/fac/view', [QCEevalformController::class, 'evalformStore'])->name('evalformStore');
         Route::post('/fac/view/rate/fac', [QCEevalformController::class, 'facevalrateformCreate'])->name('facevalrateformCreate');
+        Route::get('/fac/view/rate/success/submit', [QCEevalformController::class, 'successfacevalrateform'])->name('successfacevalrateform');
         Route::get('/fac/preview', [QCEevalformController::class, 'previewStore'])->name('previewStore');
     });
 });

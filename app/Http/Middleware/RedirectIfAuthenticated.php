@@ -37,9 +37,9 @@ class RedirectIfAuthenticated
         // elseif (Auth::guard('faculty')->check()) {
         //     return redirect()->route('homefaculty');
         // }
-        // elseif (Auth::guard('kioskstudent')->check()) {
-        //     return redirect()->route('kioskhome');
-        // }
+        elseif (Auth::guard('kioskstudent')->check()) {
+            return redirect()->route('dash');
+        }
 
         $response = $next($request);
         $response->headers->set('Cache-Control', 'no-cache, no-store, max-age=0, must-revalidate');
