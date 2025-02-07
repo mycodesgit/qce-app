@@ -280,7 +280,7 @@
                                                 <div class="form-row">
                                                     <div class="col-md-12">
                                                         <label>Rating Period:</label>
-                                                        <input type="text" name="schlyear" class="form-control required-input" placeholder="Rating Period" value="{{ $currsem->first()->qceratingfrom }} - {{ $currsem->first()->qceratingto }}" required readonly>
+                                                        <input type="text" name="ratingfromto" class="form-control required-input" placeholder="Rating Period" value="{{ $currsem->first()->qceratingfrom }} - {{ $currsem->first()->qceratingto }}" required readonly>
                                                     </div>
                                                 </div>
                                             </div>

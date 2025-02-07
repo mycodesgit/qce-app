@@ -281,6 +281,28 @@
     <script src="{{ asset('template/plugins/sweetalert2/sweetalert2.min.js') }}"></script>
     <!-- Moment -->
     <script src="{{ asset('template/plugins/moment/moment.min.js') }}"></script>
+
+    <script>
+        $(document).ready(function() {
+            @if(session('error'))
+                toastr.error("{{ session('error') }}", "Error", {
+                    closeButton: true,
+                    progressBar: true,
+                    positionClass: "toast-bottom-left",
+                    timeOut: 5000
+                });
+            @endif
+
+            @if(session('success'))
+                toastr.success("{{ session('success') }}", "Success", {
+                    closeButton: true,
+                    progressBar: true,
+                    positionClass: "toast-bottom-left",
+                    timeOut: 10000
+                });
+            @endif
+        });
+    </script>
 </body>
 </html>
    

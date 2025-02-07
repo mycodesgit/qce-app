@@ -14,6 +14,7 @@ use PDF;
 use App\Models\EvaluationDB\QCEinstruction;
 use App\Models\EvaluationDB\QCEcategory;
 use App\Models\EvaluationDB\QCEquestion;
+use App\Models\EvaluationDB\QCEsemester;
 use App\Models\EvaluationDB\QCEfevalrate;
 
 class QceformController extends Controller
@@ -44,6 +45,7 @@ class QceformController extends Controller
     public function qceformprintpdfrated()
     {
         $inst = QCEinstruction::orderBy('inst_scale', 'DESC')->get();
+        $currsem = QCEsemester::where('qcesemstat', 2)->get();
 
         $quest = QCEquestion::join('qcecategory', 'qcequestion.catName_id', '=', 'qcecategory.id')
                 ->select('qcecategory.catName', 'qcequestion.*')
@@ -54,6 +56,7 @@ class QceformController extends Controller
 
         $data = [
             'inst' => $inst,
+            'currsem' => $currsem,
             'quest' => $quest,
             'facrated' => $facrated
         ];

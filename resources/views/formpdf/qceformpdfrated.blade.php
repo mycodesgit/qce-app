@@ -92,8 +92,37 @@
 	</div>
 
 	<div>
-		<p>Rating Period:__________________________ to _________________________________________</p>
-		<p>Name of Faculty:________________________ Academic Rank: _____________________________</p>
+		@php
+		    // Define default placeholders for the underline length
+		    $underlineLengthFrom = 26; // Adjust based on your layout
+		    $underlineLengthTo = 39; // Adjust based on your layout
+
+		    // Fetch and format the rating period, centering within the underline
+		    $ratingFrom = $currsem->first()->qceratingfrom ?? '';
+		    $ratingTo = $currsem->first()->qceratingto ?? '';
+
+		    // Center the text within the underline length
+		    $underlineFrom = str_pad($ratingFrom, $underlineLengthFrom, '_', STR_PAD_BOTH);
+		    $underlineTo = str_pad($ratingTo, $underlineLengthTo, '_', STR_PAD_BOTH);
+		@endphp
+
+		<p>Rating Period: <u>{{ $underlineFrom }}</u> to <u>{{ $underlineTo }}</u></p>
+
+		@php
+		    // Define the underline lengths for proper alignment
+		    $underlineLengthName = 26; // Adjust as needed
+		    $underlineLengthRank = 27; // Adjust as needed
+
+		    // Fetch faculty name and rank
+		    $facultyName = $facrated->first()->qcefacname ?? '';
+		    $academicRank = $facrated->first()->academic_rank ?? '';
+
+		    // Center the text within the underline length
+		    $underlineFaculty = str_pad($facultyName, $underlineLengthName, '_', STR_PAD_BOTH);
+		    $underlineRank = str_pad($academicRank, $underlineLengthRank, '_', STR_PAD_BOTH);
+		@endphp
+
+		<p>Name of Faculty: <u>{{ $underlineFaculty }}</u> Academic Rank: <u>{{ $underlineRank }}</u></p>
 		<p>Evaluators:</p>
 
 		
@@ -207,7 +236,7 @@
 		    <label style="font-weight: bold;">Comments:</label>
 		    <div class="comment-lines">
 		        @php
-		            $comments = explode("\n", wordwrap($facrated->first()->qcecomments, 500, "\n", true));
+		            $comments = explode("\n", wordwrap($facrated->first()->qcecomments ?? '', 500, "\n", true));
 		        @endphp
 		        @for($i = 0; $i < 4; $i++)
 		            <div class="line">

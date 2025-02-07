@@ -79,14 +79,14 @@ class QCEevalformController extends Controller
     {
         if ($request->isMethod('post')) {
             $request->validate([
-                'qceschlyearsemID' => 'required',
-                'schlyear' => 'required',
-                'semester' => 'required',
-                'ratingfromto' => 'required',
-                'question' => 'required|array',
-                'question_rate' => 'required|array',
-                'evaluatorname' => 'required',
-                'evaluatorID' => 'required',
+                // 'qceschlyearsemID' => 'required',
+                // 'schlyear' => 'required',
+                // 'semester' => 'required',
+                // 'ratingfromto' => 'required',
+                // 'question' => 'required|array',
+                // 'question_rate' => 'required|array',
+                // 'evaluatorname' => 'required',
+                // 'evaluatorID' => 'required',
                 'qcecomments' => [
                     'required',
                     function ($attribute, $value, $fail) {
@@ -97,7 +97,7 @@ class QCEevalformController extends Controller
                 ],
             ]);
             
-            try {
+            //try {
                 // $existingSurvey = QCEfevalrate::where([
                 //     ['title_id', '=', $request->input('title_id')],
                 //     ['name', '=', $request->input('name')],
@@ -125,9 +125,9 @@ class QCEevalformController extends Controller
                 ]);
 
                 return redirect()->route('successfacevalrateform')->with('success', 'Survey Submitted Successfully');
-            } catch (\Exception $e) {
+            //} catch (\Exception $e) {
                 return back()->with('error', 'Failed to Submit Survey');
-            }
+            //}
         }
     }
 
