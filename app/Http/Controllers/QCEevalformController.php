@@ -55,6 +55,7 @@ class QCEevalformController extends Controller
                         )
                         ->where('coasv2_db_schedule.sub_offered.semester', 2)
                         ->where('coasv2_db_schedule.sub_offered.schlyear', '=', '2024-2025')
+                        ->where('studgrades.studID', '=', '2021-1016-K')
                         ->get();
         return view('studevalform.formevalsubjfac', compact('mysubj'));
     }
