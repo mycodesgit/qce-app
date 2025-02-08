@@ -22,7 +22,7 @@
 
 .widget-user .widget-user-image {
     left: 15% !important;
-    margin-left: -45px !important;
+    margin-left: -35px !important;
     position: absolute !important;
     top: 100px !important;
 }
@@ -36,7 +36,7 @@
 @media screen and (max-width: 992px) {
     .widget-user .widget-user-image {
         left: 30% !important;
-        margin-left: -45px !important;
+        margin-left: -35px !important;
         position: absolute !important;
         top: 100px !important;
     }
@@ -50,7 +50,7 @@
 @media screen and (max-width: 576px) {
     .widget-user .widget-user-image {
         left: 30% !important;
-        margin-left: -45px !important;
+        margin-left: -35px !important;
         position: absolute !important;
         top: 95px !important;
     }
