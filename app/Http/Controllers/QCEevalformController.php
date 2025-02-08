@@ -37,24 +37,27 @@ class QCEevalformController extends Controller
 {
     public function evalsubjfacStore()
     {
-        $mysubj = Grade::join('coasv2_db_schedule.sub_offered', 'studgrades.subjID', '=', 'coasv2_db_schedule.sub_offered.id')
-                ->leftJoin('coasv2_db_schedule.subjects', 'coasv2_db_schedule.sub_offered.subCode', '=', 'coasv2_db_schedule.subjects.sub_code')
-                ->leftJoin('coasv2_db_schedule.scheduleclass', 'studgrades.subjID', '=', 'coasv2_db_schedule.scheduleclass.subject_id')
-                ->leftJoin('coasv2_db_schedule.faculty', 'coasv2_db_schedule.scheduleclass.faculty_id', '=', 'coasv2_db_schedule.faculty.id')
-                ->select(
-                    'studgrades.id as stugdeID',
-                    'coasv2_db_schedule.subjects.sub_name',
-                    'coasv2_db_schedule.sub_offered.subSec',
-                    'coasv2_db_schedule.sub_offered.schlyear',
-                    'coasv2_db_schedule.sub_offered.semester',
-                    'coasv2_db_schedule.faculty.fname',
-                    'coasv2_db_schedule.faculty.lname'
-                )
-                ->where('coasv2_db_schedule.sub_offered.semester', 2)
-                ->where('coasv2_db_schedule.sub_offered.schlyear', '2024-2025')
-                ->limit(1)
-                ->get();
-
+        $mysubj = Grade::leftJoin('kioskstudent', 'studgrades.studID', '=', 'kioskstudent.studid')
+                        ->join('coasv2_db_schedule.sub_offered', 'studgrades.subjID', '=', 'coasv2_db_schedule.sub_offered.id')
+                        ->leftJoin('coasv2_db_schedule.subjects', 'coasv2_db_schedule.sub_offered.subCode', '=', 'coasv2_db_schedule.subjects.sub_code')
+                        ->leftJoin('coasv2_db_schedule.scheduleclass', 'studgrades.subjID', '=', 'coasv2_db_schedule.scheduleclass.subject_id')
+                        ->leftJoin('coasv2_db_schedule.faculty', 'coasv2_db_schedule.scheduleclass.faculty_id', '=', 'coasv2_db_schedule.faculty.id')
+                        ->select(
+                            'studgrades.*',
+                            'studgrades.id as stugdeID',
+                            'coasv2_db_schedule.subjects.sub_name',
+                            'coasv2_db_schedule.sub_offered.subSec',
+                            'coasv2_db_schedule.sub_offered.schlyear',
+                            'coasv2_db_schedule.sub_offered.semester',
+                            'coasv2_db_schedule.sub_offered.campus',
+                            'coasv2_db_schedule.faculty.fname',
+                            'coasv2_db_schedule.faculty.lname',
+                            'coasv2_db_schedule.faculty.id',
+                        )
+                        ->where('coasv2_db_schedule.sub_offered.semester', 2)
+                        ->where('coasv2_db_schedule.sub_offered.schlyear', '=', '2024-2025')
+                        ->limit(1)
+                        ->get();
         return view('studevalform.formevalsubjfac', compact('mysubj'));
     }
 
