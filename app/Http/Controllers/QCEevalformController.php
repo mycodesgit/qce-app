@@ -37,11 +37,10 @@ class QCEevalformController extends Controller
 {
     public function evalsubjfacStore()
     {
-        $mysubj = Grade::leftJoin('kioskstudent', 'studgrades.studID', '=', 'kioskstudent.studid')
-                        ->join('coasv2_db_schedule.sub_offered', 'studgrades.subjID', '=', 'coasv2_db_schedule.sub_offered.id')
-                        ->leftJoin('coasv2_db_schedule.subjects', 'coasv2_db_schedule.sub_offered.subCode', '=', 'coasv2_db_schedule.subjects.sub_code')
-                        ->leftJoin('coasv2_db_schedule.scheduleclass', 'studgrades.subjID', '=', 'coasv2_db_schedule.scheduleclass.subject_id')
-                        ->leftJoin('coasv2_db_schedule.faculty', 'coasv2_db_schedule.scheduleclass.faculty_id', '=', 'coasv2_db_schedule.faculty.id')
+        $mysubj = Grade::join('coasv2_db_schedule.sub_offered', 'studgrades.subjID', '=', 'coasv2_db_schedule.sub_offered.id')
+    ->leftJoin('coasv2_db_schedule.subjects', 'coasv2_db_schedule.sub_offered.subCode', '=', 'coasv2_db_schedule.subjects.sub_code')
+    ->leftJoin('coasv2_db_schedule.scheduleclass', 'studgrades.subjID', '=', 'coasv2_db_schedule.scheduleclass.subject_id')
+    ->leftJoin('coasv2_db_schedule.faculty', 'coasv2_db_schedule.scheduleclass.faculty_id', '=', 'coasv2_db_schedule.faculty.id')
                         ->select(
                             'studgrades.*',
                             'studgrades.id as stugdeID',
@@ -56,7 +55,6 @@ class QCEevalformController extends Controller
                         )
                         ->where('coasv2_db_schedule.sub_offered.semester', 2)
                         ->where('coasv2_db_schedule.sub_offered.schlyear', '=', '2024-2025')
-                        ->limit(1)
                         ->get();
         return view('studevalform.formevalsubjfac', compact('mysubj'));
     }
