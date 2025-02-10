@@ -75,10 +75,25 @@ class ReportsController extends Controller
         // Extract only the part before "+"
         $progCodParts = explode('+', $progCodRaw);
         $progCod = $progCodParts[0]; // Extract 'CSS-INT-001'
-        $progCodSection = $progCodParts[1];
 
-        //\Log::info('Raw progCod:', [$progCodRaw]);
+        // Ensure $progCodParts[1] exists before using it
+        $progCodSection = isset($progCodParts[1]) ? $progCodParts[1] : null;
+
+        // Extract studYear (integer) and studSec (letter) using regex
+        $studYear = null;
+        $studSec = null;
+
+        if ($progCodSection) {
+            preg_match('/^(\d+)-([A-Z]+)$/', $progCodSection, $matches);
+            if (!empty($matches)) {
+                $studYear = $matches[1]; // Extracts '1' from '1-A'
+                $studSec = $matches[2];  // Extracts 'A' from '1-A'
+            }
+        }
+
         //\Log::info('Extracted progCod:', [$progCod]);
+        //\Log::info('Extracted studYear:', [$studYear]);
+        //\Log::info('Extracted studSec:', [$studSec]);
 
         try {
             $studentIds = DB::connection('enrollment')->table('program_en_history')
@@ -86,8 +101,11 @@ class ReportsController extends Controller
                 ->where('schlyear', $schlyear)
                 ->where('campus', $campus)
                 ->where('progCod', $progCod)
-                ->when($progCodSection, function ($query) use ($progCodSection) {
-                    return $query->where('course', $progCodSection); // Filter by section
+                ->when($studYear, function ($query) use ($studYear) {
+                    return $query->where('studYear', '=', $studYear);
+                })
+                ->when($studSec, function ($query) use ($studSec) {
+                    return $query->where('studSec', '=', $studSec);
                 })
                 ->pluck('studentID');
 
