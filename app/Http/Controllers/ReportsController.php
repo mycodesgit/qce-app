@@ -72,25 +72,34 @@ class ReportsController extends Controller
         // Convert spaces back to `+` to restore the original value
         $progCodRaw = str_replace(' ', '+', $progCodRaw);
 
-        // Extract only the part before "+"
-        $progCod = explode('+', $progCodRaw)[0];
-        $progCodSec = explode('+', $progCodRaw)[1];
+        // Extract parts before and after "+"
+        $progCodParts = explode('+', $progCodRaw);
+        $progCod = $progCodParts[0] ?? ''; // Get main program code
+        $progCodSec = $progCodParts[1] ?? ''; // Get section (e.g., "1-A")
 
+        // Query the database
+        $query = QCEfevalrate::join('coasv2_db_enrollment.program_en_history', 'qceformevalrate.studidno', '=', 'coasv2_db_enrollment.program_en_history.studentID')
+            ->where('coasv2_db_enrollment.program_en_history.semester', $semester)
+            ->where('coasv2_db_enrollment.program_en_history.schlyear', $schlyear)
+            ->where('coasv2_db_enrollment.program_en_history.campus', $campus)
+            ->where('coasv2_db_enrollment.program_en_history.progCod', $progCod)
+            ->where('qceformevalrate.statprint', 1)
+            ->where('qceformevalrate.semester', $semester)
+            ->where('qceformevalrate.schlyear', $schlyear)
+            ->where('qceformevalrate.campus', $campus);
 
-        $data = QCEfevalrate::join('coasv2_db_enrollment.program_en_history', 'qceformevalrate.studidno', '=', 'coasv2_db_enrollment.program_en_history.studentID')
-                ->where('coasv2_db_enrollment.program_en_history.semester', $semester)
-                ->where('coasv2_db_enrollment.program_en_history.schlyear', $schlyear)
-                ->where('coasv2_db_enrollment.program_en_history.campus', $campus)
-                ->where('coasv2_db_enrollment.program_en_history.progCod', $progCod)
-                ->whereRaw("RIGHT(coasv2_db_enrollment.program_en_history.course, LOCATE(' ', REVERSE(coasv2_db_enrollment.program_en_history.course)) - 1) = ?", [$progCodSec])
-                ->where('qceformevalrate.statprint', 1)
-                ->where('qceformevalrate.semester', $semester)
-                ->where('qceformevalrate.schlyear', $schlyear)
-                ->where('qceformevalrate.campus', $campus)
-                ->get();
+        // Extract and match only the section (e.g., "1-A") from `course`
+        if (!empty($progCodSec)) {
+            $query->whereRaw("
+                RIGHT(coasv2_db_enrollment.program_en_history.course, LOCATE(' ', REVERSE(coasv2_db_enrollment.program_en_history.course)) - 1) = ?", [$progCodSec]);
+        }
+
+        // Get the results
+        $data = $query->get();
 
         return response()->json(['data' => $data]);
     }
+
 
     public function getevalsubrateprintedlistRead(Request $request) 
     {
