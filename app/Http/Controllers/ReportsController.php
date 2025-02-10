@@ -86,7 +86,9 @@ class ReportsController extends Controller
                 ->where('schlyear', $schlyear)
                 ->where('campus', $campus)
                 ->where('progCod', $progCod)
-                ->where('progCod', $progCodSection)
+                ->when($progCodSection, function ($query) use ($progCodSection) {
+                    return $query->where('course', $progCodSection); // Filter by section
+                })
                 ->pluck('studentID');
 
             if ($studentIds->isEmpty()) {
