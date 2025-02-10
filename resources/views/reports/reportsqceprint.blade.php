@@ -35,28 +35,9 @@
 
                                 <div class="form-group" style="padding: 10px">
                                     <div class="form-row">
-                                        <div class="col-md-3">
-                                            <label><span class="badge badge-secondary">School Year</span></label>
-                                            <select class="form-control form-control-sm" name="schlyear">
-                                                @foreach($currsem as $datacurrsem)
-                                                    <option value="{{ $datacurrsem->qceschlyear }}">{{ $datacurrsem->qceschlyear }}</option>
-                                                @endforeach
-                                            </select>
-                                        </div>
-
-                                        <div class="col-md-3">
-                                            <label><span class="badge badge-secondary">Semester</span></label>
-                                            <select class="form-control form-control-sm" name="semester">
-                                                <option disabled selected>Select</option>
-                                                <option value="1" @if (old('type') == 1) {{ 'selected' }} @endif>First Semester</option>
-                                                <option value="2" @if (old('type') == 2) {{ 'selected' }} @endif>Second Semester</option>
-                                                <option value="3" @if (old('type') == 3) {{ 'selected' }} @endif>Summer</option>
-                                            </select>
-                                        </div>
-
                                         <div class="col-md-2">
                                             <label><span class="badge badge-secondary">Campus</span></label>
-                                            <select class="form-control form-control-sm" name="campus">
+                                            <select class="form-control form-control-sm" name="campus" id="campus">
                                                 <option disabled selected> --Select-- </option>
                                                 <option value="MC">Main</option>
                                                 <option value="VC">Victorias</option>
@@ -72,7 +53,33 @@
                                             </select>
                                         </div>
 
+                                        <div class="col-md-2">
+                                            <label><span class="badge badge-secondary">School Year</span></label>
+                                            <select class="form-control form-control-sm" name="schlyear" id="schlyear">
+                                                @foreach($currsem as $datacurrsem)
+                                                    <option value="{{ $datacurrsem->qceschlyear }}">{{ $datacurrsem->qceschlyear }}</option>
+                                                @endforeach
+                                            </select>
+                                        </div>
+
+                                        <div class="col-md-2">
+                                            <label><span class="badge badge-secondary">Semester</span></label>
+                                            <select class="form-control form-control-sm" name="semester" id="semester">
+                                                <option disabled selected>Select</option>
+                                                <option value="1" @if (old('type') == 1) {{ 'selected' }} @endif>First Semester</option>
+                                                <option value="2" @if (old('type') == 2) {{ 'selected' }} @endif>Second Semester</option>
+                                                <option value="3" @if (old('type') == 3) {{ 'selected' }} @endif>Summer</option>
+                                            </select>
+                                        </div>
+
                                         <div class="col-md-3">
+                                            <label><span class="badge badge-secondary">Course</span></label>
+                                            <select class="form-control form-control-sm select2bs4" name="progCod" id="progCod">
+                                                <option disabled selected>Select a course</option>
+                                            </select>
+                                        </div>
+
+                                        <div class="col-md-2">
                                             <label>&nbsp;</label>
                                             <button type="submit" class="form-control form-control-sm btn btn-success btn-sm">OK</button>
                                         </div>
@@ -85,7 +92,10 @@
             </div>
         </div>
     </div>
-
 </div>
+
+<script>
+    var classenrollyrsecReadRoute = "{{ route('getCoursesyearsec') }}";
+</script>
         
 @endsection

@@ -67,11 +67,26 @@ class ReportsController extends Controller
         $semester = $request->query('semester');
         $schlyear = $request->query('schlyear');
         $campus = $request->query('campus');
+        $progCodRaw = $request->query('progCod');
 
-        $data = QCEfevalrate::where('statprint', 1)
-                ->where('semester', $semester)
-                ->where('schlyear', $schlyear)
-                ->where('campus', $campus)
+        // Convert spaces back to `+` to restore the original value
+        $progCodRaw = str_replace(' ', '+', $progCodRaw);
+
+        // Extract only the part before "+"
+        $progCod = explode('+', $progCodRaw)[0];
+        $progCodSec = explode('+', $progCodRaw)[1];
+
+
+        $data = QCEfevalrate::join('coasv2_db_enrollment.program_en_history', 'qceformevalrate.studidno', '=', 'coasv2_db_enrollment.program_en_history.studentID')
+                ->where('coasv2_db_enrollment.program_en_history.semester', $semester)
+                ->where('coasv2_db_enrollment.program_en_history.schlyear', $schlyear)
+                ->where('coasv2_db_enrollment.program_en_history.campus', $campus)
+                ->where('coasv2_db_enrollment.program_en_history.progCod', $progCod)
+                ->whereRaw("RIGHT(coasv2_db_enrollment.program_en_history.course, LOCATE(' ', REVERSE(coasv2_db_enrollment.program_en_history.course)) - 1) = ?", [$progCodSec])
+                ->where('qceformevalrate.statprint', 1)
+                ->where('qceformevalrate.semester', $semester)
+                ->where('qceformevalrate.schlyear', $schlyear)
+                ->where('qceformevalrate.campus', $campus)
                 ->get();
 
         return response()->json(['data' => $data]);
@@ -82,13 +97,45 @@ class ReportsController extends Controller
         $semester = $request->query('semester');
         $schlyear = $request->query('schlyear');
         $campus = $request->query('campus');
+        $progCodRaw = $request->query('progCod');
 
-        $data = QCEfevalrate::where('statprint', 2)
-                ->where('semester', $semester)
-                ->where('schlyear', $schlyear)
-                ->where('campus', $campus)
+        // Convert spaces back to `+` to restore the original value
+        $progCodRaw = str_replace(' ', '+', $progCodRaw);
+
+        // Extract only the part before "+"
+        $progCod = explode('+', $progCodRaw)[0];
+        $progCodSec = explode('+', $progCodRaw)[1];
+
+
+        $data = QCEfevalrate::join('coasv2_db_enrollment.program_en_history', 'qceformevalrate.studidno', '=', 'coasv2_db_enrollment.program_en_history.studentID')
+                ->where('coasv2_db_enrollment.program_en_history.semester', $semester)
+                ->where('coasv2_db_enrollment.program_en_history.schlyear', $schlyear)
+                ->where('coasv2_db_enrollment.program_en_history.campus', $campus)
+                ->where('coasv2_db_enrollment.program_en_history.progCod', $progCod)
+                ->whereRaw("RIGHT(coasv2_db_enrollment.program_en_history.course, LOCATE(' ', REVERSE(coasv2_db_enrollment.program_en_history.course)) - 1) = ?", [$progCodSec])
+                ->where('qceformevalrate.statprint', 2)
+                ->where('qceformevalrate.semester', $semester)
+                ->where('qceformevalrate.schlyear', $schlyear)
+                ->where('qceformevalrate.campus', $campus)
                 ->get();
 
         return response()->json(['data' => $data]);
+    }
+
+    public function getCoursesyearsec(Request $request)
+    {
+        $semester = $request->semester;
+        $schlyear = $request->schlyear;
+        $campus = $request->campus;
+
+        $courses = ClassEnroll::join('programs', 'class_enroll.progCode', '=', 'programs.progCod')
+            ->where('class_enroll.semester', $semester)
+            ->where('class_enroll.schlyear', $schlyear)
+            ->where('class_enroll.campus', $campus)
+            ->orderBy('class_enroll.progCode')
+            ->orderBy('class_enroll.classSection')
+            ->get();
+
+        return response()->json($courses);
     }
 }

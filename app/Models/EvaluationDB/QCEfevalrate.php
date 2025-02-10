@@ -25,6 +25,7 @@ class QCEfevalrate extends Model
         'question_rate',
         'qcecomments',
         'evaluatorname',
-        'evaluatorID'
+        'evaluatorID',
+        'studidno'
     ];
 }

@@ -9,6 +9,7 @@ $(document).ready(function() {
     var schlyear = urlParams.get('schlyear') || ''; 
     var semester = urlParams.get('semester') || '';
     var campus = urlParams.get('campus') || ''; 
+    var progCod = urlParams.get('progCod') || ''; 
 
     var dataTable = $('#submitevalTable').DataTable({
         "ajax": {
@@ -17,7 +18,8 @@ $(document).ready(function() {
             "data": { 
                 "schlyear": schlyear,
                 "semester": semester,
-                "campus": campus
+                "campus": campus,
+                "progCod": progCod
             }
         },
         destroy: true,
@@ -80,6 +82,7 @@ $(document).ready(function() {
     var schlyear = urlParams.get('schlyear') || ''; 
     var semester = urlParams.get('semester') || '';
     var campus = urlParams.get('campus') || ''; 
+    var progCod = urlParams.get('progCod') || '';
 
     var dataTable = $('#doneprintTable').DataTable({
         "ajax": {
@@ -88,7 +91,8 @@ $(document).ready(function() {
             "data": { 
                 "schlyear": schlyear,
                 "semester": semester,
-                "campus": campus
+                "campus": campus,
+                "progCod": progCod
             }
         },
         destroy: true,

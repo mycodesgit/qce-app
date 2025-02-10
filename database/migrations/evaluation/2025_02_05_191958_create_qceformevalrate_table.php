@@ -31,6 +31,7 @@ return new class extends Migration
             $table->text('qcecomments')->nullable();
             $table->string('evaluatorname')->nullable();
             $table->integer('evaluatorID')->nullable();
+            $table->string('studidno')->nullable();
             $table->timestamps();
         });
     }
