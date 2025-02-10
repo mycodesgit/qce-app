@@ -81,12 +81,13 @@ class ReportsController extends Controller
                 ->where('coasv2_db_enrollment.program_en_history.semester', $semester)
                 ->where('coasv2_db_enrollment.program_en_history.schlyear', $schlyear)
                 ->where('coasv2_db_enrollment.program_en_history.campus', $campus)
-                ->where('coasv2_db_enrollment.program_en_history.progCod', $progCod)
+                ->where('coasv2_db_enrollment.program_en_history.progCod', '=', 'CCS-INT-001')
                 //->where('coasv2_db_enrollment.program_en_history.course', $progCodSec)
                 ->where('qceformevalrate.statprint', 1)
                 ->where('qceformevalrate.semester', $semester)
                 ->where('qceformevalrate.schlyear', $schlyear)
                 ->where('qceformevalrate.campus', $campus)
+                ->select('qceformevalrate.*')
                 ->get();
 
         return response()->json(['data' => $data]);
