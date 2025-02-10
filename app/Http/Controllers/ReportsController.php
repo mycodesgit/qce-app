@@ -134,14 +134,66 @@ class ReportsController extends Controller
         $semester = $request->query('semester');
         $schlyear = $request->query('schlyear');
         $campus = $request->query('campus');
+        $progCodRaw = $request->query('progCod');
 
-        $data = QCEfevalrate::where('statprint', 2)
+        // Convert spaces back to `+`
+        $progCodRaw = str_replace(' ', '+', $progCodRaw);
+
+        // Extract only the part before "+"
+        $progCodParts = explode('+', $progCodRaw);
+        $progCod = $progCodParts[0]; // Extract 'CSS-INT-001'
+
+        // Ensure $progCodParts[1] exists before using it
+        $progCodSection = isset($progCodParts[1]) ? $progCodParts[1] : null;
+
+        // Extract studYear (integer) and studSec (letter) using regex
+        $studYear = null;
+        $studSec = null;
+
+        if ($progCodSection) {
+            preg_match('/^(\d+)-([A-Z]+)$/', $progCodSection, $matches);
+            if (!empty($matches)) {
+                $studYear = $matches[1]; // Extracts '1' from '1-A'
+                $studSec = $matches[2];  // Extracts 'A' from '1-A'
+            }
+        }
+
+        //\Log::info('Extracted progCod:', [$progCod]);
+        //\Log::info('Extracted studYear:', [$studYear]);
+        //\Log::info('Extracted studSec:', [$studSec]);
+
+        try {
+            $studentIds = DB::connection('enrollment')->table('program_en_history')
+                ->where('semester', $semester)
+                ->where('schlyear', $schlyear)
+                ->where('campus', $campus)
+                ->where('progCod', $progCod)
+                ->when($studYear, function ($query) use ($studYear) {
+                    return $query->where('studYear', '=', $studYear);
+                })
+                ->when($studSec, function ($query) use ($studSec) {
+                    return $query->where('studSec', '=', $studSec);
+                })
+                ->pluck('studentID');
+
+            if ($studentIds->isEmpty()) {
+                return response()->json(['data' => [], 'message' => 'No students found'], 200);
+            }
+
+            $data = DB::table('qceformevalrate')
+                ->whereIn('studidno', $studentIds)
+                ->where('statprint', 2)
                 ->where('semester', $semester)
                 ->where('schlyear', $schlyear)
                 ->where('campus', $campus)
                 ->get();
 
-        return response()->json(['data' => $data]);
+            return response()->json(['data' => $data]);
+
+        } catch (\Exception $e) {
+            //\Log::error('Database Query Error: ' . $e->getMessage());
+            return response()->json(['error' => 'Internal Server Error'], 500);
+        }
     }
 
     public function getCoursesyearsec(Request $request)
