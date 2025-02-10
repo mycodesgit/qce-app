@@ -112,6 +112,7 @@ class QCEevalformController extends Controller
                 // }
 
                 QCEfevalrate::create([
+                    'campus' => $request->input('campus'),
                     'qceschlyearsemID' => $request->input('qceschlyearsemID'),
                     'schlyear' => $request->input('schlyear'),
                     'semester' => $request->input('semester'),
@@ -124,6 +125,7 @@ class QCEevalformController extends Controller
                     'qcecomments' => $request->input('qcecomments'),
                     'evaluatorname' => $request->input('evaluatorname'),
                     'evaluatorID' => Auth::guard('kioskstudent')->user()->id,
+                    'studidno' => $request->input('studidno'),
                 ]);
 
                 return redirect()->route('successfacevalrateform')->with('success', 'Survey Submitted Successfully');

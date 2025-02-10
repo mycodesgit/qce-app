@@ -246,12 +246,14 @@
                             <form method="post" action="{{ route('facevalrateformCreate') }}" enctype="multipart/form-data" id="admissionApply">
                                 @csrf
 
+                                <input type="hidden" name="campus" value="{{ Auth::guard('kioskstudent')->user()->student->campus }}">
                                 <input type="hidden" name="qceschlyearsemID" value="{{ $currsem->first()->id }}">
                                 <input type="hidden" name="schlyear" value="{{ $currsem->first()->qceschlyear }}">
                                 <input type="hidden" name="semester" value="{{ $currsem->first()->qcesemester }}">
                                 <input type="hidden" name="qcefacID" value="{{ request('qcefacID') }}">
                                 <input type="hidden" name="evaluatorname" value="{{ Auth::guard('kioskstudent')->user()->student->fname }} {{ Auth::guard('kioskstudent')->user()->student->lname }}">
                                 <input type="hidden" name="evaluatorID" value="{{ Auth::guard('kioskstudent')->user()->id }}">
+                                <input type="hidden" name="studidno" value="{{ Auth::guard('kioskstudent')->user()->student->stud_id }}">
 
                                 <div id="card-1">
                                     <p>
