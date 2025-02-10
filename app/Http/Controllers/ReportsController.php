@@ -86,6 +86,7 @@ class ReportsController extends Controller
                 ->where('qceformevalrate.semester', $semester)
                 ->where('qceformevalrate.schlyear', $schlyear)
                 ->where('qceformevalrate.campus', $campus)
+                ->where('qceformevalrate.studidno', '=', '2021-1016-K')
                 ->get();
 
         return response()->json(['data' => $data]);
