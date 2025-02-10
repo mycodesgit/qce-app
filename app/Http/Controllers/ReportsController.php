@@ -69,32 +69,33 @@ class ReportsController extends Controller
         $campus = $request->query('campus');
         $progCodRaw = $request->query('progCod');
 
+        // Ensure required parameters exist
+        if (!$semester || !$schlyear || !$campus || !$progCodRaw) {
+            return response()->json(['error' => 'Missing required parameters'], 400);
+        }
+
         // Convert spaces back to `+` to restore the original value
         $progCodRaw = str_replace(' ', '+', $progCodRaw);
 
-        // Extract only the part before "+"
-        $progCod = explode('+', $progCodRaw)[0];
+        // Extract `progCod` and optional `progCodSec`
+        $progCodParts = explode('+', $progCodRaw);
+        $progCod = $progCodParts[0]; 
+        $progCodSec = isset($progCodParts[1]) ? $progCodParts[1] : null; // Avoid undefined index error
 
-
-        $query = QCEfevalrate::join('coasv2_db_enrollment.program_en_history', 'qceformevalrate.studidno', '=', 'coasv2_db_enrollment.program_en_history.studentID')
-            ->whereRaw("BINARY coasv2_db_enrollment.program_en_history.semester = ?", [$semester])
-            ->whereRaw("BINARY coasv2_db_enrollment.program_en_history.schlyear = ?", [$schlyear])
-            ->whereRaw("BINARY coasv2_db_enrollment.program_en_history.campus = ?", [$campus])
-            ->whereRaw("BINARY TRIM(coasv2_db_enrollment.program_en_history.progCod) = ?", [$progCod]) // Fix trailing spaces
-            ->where('qceformevalrate.statprint', 1)
-            ->whereRaw("BINARY qceformevalrate.semester = ?", [$semester])
-            ->whereRaw("BINARY qceformevalrate.schlyear = ?", [$schlyear])
-            ->whereRaw("BINARY qceformevalrate.campus = ?", [$campus]);
-
-        // ✅ Log the query BEFORE calling `get()`
-        //\Log::info("Generated SQL Query:", [$query->toSql()]);
-        //\Log::info("Query Bindings:", $query->getBindings());
-
-        $data = $query->get(); // Fetch results after logging query
+        $data = QCEfevalrate::join('coasv2_db_enrollment.program_en_history', 'qceformevalrate.studidno', '=', 'coasv2_db_enrollment.program_en_history.studentID')
+                ->where('coasv2_db_enrollment.program_en_history.semester', $semester)
+                ->where('coasv2_db_enrollment.program_en_history.schlyear', $schlyear)
+                ->where('coasv2_db_enrollment.program_en_history.campus', $campus)
+                ->where('coasv2_db_enrollment.program_en_history.progCod', $progCod)
+                ->where('qceformevalrate.statprint', 1)
+                ->where('qceformevalrate.semester', $semester)
+                ->where('qceformevalrate.schlyear', $schlyear)
+                ->where('qceformevalrate.campus', $campus)
+                ->get();
 
         return response()->json(['data' => $data]);
-
     }
+
 
     public function getevalsubrateprintedlistRead(Request $request) 
     {
