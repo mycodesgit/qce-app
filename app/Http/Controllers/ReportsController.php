@@ -64,47 +64,33 @@ class ReportsController extends Controller
 
     public function getevalsubratelistRead(Request $request) 
     {
-        try {
-            $semester = $request->query('semester');
-            $schlyear = $request->query('schlyear');
-            $campus = $request->query('campus');
-            $progCodRaw = urldecode($request->query('progCod'));
+        $semester = $request->query('semester');
+        $schlyear = $request->query('schlyear');
+        $campus = $request->query('campus');
+        $progCodRaw = $request->query('progCod');
 
-            // Fix `+` being converted to a space
-            $progCodRaw = str_replace(' ', '+', $progCodRaw);
+        // Convert spaces back to `+` to restore the original value
+        $progCodRaw = str_replace(' ', '+', $progCodRaw);
 
-            // Extract parts before and after "+"
-            $progCodParts = explode('+', $progCodRaw);
-            $progCod = $progCodParts[0] ?? '';
-            $progCodSec = $progCodParts[1] ?? '';
+        // Extract only the part before "+"
+        $progCod = explode('+', $progCodRaw)[0];
+        //$progCodSec = explode('+', $progCodRaw)[1];
 
 
-            // Query
-            $query = QCEfevalrate::join('coasv2_db_enrollment.program_en_history', 'qceformevalrate.studidno', '=', 'coasv2_db_enrollment.program_en_history.studentID')
+        $data = QCEfevalrate::join('coasv2_db_enrollment.program_en_history', 'qceformevalrate.studidno', '=', 'coasv2_db_enrollment.program_en_history.studentID')
                 ->where('coasv2_db_enrollment.program_en_history.semester', $semester)
                 ->where('coasv2_db_enrollment.program_en_history.schlyear', $schlyear)
                 ->where('coasv2_db_enrollment.program_en_history.campus', $campus)
                 ->where('coasv2_db_enrollment.program_en_history.progCod', $progCod)
+                //->where('coasv2_db_enrollment.program_en_history.course', $progCodSec)
                 ->where('qceformevalrate.statprint', 1)
                 ->where('qceformevalrate.semester', $semester)
                 ->where('qceformevalrate.schlyear', $schlyear)
-                ->where('qceformevalrate.campus', $campus);
+                ->where('qceformevalrate.campus', $campus)
+                ->get();
 
-            if (!empty($progCodSec)) {
-                $query->whereRaw("
-                    RIGHT(coasv2_db_enrollment.program_en_history.course, LOCATE(' ', REVERSE(coasv2_db_enrollment.program_en_history.course)) - 1) = ?", [$progCodSec]);
-            }
-
-            $data = $query->get();
-
-            
-            return response()->json(['data' => $data], 200);
-        } catch (\Exception $e) {
-            return response()->json(['error' => 'Something went wrong'], 500);
-        }
+        return response()->json(['data' => $data]);
     }
-
-
 
     public function getevalsubrateprintedlistRead(Request $request) 
     {
