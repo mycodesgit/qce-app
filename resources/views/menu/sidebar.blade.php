@@ -106,7 +106,7 @@
 
             <li class="nav-header text-gray">Reports</li>
 
-            <li class="nav-item {{ $current_route == 'subprintStore' ? 'menu-open' : '' }}">
+            <li class="nav-item {{ $current_route == 'subprintStore' || $current_route == 'subprint_searchresultStore' ? 'menu-open' : '' }}">
                 <a href="#" class="nav-link">
                     <i class="nav-icon fas fa-laptop-code"></i>
                     <p>

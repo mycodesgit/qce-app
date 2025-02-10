@@ -213,6 +213,9 @@
     @if(request()->routeIs('userStore'))
         <script src="{{ asset('js/evalajax/userSerialize.js') }}"></script>
     @endif
+    @if(request()->routeIs('subprint_searchresultStore'))
+        <script src="{{ asset('js/evalajax/facultySerialize.js') }}"></script>
+    @endif
 
     <!-- Validation -->
     <script src="{{ asset('js/validation/manage/catValidation.js') }}"></script>

@@ -47,4 +47,30 @@ class ReportsController extends Controller
             ->get();
         return view('reports.reportsqceprint', compact('currsem'));
     }
+
+    public function subprint_searchresultStore()
+    {
+        //$currsem = QCEsemester::all();
+        $currsem = QCEsemester::select('id', 'qceschlyear')
+            ->whereIn('id', function($query) {
+                $query->select(DB::raw('MAX(id)'))
+                    ->from('qceschlyearsem')
+                    ->groupBy('qceschlyear');
+            })
+            ->orderBy('id', 'DESC')
+            ->get();
+        return view('reports.reportsqceprint_searchresult', compact('currsem'));
+    }
+
+    public function getfacultylistRead() 
+    {
+        $data = Faculty::join('addressee', 'faculty.adrID', '=', 'addressee.id')
+                ->join('college', 'faculty.dept', '=', 'college.college_abbr')
+                ->where('faculty.campus', '=', Auth::guard('web')->user()->campus)
+                ->select('faculty.*', 'faculty.id as fctyid', 'faculty.campus as fcamp', 'college.*', 'addressee.*', 'addressee.id as adrid')
+                ->orderBy('faculty.lname')
+                ->get();
+
+        return response()->json(['data' => $data]);
+    }
 }

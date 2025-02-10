@@ -30,7 +30,7 @@
                             </h5>
                         </div>
                         <div class="card-body">
-                            <form method="GET" action="{{ route('subprint_searchresultStore') }}" id="enrollStud">
+                            <form method="GET" action="" id="enrollStud">
                                 @csrf   
 
                                 <div class="form-group" style="padding: 10px">
@@ -79,13 +79,38 @@
                                     </div>
                                 </div>
                             </form>
+
+                            <div>
+                                <div class="page-header" style="border-bottom: 1px solid #04401f;">
+                                </div> 
+                            </div>
+
+                            <div style="padding: 25px">
+                                <table id="facltyTable" class="table table-hover">
+                                    <thead>
+                                        <tr>
+                                            <th>Name</th>
+                                            <th>Salutation</th>
+                                            <th>College</th>
+                                            <th>Campus</th>
+                                            <th>Action</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        
+                                    </tbody>
+                                </table>
+                            </div>
                         </div>
                     </div>
                 </div>
             </div>
         </div>
     </div>
-
 </div>
+
+<script>
+    var facultyReadRoute = "{{ route('getfacultylistRead') }}";
+</script>
         
 @endsection
