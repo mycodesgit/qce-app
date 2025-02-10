@@ -77,10 +77,6 @@ class ReportsController extends Controller
     $progCod = $progCodParts[0] ?? ''; // Get the main program code
     $progCodSec = $progCodParts[1] ?? ''; // Get the section/course part, if available
 
-    // Log values for debugging
-    \Log::info("Raw progCod from URL: $progCodRaw");
-    \Log::info("Extracted progCod: $progCod");
-    \Log::info("Extracted progCodSec: $progCodSec");
 
     $query = QCEfevalrate::join('coasv2_db_enrollment.program_en_history', 'qceformevalrate.studidno', '=', 'coasv2_db_enrollment.program_en_history.studentID')
         ->where('coasv2_db_enrollment.program_en_history.semester', $semester)
