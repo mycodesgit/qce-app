@@ -221,7 +221,8 @@ class ReportsController extends Controller
         $campus = $request->query('campus');
         $progCod = $request->query('progCod');
         $studYear = $request->query('studYear'); // Fix: Read studYear
-        $studSec = $request->query('studSec');   // Fix: Read studSec
+        $studSec = $request->query('studSec');
+        $studidno = $request->query('studidno');   // Fix: Read studSec
 
         // Debugging logs
         // \Log::info("Received Parameters: ", [
@@ -243,7 +244,15 @@ class ReportsController extends Controller
         $quest = QCEquestion::join('qcecategory', 'qcequestion.catName_id', '=', 'qcecategory.id')
                 ->select('qcecategory.catName', 'qcequestion.*')
                 ->get();
-        $facrated = QCEfevalrate::all();
+        $facratedQuery = QCEfevalrate::where('semester', $semester)
+            ->where('schlyear', $schlyear)
+            ->where('campus', $campus);
+
+        if (!empty($studidno)) {
+            $facratedQuery->where('studidno', '=', $studidno);
+        }
+
+        $facrated = $facratedQuery->get();
 
         // Load PDF
         $pdf = PDF::loadView('formpdf.qceformpdfrated', compact(

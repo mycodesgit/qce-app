@@ -66,7 +66,7 @@ $(document).ready(function() {
                         var dropdown = '<div class="d-inline-block">' +
                             '<a class="btn btn-primary btn-sm dropdown-toggle dropdown-icon" data-toggle="dropdown"></a>' +
                             '<div class="dropdown-menu">' +
-                            '<a href="#" class="dropdown-item btn-viewpdf" data-id="' + row.id + '" data-program="' + row.progCod + '" data-year="' + row.studYear + '" data-section="' + row.studSec + '" data-schlyear="' + row.schlyear + '" data-semester="' + row.semester + '" data-campus="' + row.campus + '">' +
+                            '<a href="#" class="dropdown-item btn-viewpdf" data-id="' + row.id + '" data-program="' + row.progCod + '" data-year="' + row.studYear + '" data-section="' + row.studSec + '" data-schlyear="' + row.schlyear + '" data-semester="' + row.semester + '" data-campus="' + row.campus + '" data-studidno="' + row.studidno + '">' +
                             '<i class="fas fa-file-pdf"></i> View in PDF' +
                             '</a>' +
                             '<a href="#" class="dropdown-item btn-viewexcel" data-id="' + row.id + '" data-flname="' + row.lname + '" data-ffname="' + row.fname + '" data-fmname="' + row.mname + '" data-fxname="' + row.ext + '" data-adrname="' + row.adrID + '" data-deptname="' + row.dept + '" data-email="' + row.email + '">' +
@@ -172,6 +172,7 @@ $(document).ready(function() {
         var schlyear = $(this).data('schlyear');
         var semester = $(this).data('semester');
         var campus = $(this).data('campus');  // Ensure this is included
+        var studidno = $(this).data('studidno');
 
         // Debugging: Log all extracted values
         console.log('Program Code:', programCode);
@@ -180,6 +181,7 @@ $(document).ready(function() {
         console.log('School Year:', schlyear);
         console.log('Semester:', semester);
         console.log('Campus:', campus);
+        console.log('Student ID:', studidno);
 
         // Check if any value is undefined
         if (!programCode || !studYear || !studSec || !schlyear || !semester || !campus) {
@@ -193,7 +195,8 @@ $(document).ready(function() {
                      "&studSec=" + studSec + 
                      "&schlyear=" + schlyear + 
                      "&semester=" + semester +
-                     "&campus=" + campus;
+                     "&campus=" + campus +
+                     "&studidno=" + studidno;
 
         //console.log("PDF URL:", pdfUrl); // Debugging URL
 
