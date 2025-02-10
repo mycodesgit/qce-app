@@ -69,12 +69,20 @@ class ReportsController extends Controller
         $campus = $request->query('campus');
         $progCodRaw = $request->query('progCod');
 
-        // Convert spaces back to `+` to restore the original value
+        //\Log::info('Raw progCod:', [$progCodRaw]);
+
+        // Convert spaces back to `+`
         $progCodRaw = str_replace(' ', '+', $progCodRaw);
 
-        // Extract only the part before "+"
-        $progCod = explode('+', $progCodRaw)[0];
-        $progCodSec = explode('+', $progCodRaw)[1];
+        //\Log::info('Converted progCod:', [$progCodRaw]);
+
+        $progCodParts = explode('+', $progCodRaw);
+        $progCod = $progCodParts[0];
+        $progCodSec = isset($progCodParts[1]) ? $progCodParts[1] : null;
+
+        //\Log::info('progCod:', [$progCod]);
+        //\Log::info('progCodSec:', [$progCodSec]);
+
 
 
         $data = QCEfevalrate::leftJoin('coasv2_db_enrollment.program_en_history', 'qceformevalrate.studidno', '=', 'coasv2_db_enrollment.program_en_history.studentID')
@@ -86,7 +94,6 @@ class ReportsController extends Controller
                 ->where('qceformevalrate.semester', $semester)
                 ->where('qceformevalrate.schlyear', $schlyear)
                 ->where('qceformevalrate.campus', $campus)
-                ->where('qceformevalrate.studidno', '=', '2021-1016-K')
                 ->get();
 
         return response()->json(['data' => $data]);
