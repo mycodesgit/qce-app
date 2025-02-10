@@ -249,21 +249,26 @@
 
 	<div>
 		@php
+			use Carbon\Carbon;
 		    // Define the underline lengths for proper alignment
 		    $underlineLengthName = 26; // Adjust as needed
 		    $underlineLengthRank = 27; // Adjust as needed
 
 		    // Fetch faculty name and rank
 		    $evaluatorName = $facrated->first()->evaluatorname ?? '';
-		    $academicRank = $facrated->first()->academic_rank ?? '';
+		    $qcetype = $facrated->first()->qceevaluator ?? '';
+		    $qcedatesubmit = optional($facrated->first())->created_at ? Carbon::parse($facrated->first()->created_at)->format('F d, Y') : '';
+
 
 		    // Center the text within the underline length
-		    $underlineFaculty = str_pad($evaluatorName, $underlineLengthName, '_', STR_PAD_BOTH);
+		    $underlineEvaluator = str_pad($evaluatorName, $underlineLengthName, '_', STR_PAD_BOTH);
+		    $underlineRank = str_pad($qcetype, $underlineLengthRank, '_', STR_PAD_BOTH);
+		    $underlineDate = str_pad($qcedatesubmit, $underlineLengthRank, '_', STR_PAD_BOTH);
 		@endphp
 
-		<p>Signature of Evaluator : <u>{{ $underlineFaculty }}</u> </p>
-		<p>Name of Evaluator &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;:__________________________ </p>
-		<p>Position of Evaluator &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;:__________________________ </p>
-		<p>Date &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;:__________________________ </p>
+		<p>Signature of Evaluator &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;:__________________________ </p>
+		<p>Name of Evaluator &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;:<u>{{ $underlineEvaluator }}</u> </p>
+		<p>Position of Evaluator &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;:<u>{{ $underlineRank }}</u> </p>
+		<p>Date &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;:<u>{{ $underlineDate }}</u></p>
 </body>
 </html>
