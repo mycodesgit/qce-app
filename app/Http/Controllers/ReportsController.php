@@ -69,20 +69,15 @@ class ReportsController extends Controller
         $campus = $request->query('campus');
         $progCodRaw = $request->query('progCod');
 
-        // Ensure required parameters exist
-        if (!$semester || !$schlyear || !$campus || !$progCodRaw) {
-            return response()->json(['error' => 'Missing required parameters'], 400);
-        }
-
         // Convert spaces back to `+` to restore the original value
         $progCodRaw = str_replace(' ', '+', $progCodRaw);
 
-        // Extract `progCod` and optional `progCodSec`
-        $progCodParts = explode('+', $progCodRaw);
-        $progCod = $progCodParts[0]; 
-        $progCodSec = isset($progCodParts[1]) ? $progCodParts[1] : null; // Avoid undefined index error
+        // Extract only the part before "+"
+        $progCod = explode('+', $progCodRaw)[0];
+        $progCodSec = explode('+', $progCodRaw)[1];
 
-        $data = QCEfevalrate::join('coasv2_db_enrollment.program_en_history', 'qceformevalrate.studidno', '=', 'coasv2_db_enrollment.program_en_history.studentID')
+
+        $data = QCEfevalrate::leftJoin('coasv2_db_enrollment.program_en_history', 'qceformevalrate.studidno', '=', 'coasv2_db_enrollment.program_en_history.studentID')
                 ->where('coasv2_db_enrollment.program_en_history.semester', $semester)
                 ->where('coasv2_db_enrollment.program_en_history.schlyear', $schlyear)
                 ->where('coasv2_db_enrollment.program_en_history.campus', $campus)
@@ -95,7 +90,6 @@ class ReportsController extends Controller
 
         return response()->json(['data' => $data]);
     }
-
 
     public function getevalsubrateprintedlistRead(Request $request) 
     {
