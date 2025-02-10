@@ -127,15 +127,15 @@
 
 		
 		<div class="radio-container">
-	        <input type="radio" id="self" style="margin-left: 180px;">
+	        <input type="radio" id="self" style="margin-left: 180px;" value="Self" {{ ($facrated->first()->qceevaluator ?? '') == 'Self' ? 'checked' : '' }}>
 	        <label for="self">Self</label>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-	        <input type="radio" id="peer" style="margin-left: 50px;">
+	        <input type="radio" id="peer" style="margin-left: 50px;" value="Peer" {{ ($facrated->first()->qceevaluator ?? '') == 'Peer' ? 'checked' : '' }}>
 	        <label for="peer">Peer</label>
 	    </div>
 		<div class="radio-container">
-	        <input type="radio" id="student" style="margin-left: 180px;">
+	        <input type="radio" id="student" style="margin-left: 180px;" value="Student" {{ ($facrated->first()->qceevaluator ?? '') == 'Student' ? 'checked' : '' }}>
 	        <label for="student">Student</label>
-	        <input type="radio" id="supervisor" style="margin-left: 128px;">
+	        <input type="radio" id="supervisor" style="margin-left: 128px;" value="Supervisor" {{ ($facrated->first()->qceevaluator ?? '') == 'Supervisor' ? 'checked' : '' }}>
 	        <label for="supervisor">Supervisor</label>
 	    </div>
 	</div>

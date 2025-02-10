@@ -11,6 +11,7 @@ use App\Http\Controllers\QuestionController;
 use App\Http\Controllers\SemesterController;
 use App\Http\Controllers\QceformController;
 use App\Http\Controllers\UserController;
+use App\Http\Controllers\ReportsController;
 
 use App\Http\Controllers\QCEevalformController;
 /*
@@ -86,6 +87,10 @@ Route::group(['middleware'=>['login_empauth']],function(){
         Route::post('/fac/view/rate/fac', [QCEevalformController::class, 'facevalrateformCreate'])->name('facevalrateformCreate');
         Route::get('/fac/view/rate/success/submit', [QCEevalformController::class, 'successfacevalrateform'])->name('successfacevalrateform');
         Route::get('/fac/preview', [QCEevalformController::class, 'previewStore'])->name('previewStore');
+    });
+
+    Route::prefix('/qce/report')->group(function () {
+        Route::get('/view/search', [ReportsController::class, 'subprintStore'])->name('subprintStore');
     });
 });
 

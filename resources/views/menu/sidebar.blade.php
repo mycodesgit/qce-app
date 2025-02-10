@@ -26,7 +26,7 @@
 
             @if(in_array(Auth::guard('web')->user()->role, [0, 1, 2]))
                 <li class="nav-item {{ $current_route == 'instructionStore' || $current_route == 'categoryStore' || $current_route == 'questionStore' || $current_route == 'semesterStore' ? 'menu-open' : '' }}">
-                    <a href="starter.html" class="nav-link">
+                    <a href="#" class="nav-link">
                         <i class="nav-icon fas fa-cog"></i>
                         <p>
                             Manage
@@ -106,8 +106,8 @@
 
             <li class="nav-header text-gray">Reports</li>
 
-            <li class="nav-item">
-                <a href="starter.html" class="nav-link">
+            <li class="nav-item {{ $current_route == 'subprintStore' ? 'menu-open' : '' }}">
+                <a href="#" class="nav-link">
                     <i class="nav-icon fas fa-laptop-code"></i>
                     <p>
                         Reports
@@ -116,7 +116,7 @@
                 </a>
                 <ul class="nav nav-treeview">
                     <li class="nav-item">
-                        <a href="" class="nav-link">
+                        <a href="{{ route('subprintStore') }}" class="nav-link {{ request()->is('qce/report*') ? 'active' : '' }}">
                             <i class="fas fa-file-pdf nav-icon"></i>
                             <p>QCE Submissions Print</p>
                         </a>
