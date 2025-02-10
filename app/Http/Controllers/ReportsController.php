@@ -74,25 +74,27 @@ class ReportsController extends Controller
 
     // Extract only the part before "+"
     $progCodParts = explode('+', $progCodRaw);
-    $progCod = $progCodParts[0]; // Only take 'CSS-INT-001'
+    $progCod = $progCodParts[0]; // Extract 'CSS-INT-001'
 
     \Log::info('Raw progCod:', [$progCodRaw]);
     \Log::info('Extracted progCod:', [$progCod]);
 
     try {
-        // ✅ Fetch student IDs from Server 2
-        $studentIds = ProgramEnHistory::where('semester', $semester)
+        // ✅ Fetch student IDs from Server 2 (Remote Database)
+        $studentIds = DB::connection('enrollment')->table('program_en_history')
+            ->where('semester', $semester)
             ->where('schlyear', $schlyear)
             ->where('campus', $campus)
             ->where('progCod', $progCod)
-            ->pluck('studentID'); // Get only student IDs
+            ->pluck('studentID');
 
         if ($studentIds->isEmpty()) {
             return response()->json(['data' => [], 'message' => 'No students found'], 200);
         }
 
-        // ✅ Fetch QCE data from Server 1 using the student IDs
-        $data = QCEfevalrate::whereIn('studidno', $studentIds)
+        // ✅ Fetch QCE data from Server 1 using student IDs
+        $data = DB::table('qceformevalrate')
+            ->whereIn('studidno', $studentIds)
             ->where('statprint', 1)
             ->where('semester', $semester)
             ->where('schlyear', $schlyear)
@@ -106,7 +108,6 @@ class ReportsController extends Controller
         return response()->json(['error' => 'Internal Server Error'], 500);
     }
 }
-
 
     public function getevalsubrateprintedlistRead(Request $request) 
     {
