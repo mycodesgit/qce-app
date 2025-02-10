@@ -45,6 +45,7 @@ class QCEevalformController extends Controller
                             'studgrades.*',
                             'studgrades.id as stugdeID',
                             'coasv2_db_schedule.subjects.sub_name',
+                            'coasv2_db_schedule.subjects.subjCollege',
                             'coasv2_db_schedule.sub_offered.subSec',
                             'coasv2_db_schedule.sub_offered.schlyear',
                             'coasv2_db_schedule.sub_offered.semester',

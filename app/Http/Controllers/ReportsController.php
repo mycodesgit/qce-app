@@ -76,4 +76,19 @@ class ReportsController extends Controller
 
         return response()->json(['data' => $data]);
     }
+
+    public function getevalsubrateprintedlistRead(Request $request) 
+    {
+        $semester = $request->query('semester');
+        $schlyear = $request->query('schlyear');
+        $campus = $request->query('campus');
+
+        $data = QCEfevalrate::where('statprint', 2)
+                ->where('semester', $semester)
+                ->where('schlyear', $schlyear)
+                ->where('campus', $campus)
+                ->get();
+
+        return response()->json(['data' => $data]);
+    }
 }

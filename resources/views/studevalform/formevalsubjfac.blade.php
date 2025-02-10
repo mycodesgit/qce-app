@@ -58,7 +58,7 @@
                                                         <div class="modal-footer justify-content-between">
                                                             <h6 class="widget-user-desc text-dark">
                                                                 @if(isset($datafacsubprogen->fname) && isset($datafacsubprogen->lname))
-                                                                    {{ substr($datafacsubprogen->fname, 0, 1) }}. {{ $datafacsubprogen->lname }}
+                                                                    {{ substr($datafacsubprogen->fname, 0, 1) }}. {{ $datafacsubprogen->lname }} {{ $datafacsubprogen->subjCollege }}
                                                                 @else
                                                                     No Instructor
                                                                 @endif

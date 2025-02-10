@@ -111,6 +111,19 @@
                             </h5>
                         </div>
                         <div class="card-body">
+                            <table id="doneprintTable" class="table table-hover">
+                                <thead>
+                                    <tr>
+                                        <th>Name</th>
+                                        <th>Faculty</th>
+                                        <th>Campus</th>
+                                        <th>Action</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    
+                                </tbody>
+                            </table>
                         </div>
                     </div>
                 </div>
@@ -121,6 +134,7 @@
 
 <script>
     var submissionReadRoute = "{{ route('getevalsubratelistRead') }}";
+    var doneprintReadRoute = "{{ route('getevalsubrateprintedlistRead') }}";
 </script>
         
 @endsection

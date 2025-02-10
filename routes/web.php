@@ -93,6 +93,7 @@ Route::group(['middleware'=>['login_empauth']],function(){
         Route::get('/view/search', [ReportsController::class, 'subprintStore'])->name('subprintStore');
         Route::get('/view/search/result', [ReportsController::class, 'subprint_searchresultStore'])->name('subprint_searchresultStore');
         Route::get('/view/search/result/eval/submission/ajax', [ReportsController::class, 'getevalsubratelistRead'])->name('getevalsubratelistRead');
+        Route::get('/view/search/result/eval/submission/printedajax', [ReportsController::class, 'getevalsubrateprintedlistRead'])->name('getevalsubrateprintedlistRead');
     });
 });
 
