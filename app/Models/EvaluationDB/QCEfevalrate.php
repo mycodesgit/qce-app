@@ -13,6 +13,7 @@ class QCEfevalrate extends Model
 
     protected $fillable = [
         'campus',
+        'prog',
         'statprint',
         'qceschlyearsemID', 
         'schlyear',

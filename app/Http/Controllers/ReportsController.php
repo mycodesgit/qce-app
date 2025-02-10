@@ -67,14 +67,42 @@ class ReportsController extends Controller
         $semester = $request->query('semester');
         $schlyear = $request->query('schlyear');
         $campus = $request->query('campus');
+        $progCodRaw = $request->query('progCod');
 
-        $data = QCEfevalrate::where('statprint', 1)
-                ->where('semester', $semester)
-                ->where('schlyear', $schlyear)
-                ->where('campus', $campus)
-                ->get();
+        // Ensure required parameters exist
+        if (!$semester || !$schlyear || !$campus || !$progCodRaw) {
+            return response()->json(['error' => 'Missing required parameters'], 400);
+        }
 
-        return response()->json(['data' => $data]);
+        // Convert spaces back to `+` to restore the original value
+        $progCodRaw = str_replace(' ', '+', $progCodRaw);
+
+        // Extract only the part before "+"
+        $progCodParts = explode('+', $progCodRaw);
+        $progCod = $progCodParts[0]; // Only take the first part (CSS-INT-001)
+
+        // Optional: Log the values for debugging
+        //\Log::info('Raw progCod:', [$progCodRaw]);
+        //\Log::info('Extracted progCod:', [$progCod]);
+
+        try {
+            $data = QCEfevalrate::leftJoin('coasv2_db_enrollment.program_en_history', 'qceformevalrate.studidno', '=', 'coasv2_db_enrollment.program_en_history.studentID')
+                    ->where('coasv2_db_enrollment.program_en_history.semester', $semester)
+                    ->where('coasv2_db_enrollment.program_en_history.schlyear', $schlyear)
+                    ->where('coasv2_db_enrollment.program_en_history.campus', $campus)
+                    ->where('coasv2_db_enrollment.program_en_history.progCod', $progCod) // Match only CSS-INT-001
+                    ->where('qceformevalrate.statprint', 1)
+                    ->where('qceformevalrate.semester', $semester)
+                    ->where('qceformevalrate.schlyear', $schlyear)
+                    ->where('qceformevalrate.campus', $campus)
+                    ->get();
+
+            return response()->json(['data' => $data]);
+
+        } catch (\Exception $e) {
+            //\Log::error('Database Query Error: ' . $e->getMessage());
+            return response()->json(['error' => 'Internal Server Error'], 500);
+        }
     }
 
     public function getevalsubrateprintedlistRead(Request $request) 
