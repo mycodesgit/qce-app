@@ -64,40 +64,44 @@ class ReportsController extends Controller
 
     public function getevalsubratelistRead(Request $request) 
     {
-        $semester = $request->query('semester');
-        $schlyear = $request->query('schlyear');
-        $campus = $request->query('campus');
-        $progCodRaw = urldecode($request->query('progCod')); // Fix + issue
+        try {
+            $semester = $request->query('semester');
+            $schlyear = $request->query('schlyear');
+            $campus = $request->query('campus');
+            $progCodRaw = urldecode($request->query('progCod'));
 
-        // Convert spaces back to `+` to restore the original value
-        $progCodRaw = str_replace(' ', '+', $progCodRaw);
+            // Fix `+` being converted to a space
+            $progCodRaw = str_replace(' ', '+', $progCodRaw);
 
-        // Extract parts before and after "+"
-        $progCodParts = explode('+', $progCodRaw);
-        $progCod = $progCodParts[0] ?? ''; // Get the main program code
-        $progCodSec = $progCodParts[1] ?? ''; // Get the section/course part, if available
+            // Extract parts before and after "+"
+            $progCodParts = explode('+', $progCodRaw);
+            $progCod = $progCodParts[0] ?? '';
+            $progCodSec = $progCodParts[1] ?? '';
 
-        // Query
-        $query = QCEfevalrate::join('coasv2_db_enrollment.program_en_history', 'qceformevalrate.studidno', '=', 'coasv2_db_enrollment.program_en_history.studentID')
-            ->whereRaw("BINARY coasv2_db_enrollment.program_en_history.semester = ?", [$semester]) // Case sensitive
-            ->whereRaw("BINARY coasv2_db_enrollment.program_en_history.schlyear = ?", [$schlyear])
-            ->whereRaw("BINARY coasv2_db_enrollment.program_en_history.campus = ?", [$campus])
-            ->whereRaw("BINARY coasv2_db_enrollment.program_en_history.progCod = ?", [$progCod])
-            ->where('qceformevalrate.statprint', 1)
-            ->whereRaw("BINARY qceformevalrate.semester = ?", [$semester])
-            ->whereRaw("BINARY qceformevalrate.schlyear = ?", [$schlyear])
-            ->whereRaw("BINARY qceformevalrate.campus = ?", [$campus]);
 
-        // Only filter by course if `$progCodSec` is not empty
-        if (!empty($progCodSec)) {
-            $query->whereRaw("
-                RIGHT(coasv2_db_enrollment.program_en_history.course, LOCATE(' ', REVERSE(coasv2_db_enrollment.program_en_history.course)) - 1) = ?", [$progCodSec]);
+            // Query
+            $query = QCEfevalrate::join('coasv2_db_enrollment.program_en_history', 'qceformevalrate.studidno', '=', 'coasv2_db_enrollment.program_en_history.studentID')
+                ->where('coasv2_db_enrollment.program_en_history.semester', $semester)
+                ->where('coasv2_db_enrollment.program_en_history.schlyear', $schlyear)
+                ->where('coasv2_db_enrollment.program_en_history.campus', $campus)
+                ->where('coasv2_db_enrollment.program_en_history.progCod', $progCod)
+                ->where('qceformevalrate.statprint', 1)
+                ->where('qceformevalrate.semester', $semester)
+                ->where('qceformevalrate.schlyear', $schlyear)
+                ->where('qceformevalrate.campus', $campus);
+
+            if (!empty($progCodSec)) {
+                $query->whereRaw("
+                    RIGHT(coasv2_db_enrollment.program_en_history.course, LOCATE(' ', REVERSE(coasv2_db_enrollment.program_en_history.course)) - 1) = ?", [$progCodSec]);
+            }
+
+            $data = $query->get();
+
+            
+            return response()->json(['data' => $data], 200);
+        } catch (\Exception $e) {
+            return response()->json(['error' => 'Something went wrong'], 500);
         }
-
-
-        $data = $query->get();
-
-        return response()->json(['data' => $data]);
     }
 
 
