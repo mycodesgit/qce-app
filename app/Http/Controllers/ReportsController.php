@@ -67,32 +67,12 @@ class ReportsController extends Controller
         $semester = $request->query('semester');
         $schlyear = $request->query('schlyear');
         $campus = $request->query('campus');
-        $progCodRaw = $request->query('progCod');
 
-        // Convert spaces back to `+` to restore the original value
-        $progCodRaw = str_replace(' ', '+', $progCodRaw);
-
-        // Extract parts before and after "+"
-        $progCodParts = explode('+', $progCodRaw);
-        $progCod = $progCodParts[0] ?? ''; // Get the main program code
-        $progCodSec = $progCodParts[1] ?? ''; // Get the section/course part, if available
-
-        $query = QCEfevalrate::join('coasv2_db_enrollment.program_en_history', 'qceformevalrate.studidno', '=', 'coasv2_db_enrollment.program_en_history.studentID')
-            ->where('coasv2_db_enrollment.program_en_history.semester', $semester)
-            ->where('coasv2_db_enrollment.program_en_history.schlyear', $schlyear)
-            ->where('coasv2_db_enrollment.program_en_history.campus', $campus)
-            ->where('coasv2_db_enrollment.program_en_history.progCod', $progCod)
-            ->where('qceformevalrate.statprint', 1)
-            ->where('qceformevalrate.semester', $semester)
-            ->where('qceformevalrate.schlyear', $schlyear)
-            ->where('qceformevalrate.campus', $campus);
-
-        // Only filter by course if `$progCodSec` is not empty
-        if (!empty($progCodSec)) {
-            $query->where('coasv2_db_enrollment.program_en_history.course', 'LIKE', '%' . $progCodSec . '%');
-        }
-
-        $data = $query->get();
+        $data = QCEfevalrate::where('statprint', 1)
+                ->where('semester', $semester)
+                ->where('schlyear', $schlyear)
+                ->where('campus', $campus)
+                ->get();
 
         return response()->json(['data' => $data]);
     }
