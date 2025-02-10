@@ -63,51 +63,51 @@ class ReportsController extends Controller
     }
 
     public function getevalsubratelistRead(Request $request) 
-{
-    $semester = $request->query('semester');
-    $schlyear = $request->query('schlyear');
-    $campus = $request->query('campus');
-    $progCodRaw = $request->query('progCod');
+    {
+        $semester = $request->query('semester');
+        $schlyear = $request->query('schlyear');
+        $campus = $request->query('campus');
+        $progCodRaw = $request->query('progCod');
 
-    // Convert spaces back to `+`
-    $progCodRaw = str_replace(' ', '+', $progCodRaw);
+        // Convert spaces back to `+`
+        $progCodRaw = str_replace(' ', '+', $progCodRaw);
 
-    // Extract only the part before "+"
-    $progCodParts = explode('+', $progCodRaw);
-    $progCod = $progCodParts[0]; // Extract 'CSS-INT-001'
+        // Extract only the part before "+"
+        $progCodParts = explode('+', $progCodRaw);
+        $progCod = $progCodParts[0]; // Extract 'CSS-INT-001'
+        $progCodSection = $progCodParts[1];
 
-    \Log::info('Raw progCod:', [$progCodRaw]);
-    \Log::info('Extracted progCod:', [$progCod]);
+        //\Log::info('Raw progCod:', [$progCodRaw]);
+        //\Log::info('Extracted progCod:', [$progCod]);
 
-    try {
-        // ✅ Fetch student IDs from Server 2 (Remote Database)
-        $studentIds = DB::connection('enrollment')->table('program_en_history')
-            ->where('semester', $semester)
-            ->where('schlyear', $schlyear)
-            ->where('campus', $campus)
-            ->where('progCod', $progCod)
-            ->pluck('studentID');
+        try {
+            $studentIds = DB::connection('enrollment')->table('program_en_history')
+                ->where('semester', $semester)
+                ->where('schlyear', $schlyear)
+                ->where('campus', $campus)
+                ->where('progCod', $progCod)
+                ->where('progCod', $progCodSection)
+                ->pluck('studentID');
 
-        if ($studentIds->isEmpty()) {
-            return response()->json(['data' => [], 'message' => 'No students found'], 200);
+            if ($studentIds->isEmpty()) {
+                return response()->json(['data' => [], 'message' => 'No students found'], 200);
+            }
+
+            $data = DB::table('qceformevalrate')
+                ->whereIn('studidno', $studentIds)
+                ->where('statprint', 1)
+                ->where('semester', $semester)
+                ->where('schlyear', $schlyear)
+                ->where('campus', $campus)
+                ->get();
+
+            return response()->json(['data' => $data]);
+
+        } catch (\Exception $e) {
+            //\Log::error('Database Query Error: ' . $e->getMessage());
+            return response()->json(['error' => 'Internal Server Error'], 500);
         }
-
-        // ✅ Fetch QCE data from Server 1 using student IDs
-        $data = DB::table('qceformevalrate')
-            ->whereIn('studidno', $studentIds)
-            ->where('statprint', 1)
-            ->where('semester', $semester)
-            ->where('schlyear', $schlyear)
-            ->where('campus', $campus)
-            ->get();
-
-        return response()->json(['data' => $data]);
-
-    } catch (\Exception $e) {
-        \Log::error('Database Query Error: ' . $e->getMessage());
-        return response()->json(['error' => 'Internal Server Error'], 500);
     }
-}
 
     public function getevalsubrateprintedlistRead(Request $request) 
     {
