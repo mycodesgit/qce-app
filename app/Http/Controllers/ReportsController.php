@@ -82,6 +82,7 @@ class ReportsController extends Controller
                 ->where('coasv2_db_enrollment.program_en_history.schlyear', $schlyear)
                 ->where('coasv2_db_enrollment.program_en_history.campus', $campus)
                 ->where('coasv2_db_enrollment.program_en_history.progCod', '=', 'CCS-INT-001')
+                ->where('coasv2_db_enrollment.program_en_history.studentID', '=', '2021-1016-K')
                 //->where('coasv2_db_enrollment.program_en_history.course', $progCodSec)
                 ->where('qceformevalrate.statprint', 1)
                 ->where('qceformevalrate.semester', $semester)
