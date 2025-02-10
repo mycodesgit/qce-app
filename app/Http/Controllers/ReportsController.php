@@ -74,21 +74,17 @@ class ReportsController extends Controller
 
         // Extract only the part before "+"
         $progCod = explode('+', $progCodRaw)[0];
-        //$progCodSec = explode('+', $progCodRaw)[1];
 
 
         $data = QCEfevalrate::join('coasv2_db_enrollment.program_en_history', 'qceformevalrate.studidno', '=', 'coasv2_db_enrollment.program_en_history.studentID')
                 ->where('coasv2_db_enrollment.program_en_history.semester', $semester)
                 ->where('coasv2_db_enrollment.program_en_history.schlyear', $schlyear)
                 ->where('coasv2_db_enrollment.program_en_history.campus', $campus)
-                ->where('coasv2_db_enrollment.program_en_history.progCod', '=', 'CCS-INT-001')
-                ->where('coasv2_db_enrollment.program_en_history.studentID', '=', '2021-1016-K')
-                //->where('coasv2_db_enrollment.program_en_history.course', $progCodSec)
+                ->where('coasv2_db_enrollment.program_en_history.progCod', $progCod)
                 ->where('qceformevalrate.statprint', 1)
                 ->where('qceformevalrate.semester', $semester)
                 ->where('qceformevalrate.schlyear', $schlyear)
                 ->where('qceformevalrate.campus', $campus)
-                ->select('qceformevalrate.*')
                 ->get();
 
         return response()->json(['data' => $data]);
