@@ -62,13 +62,16 @@ class ReportsController extends Controller
         return view('reports.reportsqceprint_searchresult', compact('currsem'));
     }
 
-    public function getfacultylistRead() 
+    public function getevalsubratelistRead(Request $request) 
     {
-        $data = Faculty::join('addressee', 'faculty.adrID', '=', 'addressee.id')
-                ->join('college', 'faculty.dept', '=', 'college.college_abbr')
-                ->where('faculty.campus', '=', Auth::guard('web')->user()->campus)
-                ->select('faculty.*', 'faculty.id as fctyid', 'faculty.campus as fcamp', 'college.*', 'addressee.*', 'addressee.id as adrid')
-                ->orderBy('faculty.lname')
+        $semester = $request->query('semester');
+        $schlyear = $request->query('schlyear');
+        $campus = $request->query('campus');
+
+        $data = QCEfevalrate::where('statprint', 1)
+                ->where('semester', $semester)
+                ->where('schlyear', $schlyear)
+                ->where('campus', $campus)
                 ->get();
 
         return response()->json(['data' => $data]);

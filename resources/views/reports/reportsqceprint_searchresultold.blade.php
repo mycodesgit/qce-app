@@ -23,12 +23,17 @@
         <div class="container-fluid">
             <div class="row">
                 <div class="col-lg-12">
-                    <div class="card" style="background-color: #d9dcdf">
+                    <div class="card">
+                        <div class="card-header">
+                            <h5 class="card-title">
+                                <i class="fas fa-search"></i> Search
+                            </h5>
+                        </div>
                         <div class="card-body">
                             <form method="GET" action="" id="enrollStud">
                                 @csrf   
 
-                                <div class="form-group">
+                                <div class="form-group" style="padding: 10px">
                                     <div class="form-row">
                                         <div class="col-md-3">
                                             <label><span class="badge badge-secondary">School Year</span></label>
@@ -74,43 +79,28 @@
                                     </div>
                                 </div>
                             </form>
-                        </div>
-                    </div>
-                </div>
 
-                <div class="col-lg-6">
-                    <div class="card card-secondary">
-                        <div class="card-header">
-                            <h5 class="card-title">
-                                <i class="fas fa-print"></i> To be print
-                            </h5>
-                        </div>
-                        <div class="card-body">
-                            <table id="submitevalTable" class="table table-hover">
-                                <thead>
-                                    <tr>
-                                        <th>Name</th>
-                                        <th>Faculty</th>
-                                        <th>Campus</th>
-                                        <th>Action</th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    
-                                </tbody>
-                            </table>
-                        </div>
-                    </div>
-                </div>
+                            <div>
+                                <div class="page-header" style="border-bottom: 1px solid #04401f;">
+                                </div> 
+                            </div>
 
-                <div class="col-lg-6">
-                    <div class="card card-success">
-                        <div class="card-header">
-                            <h5 class="card-title">
-                                <i class="fas fa-print"></i> Done print
-                            </h5>
-                        </div>
-                        <div class="card-body">
+                            <div style="padding: 25px">
+                                <table id="facltyTable" class="table table-hover">
+                                    <thead>
+                                        <tr>
+                                            <th>Name</th>
+                                            <th>Salutation</th>
+                                            <th>College</th>
+                                            <th>Campus</th>
+                                            <th>Action</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        
+                                    </tbody>
+                                </table>
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -120,7 +110,7 @@
 </div>
 
 <script>
-    var submissionReadRoute = "{{ route('getevalsubratelistRead') }}";
+    var facultyReadRoute = "{{ route('getfacultylistRead') }}";
 </script>
         
 @endsection

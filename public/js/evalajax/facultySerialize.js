@@ -32,12 +32,12 @@ $(document).ready(function() {
                         var dropdown = '<div class="d-inline-block">' +
                             '<a class="btn btn-primary btn-sm dropdown-toggle dropdown-icon" data-toggle="dropdown"></a>' +
                             '<div class="dropdown-menu">' +
-                            '<a href="#" class="dropdown-item btn-facultyedit" data-id="' + row.fctyid + '" data-flname="' + row.lname + '" data-ffname="' + row.fname + '" data-fmname="' + row.mname + '" data-fxname="' + row.ext + '" data-adrname="' + row.adrID + '" data-deptname="' + row.dept + '" data-email="' + row.email + '">' +
-                            '<i class="fas fa-pen"></i> Edit' +
+                            '<a href="#" class="dropdown-item btn-viewpdf" data-id="' + row.fctyid + '" data-flname="' + row.lname + '" data-ffname="' + row.fname + '" data-fmname="' + row.mname + '" data-fxname="' + row.ext + '" data-adrname="' + row.adrID + '" data-deptname="' + row.dept + '" data-email="' + row.email + '">' +
+                            '<i class="fas fa-file-pdf"></i> View in PDF' +
                             '</a>' +
-                            '<button type="button" value="' + data + '" class="dropdown-item faclty-delete">' +
-                            '<i class="fas fa-trash"></i> Delete' +
-                            '</button>' +
+                            '<a href="#" class="dropdown-item btn-viewexcel" data-id="' + row.fctyid + '" data-flname="' + row.lname + '" data-ffname="' + row.fname + '" data-fmname="' + row.mname + '" data-fxname="' + row.ext + '" data-adrname="' + row.adrID + '" data-deptname="' + row.dept + '" data-email="' + row.email + '">' +
+                            '<i class="fas fa-file-excel"></i> Export in Excel' +
+                            '</a>' +
                             '</div>' +
                             '</div>';
                         return dropdown;

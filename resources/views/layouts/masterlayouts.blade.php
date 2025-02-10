@@ -214,7 +214,7 @@
         <script src="{{ asset('js/evalajax/userSerialize.js') }}"></script>
     @endif
     @if(request()->routeIs('subprint_searchresultStore'))
-        <script src="{{ asset('js/evalajax/facultySerialize.js') }}"></script>
+        <script src="{{ asset('js/evalajax/evalsubmissionprintSerialize.js') }}"></script>
     @endif
 
     <!-- Validation -->

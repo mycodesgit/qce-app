@@ -92,7 +92,7 @@ Route::group(['middleware'=>['login_empauth']],function(){
     Route::prefix('/qce/report')->group(function () {
         Route::get('/view/search', [ReportsController::class, 'subprintStore'])->name('subprintStore');
         Route::get('/view/search/result', [ReportsController::class, 'subprint_searchresultStore'])->name('subprint_searchresultStore');
-        Route::get('/view/search/result/faculty/ajax', [ReportsController::class, 'getfacultylistRead'])->name('getfacultylistRead');
+        Route::get('/view/search/result/eval/submission/ajax', [ReportsController::class, 'getevalsubratelistRead'])->name('getevalsubratelistRead');
     });
 });
 

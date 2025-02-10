@@ -12,6 +12,8 @@ class QCEfevalrate extends Model
     protected $table = 'qceformevalrate';
 
     protected $fillable = [
+        'campus',
+        'statprint',
         'qceschlyearsemID', 
         'schlyear',
         'semester',
