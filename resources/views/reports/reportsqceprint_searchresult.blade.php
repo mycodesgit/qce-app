@@ -132,9 +132,27 @@
     </div>
 </div>
 
+<div class="modal fade" id="viewEvalRatePDFModal" role="dialog" aria-labelledby="viewEvalRatePDFModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-xl" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <input type="text" name="id" id="viewEvalRatePDFId" hidden>
+                <h5 class="modal-title" id="viewEvalRatePDFModalLabel">Print PDF</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <iframe id="pdfIframe" src="" style="width: 100%; height: 500px;" frameborder="0" class="mt-3"></iframe>
+            </div>
+        </div>
+    </div>
+</div>
+
 <script>
     var submissionReadRoute = "{{ route('getevalsubratelistRead') }}";
     var doneprintReadRoute = "{{ route('getevalsubrateprintedlistRead') }}";
+    var studentevalsubPDFReadRoute = "{{ route('exportPrintEvalPDF') }}";
 </script>
         
 @endsection

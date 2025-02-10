@@ -107,6 +107,7 @@ class ReportsController extends Controller
                 ->when($studSec, function ($query) use ($studSec) {
                     return $query->where('studSec', '=', $studSec);
                 })
+                ->select('program_en_history.*')
                 ->pluck('studentID');
 
             if ($studentIds->isEmpty()) {
@@ -211,5 +212,44 @@ class ReportsController extends Controller
             ->get();
 
         return response()->json($courses);
+    }
+
+    public function exportPrintEvalPDF(Request $request)
+    {
+        $semester = $request->query('semester');
+        $schlyear = $request->query('schlyear');
+        $campus = $request->query('campus');
+        $progCod = $request->query('progCod');
+        $studYear = $request->query('studYear'); // Fix: Read studYear
+        $studSec = $request->query('studSec');   // Fix: Read studSec
+
+        // Debugging logs
+        // \Log::info("Received Parameters: ", [
+        //     'progCod' => $progCod,
+        //     'studYear' => $studYear,
+        //     'studSec' => $studSec,
+        //     'schlyear' => $schlyear,
+        //     'semester' => $semester,
+        //     'campus' => $campus,
+        // ]);
+
+        // Check if required parameters are missing
+        if (!$progCod || !$studYear || !$studSec || !$schlyear || !$semester || !$campus) {
+            return response()->json(['error' => 'Missing required parameters'], 400);
+        }
+
+        $inst = QCEinstruction::orderBy('inst_scale', 'DESC')->get();
+        $currsem = QCEsemester::where('qcesemstat', 2)->get();
+        $quest = QCEquestion::join('qcecategory', 'qcequestion.catName_id', '=', 'qcecategory.id')
+                ->select('qcecategory.catName', 'qcequestion.*')
+                ->get();
+        $facrated = QCEfevalrate::all();
+
+        // Load PDF
+        $pdf = PDF::loadView('formpdf.qceformpdfrated', compact(
+            'inst', 'currsem', 'quest', 'facrated', 'progCod', 'studYear', 'studSec', 'schlyear', 'semester', 'campus'
+        ))->setPaper('Legal', 'portrait');
+
+        return $pdf->stream('evaluation.pdf');
     }
 }

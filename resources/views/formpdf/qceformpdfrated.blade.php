@@ -248,7 +248,20 @@
 	</div>
 
 	<div>
-		<p>Signature of Evaluator &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;:__________________________ </p>
+		@php
+		    // Define the underline lengths for proper alignment
+		    $underlineLengthName = 26; // Adjust as needed
+		    $underlineLengthRank = 27; // Adjust as needed
+
+		    // Fetch faculty name and rank
+		    $evaluatorName = $facrated->first()->evaluatorname ?? '';
+		    $academicRank = $facrated->first()->academic_rank ?? '';
+
+		    // Center the text within the underline length
+		    $underlineFaculty = str_pad($evaluatorName, $underlineLengthName, '_', STR_PAD_BOTH);
+		@endphp
+
+		<p>Signature of Evaluator : <u>{{ $underlineFaculty }}</u> </p>
 		<p>Name of Evaluator &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;:__________________________ </p>
 		<p>Position of Evaluator &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;:__________________________ </p>
 		<p>Date &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;:__________________________ </p>
