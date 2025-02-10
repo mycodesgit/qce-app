@@ -67,15 +67,39 @@ class ReportsController extends Controller
         $semester = $request->query('semester');
         $schlyear = $request->query('schlyear');
         $campus = $request->query('campus');
+        $progCodRaw = urldecode($request->query('progCod')); // Fix + issue
 
-        $data = QCEfevalrate::where('statprint', 1)
-                ->where('semester', $semester)
-                ->where('schlyear', $schlyear)
-                ->where('campus', $campus)
-                ->get();
+        // Convert spaces back to `+` to restore the original value
+        $progCodRaw = str_replace(' ', '+', $progCodRaw);
+
+        // Extract parts before and after "+"
+        $progCodParts = explode('+', $progCodRaw);
+        $progCod = $progCodParts[0] ?? ''; // Get the main program code
+        $progCodSec = $progCodParts[1] ?? ''; // Get the section/course part, if available
+
+        // Query
+        $query = QCEfevalrate::join('coasv2_db_enrollment.program_en_history', 'qceformevalrate.studidno', '=', 'coasv2_db_enrollment.program_en_history.studentID')
+            ->whereRaw("BINARY coasv2_db_enrollment.program_en_history.semester = ?", [$semester]) // Case sensitive
+            ->whereRaw("BINARY coasv2_db_enrollment.program_en_history.schlyear = ?", [$schlyear])
+            ->whereRaw("BINARY coasv2_db_enrollment.program_en_history.campus = ?", [$campus])
+            ->whereRaw("BINARY coasv2_db_enrollment.program_en_history.progCod = ?", [$progCod])
+            ->where('qceformevalrate.statprint', 1)
+            ->whereRaw("BINARY qceformevalrate.semester = ?", [$semester])
+            ->whereRaw("BINARY qceformevalrate.schlyear = ?", [$schlyear])
+            ->whereRaw("BINARY qceformevalrate.campus = ?", [$campus]);
+
+        // Only filter by course if `$progCodSec` is not empty
+        if (!empty($progCodSec)) {
+            $query->whereRaw("
+                RIGHT(coasv2_db_enrollment.program_en_history.course, LOCATE(' ', REVERSE(coasv2_db_enrollment.program_en_history.course)) - 1) = ?", [$progCodSec]);
+        }
+
+
+        $data = $query->get();
 
         return response()->json(['data' => $data]);
     }
+
 
 
     public function getevalsubrateprintedlistRead(Request $request) 
