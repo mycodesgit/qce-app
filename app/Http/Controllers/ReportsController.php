@@ -86,7 +86,7 @@ class ReportsController extends Controller
     \Log::info('Extracted progCod:', [$progCod]);
 
     try {
-        $data = QCEfevalrate::leftJoin('coasv2_db_enrollment.program_en_history', 'qceformevalrate.studidno', '=', 'coasv2_db_enrollment.program_en_history.studentID')
+        $data = QCEfevalrate::join('coasv2_db_enrollment.program_en_history', 'qceformevalrate.studidno', '=', 'coasv2_db_enrollment.program_en_history.studentID')
                 ->where('coasv2_db_enrollment.program_en_history.semester', $semester)
                 ->where('coasv2_db_enrollment.program_en_history.schlyear', $schlyear)
                 ->where('coasv2_db_enrollment.program_en_history.campus', $campus)
