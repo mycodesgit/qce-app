@@ -71,9 +71,9 @@ $(document).ready(function() {
             $(row).attr('id', 'tr-' + data.fctyid); 
         }
     });
-    // setInterval(function () {
-    //     dataTable.ajax.reload(null, false);
-    // }, 3000);
+    setInterval(function () {
+        dataTable.ajax.reload(null, false);
+    }, 3000);
 });
 
 $(document).ready(function() {
