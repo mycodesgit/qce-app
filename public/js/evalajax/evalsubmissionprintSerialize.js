@@ -82,7 +82,7 @@ $(document).ready(function() {
     var schlyear = urlParams.get('schlyear') || ''; 
     var semester = urlParams.get('semester') || '';
     var campus = urlParams.get('campus') || ''; 
-    var progCod = urlParams.get('progCod') || '';
+    //var progCod = urlParams.get('progCod') || '';
 
     var dataTable = $('#doneprintTable').DataTable({
         "ajax": {
@@ -92,7 +92,7 @@ $(document).ready(function() {
                 "schlyear": schlyear,
                 "semester": semester,
                 "campus": campus,
-                "progCod": progCod
+                //"progCod": progCod
             }
         },
         destroy: true,
