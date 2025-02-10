@@ -67,33 +67,11 @@ class ReportsController extends Controller
         $semester = $request->query('semester');
         $schlyear = $request->query('schlyear');
         $campus = $request->query('campus');
-        $progCodRaw = $request->query('progCod');
 
-        //\Log::info('Raw progCod:', [$progCodRaw]);
-
-        // Convert spaces back to `+`
-        $progCodRaw = str_replace(' ', '+', $progCodRaw);
-
-        //\Log::info('Converted progCod:', [$progCodRaw]);
-
-        $progCodParts = explode('+', $progCodRaw);
-        $progCod = $progCodParts[0];
-        $progCodSec = isset($progCodParts[1]) ? $progCodParts[1] : null;
-
-        //\Log::info('progCod:', [$progCod]);
-        //\Log::info('progCodSec:', [$progCodSec]);
-
-
-
-        $data = QCEfevalrate::leftJoin('coasv2_db_enrollment.program_en_history', 'qceformevalrate.studidno', '=', 'coasv2_db_enrollment.program_en_history.studentID')
-                ->where('coasv2_db_enrollment.program_en_history.semester', $semester)
-                ->where('coasv2_db_enrollment.program_en_history.schlyear', $schlyear)
-                ->where('coasv2_db_enrollment.program_en_history.campus', $campus)
-                ->where('coasv2_db_enrollment.program_en_history.progCod', $progCod)
-                ->where('qceformevalrate.statprint', 1)
-                ->where('qceformevalrate.semester', $semester)
-                ->where('qceformevalrate.schlyear', $schlyear)
-                ->where('qceformevalrate.campus', $campus)
+        $data = QCEfevalrate::where('statprint', 1)
+                ->where('semester', $semester)
+                ->where('schlyear', $schlyear)
+                ->where('campus', $campus)
                 ->get();
 
         return response()->json(['data' => $data]);
