@@ -31,7 +31,7 @@
                         </div>
                         <div class="card-body">
                             <form method="GET" action="{{ route('subprint_searchresultStore') }}" id="enrollStud">
-                                @csrf   
+                                @csrf
 
                                 <div class="form-group" style="padding: 10px">
                                     <div class="form-row">
@@ -97,5 +97,5 @@
 <script>
     var classenrollyrsecReadRoute = "{{ route('getCoursesyearsec') }}";
 </script>
-        
+
 @endsection

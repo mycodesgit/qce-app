@@ -65,7 +65,7 @@
 <body class="hold-transition sidebar-mini layout-fixed layout-navbar-fixed text-sm">
     <div class="wrapper">
         <nav class="main-header navbar navbar-expand navbar-white navbar-light" style="background-color: #1f5036;">
-            
+
             <ul class="navbar-nav">
                 <li class="nav-item">
                     <a class="nav-link" data-widget="pushmenu" href="#" role="button">
@@ -123,7 +123,7 @@
                             @endauth
                         </a>
                         <span style="font-size: 10pt; color: #ccc;">
-                            <i class="fa fa-circle text-success" style="font-size: 8pt"></i> 
+                            <i class="fa fa-circle text-success" style="font-size: 8pt"></i>
                             @php
                                 $roles = [
                                     0 => 'Administrator',
@@ -148,21 +148,21 @@
                 </div>
 
                 @include('menu.sidebar')
-                
+
             </div>
         </aside>
 
         @yield('body')
-        
+
         <footer class="main-footer">
             <div class="float-right d-none d-sm-inline">
                 Anything you want
             </div>
             <strong>Copyright &copy; 2014-2021</strong> All rights reserved.
         </footer>
-        
+
     </div>
-    
+
 
     <!-- jQuery -->
     <script src="{{ asset('template/plugins/jquery/jquery.min.js') }}"></script>
@@ -177,7 +177,7 @@
     <script src="{{ asset('template/plugins/datatables-responsive/js/dataTables.responsive.min.js') }}"></script>
     <script src="{{ asset('template/plugins/datatables-responsive/js/responsive.bootstrap4.min.js') }}"></script>
     <script src="{{ asset('template/plugins/datatables-buttons/js/dataTables.buttons.min.js') }}"></script>
-    <script src="{{ asset('template/plugins/datatables-buttons/js/buttons.bootstrap4.min.js') }}"></script> 
+    <script src="{{ asset('template/plugins/datatables-buttons/js/buttons.bootstrap4.min.js') }}"></script>
     <script src="{{ asset('template/plugins/jszip/jszip.min.js') }}"></script>
     <script src="{{ asset('template/plugins/pdfmake/pdfmake.min.js') }}"></script>
     <script src="{{ asset('template/plugins/pdfmake/vfs_fonts.js') }}"></script>
@@ -240,7 +240,7 @@
                 });
                 $('#next-btn').prop('disabled', !allFilled);
             }
-            
+
             $('.required-input').on('input', checkInputs);
             checkInputs(); // Initial check in case inputs have default values
         });
@@ -265,6 +265,18 @@
                 });
             @endif
         });
+
+        $(function () {
+
+          $('.select2').select2();
+
+          //Initialize Select2 Elements
+          $('.select2bs4').select2({
+              theme: 'bootstrap4',
+              height: '100'
+          })
+      });
     </script>
+
 </body>
 </html>

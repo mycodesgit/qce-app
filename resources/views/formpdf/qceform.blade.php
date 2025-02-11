@@ -26,12 +26,12 @@
                     <div class="card">
                         <div class="card-header">
                             <h5 class="card-title">
-                                <i class="fas fa-file-pdf"></i> 
+                                <i class="fas fa-file-pdf"></i>
                             </h5>
                         </div>
                         <div class="card-body">
                             <div class="">
-                                <iframe src="{{ route('qceformprintpdfrated') }}" style="width: 100%; height: 800px;" frameborder="0" class="mt-3"></iframe>
+                                <iframe src="{{ route('qceformprintpdfrated') }}" style="width: 100%; height: 800px;" frameborder="0" class="mt-3" title="QCE Form PDF"></iframe>
                             </div>
                         </div>
                     </div>
@@ -40,5 +40,5 @@
         </div>
     </div>
 </div>
-        
+
 @endsection
