@@ -170,6 +170,8 @@
     <script src="{{ asset('template/plugins/bootstrap/js/bootstrap.bundle.min.js') }}"></script>
     <!-- AdminLTE App -->
     <script src="{{ asset('template/dist/js/qce.min.js') }}"></script>
+    <!-- Select2 -->
+    <script src="{{ asset('template/plugins/select2/js/select2.full.min.js') }}"></script>
 
     <!-- DataTables  & Plugins -->
     <script src="{{ asset('template/plugins/datatables/jquery.dataTables.min.js') }}"></script>
@@ -266,6 +268,7 @@
             @endif
         });
 
+        $(function () {
 
           $('.select2').select2();
 
@@ -273,7 +276,8 @@
           $('.select2bs4').select2({
               theme: 'bootstrap4',
               height: '100'
-          });
+          })
+      });
     </script>
 
 </body>
