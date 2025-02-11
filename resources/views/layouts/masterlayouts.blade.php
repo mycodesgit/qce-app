@@ -228,6 +228,7 @@
     <script src="{{ asset('js/validation/manage/semesterValidation.js') }}"></script>
     @if(request()->routeIs('previewStore'))
         <script src="{{ asset('js/validation/evalstud/evalValidation.js') }}"></script>
+        <script src="{{ asset('js/validation/evalstud/evalSubmitValidation.js') }}"></script>
     @endif
 
     <script>

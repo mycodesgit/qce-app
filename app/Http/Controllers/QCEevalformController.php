@@ -86,17 +86,17 @@ class QCEevalformController extends Controller
                 // 'semester' => 'required',
                 // 'ratingfromto' => 'required',
                 // 'question' => 'required|array',
-                // 'question_rate' => 'required|array',
+                'question_rate' => 'required|array',
                 // 'evaluatorname' => 'required',
                 // 'evaluatorID' => 'required',
-                'qcecomments' => [
-                    'required',
-                    function ($attribute, $value, $fail) {
-                        if (str_word_count($value) > 50) {
-                            $fail("The $attribute must not be more than 50 words.");
-                        }
-                    }
-                ],
+                // 'qcecomments' => [
+                //     'required',
+                //     function ($attribute, $value, $fail) {
+                //         if (str_word_count($value) > 50) {
+                //             $fail("The $attribute must not be more than 50 words.");
+                //         }
+                //     }
+                // ],
             ]);
             
             //try {

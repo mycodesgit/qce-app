@@ -243,7 +243,7 @@
                                 </div>
                             </div>
 
-                            <form method="post" action="{{ route('facevalrateformCreate') }}" enctype="multipart/form-data" id="admissionApply">
+                            <form method="post" action="{{ route('facevalrateformCreate') }}"  id="evaluateFaculty">
                                 @csrf
 
                                 <input type="hidden" name="campus" value="{{ Auth::guard('kioskstudent')->user()->student->campus }}">
@@ -317,6 +317,7 @@
                                 </div>
 
                                 <div id="card-2" style="display: none;">
+
                                     <div class="sticky-column" style="z-index: 999">
                                         <div class="card">
                                             <div class="card-body">
@@ -348,36 +349,25 @@
                                             <div class="">
                                                 <label>Evaluators:</label><br>
                                                 <div class="form-row">
-                                                    <div class="col-sm-6">
+                                                    <div class="col-md-6">
                                                         <div class="form-group clearfix">
-                                                            <div class="icheck-success d-inline">
-                                                                <input type="radio" id="radioPrimary1self" name="qceevaluator">
-                                                                <label for="radioPrimary1self">
-                                                                    Self
-                                                                </label>
-                                                            </div>
-                                                            <div class="icheck-success d-inline">
-                                                                <input type="radio" id="radioPrimary2student" name="qceevaluator">
-                                                                <label for="radioPrimary2student">
-                                                                    Student
-                                                                </label>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                    <div class="col-sm-6">
-                                                        <div class="form-group clearfix">
-                                                            <div class="icheck-success d-inline">
-                                                                <input type="radio" id="radioPrimary1peer" name="qceevaluator">
-                                                                <label for="radioPrimary1peer">
-                                                                    Peer
-                                                                </label>
-                                                            </div>
-                                                            <div class="icheck-success d-inline">
-                                                                <input type="radio" id="radioPrimary2supervisor" name="qceevaluator">
-                                                                <label for="radioPrimary2supervisor">
-                                                                    Supervisor
-                                                                </label>
-                                                            </div>
+                                                            @if(Auth::guard('kioskstudent')->user()->role == 'Faculty')
+                                                                <div class="icheck-success d-inline">
+                                                                    <input type="radio" id="radioPrimary1self" value="Self" name="qceevaluator" @if(Auth::guard('kioskstudent')->user()->role == 'Faculty') checked @endif>
+                                                                    <label for="radioPrimary1self">
+                                                                        Self
+                                                                    </label>
+                                                                </div>
+                                                            @endif
+
+                                                            @if(Auth::guard('kioskstudent')->user()->role == 'Student')
+                                                                <div class="icheck-success d-inline">
+                                                                    <input type="radio" id="radioPrimary2student" value="Student" name="qceevaluator" @if(Auth::guard('kioskstudent')->user()->role == 'Student') checked @endif>
+                                                                    <label for="radioPrimary2student">
+                                                                        Student
+                                                                    </label>
+                                                                </div>
+                                                            @endif
                                                         </div>
                                                     </div>
                                                 </div>
@@ -393,7 +383,7 @@
                                                 </div>
                                             </div>
                                             @foreach($questions as $dataformlinksquestions)
-                                                <input type="hidden" name="question[]" value="{{ $dataformlinksquestions->id }}">
+                                                <input type="hidden" class="required-input" name="question[]" value="{{ $dataformlinksquestions->id }}">
                                                 <div class="card">
                                                     <div class="card-body">
                                                         <h5 class="card-title text-bold">
@@ -401,9 +391,9 @@
                                                         </h5>
                                                         <p class="card-text mt-5"></p>
                                                         <div class="radio-group" style="margin-top: 5px">
-                                                            @for ($i = 1; $i <= 5; $i++)
+                                                            @for ($i = 5; $i >= 1; $i--)
                                                                 <a href="#" class="card-link text-dark">
-                                                                    <input type="radio" id="radio-{{ $i }}-{{ $dataformlinksquestions->id }}" name="question_rate[{{ $dataformlinksquestions->id }}]" value="{{ $i }}" required>
+                                                                    <input type="radio" class="required-input" id="radio-{{ $i }}-{{ $dataformlinksquestions->id }}" name="question_rate[{{ $dataformlinksquestions->id }}]" value="{{ $i }}" required>
                                                                     <label for="radio-{{ $i }}-{{ $dataformlinksquestions->id }}">{{ $i }}</label>
                                                                 </a>
                                                             @endfor
@@ -413,9 +403,7 @@
                                             @endforeach
                                         </div>
                                     @endforeach
-                                </div>
 
-                                <div id="card-3" style="display: none;">
                                     <div class="card">
                                         <div class="card-body">
                                             <div class="form-group">
@@ -423,6 +411,7 @@
                                                     <div class="col-md-12">
                                                         <label>Comments:</label>
                                                         <textarea class="form-control" rows="4" placeholder="Your comments here" name="qcecomments"></textarea>
+                                                        <span style="font-size: 10pt; font-weight: normal; font-style: italic; color: red">Optional</span>
                                                     </div>
                                                 </div>
                                             </div>
@@ -479,23 +468,40 @@
 
     <!-- Validation -->
     <script src="{{ asset('js/validation/evalstud/evalValidation.js') }}"></script>
+    <script src="{{ asset('js/validation/evalstud/evalSubmitValidation.js') }}"></script>
 
     <script>
         $(document).ready(function () {
             function checkInputs() {
                 let allFilled = true;
+
                 $('.required-input').each(function () {
-                    if ($(this).val().trim() === '') {
-                        allFilled = false;
-                        return false; // Break out of loop
+                    if ($(this).is(':radio')) {
+                        // Check if at least one radio button in the group is selected
+                        let radioGroupName = $(this).attr('name');
+                        if ($("input[name='" + radioGroupName + "']:checked").length === 0) {
+                            allFilled = false;
+                            return false; // Break loop
+                        }
+                    } else {
+                        // Check other input fields (text, select, etc.)
+                        if ($(this).val().trim() === '') {
+                            allFilled = false;
+                            return false; // Break loop
+                        }
                     }
                 });
-                $('#next-btn').prop('disabled', !allFilled);
+
+                $('#next-btn, #submit-btn').prop('disabled', !allFilled);
             }
+
+            // Trigger validation on input changes
+            $('.required-input').on('input change', checkInputs);
             
-            $('.required-input').on('input', checkInputs);
-            checkInputs(); // Initial check in case inputs have default values
+            // Initial check in case inputs have default values
+            checkInputs();
         });
+
         
         document.addEventListener("DOMContentLoaded", function() {
             function toggleAlertImage() {
