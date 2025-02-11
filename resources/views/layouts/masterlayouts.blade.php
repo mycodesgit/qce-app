@@ -266,7 +266,6 @@
             @endif
         });
 
-        $(function () {
 
           $('.select2').select2();
 
@@ -274,8 +273,7 @@
           $('.select2bs4').select2({
               theme: 'bootstrap4',
               height: '100'
-          })
-      });
+          });
     </script>
 
 </body>
