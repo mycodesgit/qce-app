@@ -1,13 +1,42 @@
 let currentCard = 1;
 const totalCards = document.querySelectorAll('[id^="card-"]').length;
 
-$(function () {
+$(document).ready(function () {
+    function checkInputs(cardId, buttonId) {
+        let allFilled = true;
 
-    function toggleNextButton() {
-        // Check if current card's fields are valid
-        const isCurrentCardValid = $(getCurrentCardSelector()).find("input, select").valid();
-        document.getElementById("next-btn").enabled = !isCurrentCardValid;
+        if ($(cardId + ' input[type="radio"]').length > 0) {
+            $(cardId + ' .radio-group').each(function () {
+                let radioGroupName = $(this).find('input[type="radio"]').attr('name');
+                if ($(`input[name="${radioGroupName}"]:checked`).length === 0) {
+                    allFilled = false;
+                    return false;
+                }
+            });
+        } else {
+            $(cardId + ' .required-input').each(function () {
+                if ($(this).val().trim() === '') {
+                    allFilled = false;
+                    return false;
+                }
+            });
+        }
+
+        $(buttonId).prop('disabled', !allFilled);
     }
+
+    $('#card-1 .required-input').on('input change', function () {
+        checkInputs('#card-1', '#next-btn');
+    });
+
+    $('#card-2 input[type="radio"]').on('change', function () {
+        checkInputs('#card-2', '#submit-btn');
+    });
+
+    checkInputs('#card-1', '#next-btn');
+    checkInputs('#card-2', '#submit-btn');
+
+    updateProgressBar();
 });
 
 function updateProgressBar() {
@@ -15,80 +44,39 @@ function updateProgressBar() {
     document.getElementById("progress-bar").style.width = progressPercentage + "%";
     document.getElementById("progress-text").textContent = `Page ${currentCard} of ${totalCards}`;
 
-    // Show or hide navigation buttons based on current card
     document.getElementById("back-btn").style.display = currentCard > 1 ? "inline-block" : "none";
     document.getElementById("next-btn").style.display = currentCard < totalCards ? "inline-block" : "none";
-    
-    // Show submit button only on the last card
     document.getElementById("submit-btn").style.display = currentCard === totalCards ? "inline-block" : "none";
-
-    // Check field completion if on the last card
-    if (currentCard === totalCards) {
-        checkLastCardCompletion();
-    }
 }
 
-// Check if all fields in the last card are filled out
-function checkLastCardCompletion() {
-    const lastCardFields = document.querySelectorAll(`#card-${totalCards} input, #card-${totalCards} select`);
-    const allFilled = Array.from(lastCardFields).every(field => field.value.trim() !== "");
-    
-    // Enable submit button if all fields are filled
-    document.getElementById("submit-btn").disabled = !allFilled;
-}
+// ✅ **Fix: Move to the next card properly**
+function nextCard() {
+    if (currentCard >= totalCards) return;
 
-// Move to the next card
-function nextCard(cardNumber) {
-    if (cardNumber > totalCards) return;
-
+    // Validate the current card before moving forward
     if (!$(getCurrentCardSelector()).find("input, select").valid()) {
-        validator.focusInvalid();
-        return; // Stop moving to the next card if current card is invalid
+        return; // Stop if invalid inputs exist
     }
 
-    // Hide current card and show the next one
     document.getElementById(`card-${currentCard}`).style.display = "none";
-    document.getElementById(`card-${cardNumber}`).style.display = "block";
-    
-    currentCard = cardNumber;
+    currentCard++; // Increment card count
+    document.getElementById(`card-${currentCard}`).style.display = "block";
+
     updateProgressBar();
 }
 
-// Move to the previous card
-function prevCard(cardNumber) {
-    if (cardNumber < 1) return;
+// ✅ **Fix: Move to the previous card properly**
+function prevCard() {
+    if (currentCard <= 1) return;
 
     document.getElementById(`card-${currentCard}`).style.display = "none";
-    document.getElementById(`card-${cardNumber}`).style.display = "block";
-    
-    currentCard = cardNumber;
+    currentCard--; // Decrement card count
+    document.getElementById(`card-${currentCard}`).style.display = "block";
+
     updateProgressBar();
 }
 
-// Helper to get the current card selector
+// ✅ **Fix: Get current card selector**
 function getCurrentCardSelector() {
     return `#card-${currentCard}`;
 }
-
-// Add event listeners to check field completion on input
-document.querySelectorAll(`#card-${totalCards} input, #card-${totalCards} select`).forEach(field => {
-    field.addEventListener('input', checkLastCardCompletion);
-});
-
-function adjustCard2Margin() {
-    const card2 = document.getElementById("evaluator");
-
-    if (window.innerWidth <= 768) { // Small screens
-        card2.style.marginTop = "350px";
-    } else { // Default for larger screens
-        card2.style.marginTop = "230px";
-    }
-}
-
-// Run the function on page load and when resizing the window
-window.addEventListener("load", adjustCard2Margin);
-window.addEventListener("resize", adjustCard2Margin);
-
-
-// Initialize the progress bar on page load
-updateProgressBar();

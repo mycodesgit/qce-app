@@ -471,38 +471,6 @@
     <script src="{{ asset('js/validation/evalstud/evalSubmitValidation.js') }}"></script>
 
     <script>
-        $(document).ready(function () {
-            function checkInputs() {
-                let allFilled = true;
-
-                $('.required-input').each(function () {
-                    if ($(this).is(':radio')) {
-                        // Check if at least one radio button in the group is selected
-                        let radioGroupName = $(this).attr('name');
-                        if ($("input[name='" + radioGroupName + "']:checked").length === 0) {
-                            allFilled = false;
-                            return false; // Break loop
-                        }
-                    } else {
-                        // Check other input fields (text, select, etc.)
-                        if ($(this).val().trim() === '') {
-                            allFilled = false;
-                            return false; // Break loop
-                        }
-                    }
-                });
-
-                $('#next-btn, #submit-btn').prop('disabled', !allFilled);
-            }
-
-            // Trigger validation on input changes
-            $('.required-input').on('input change', checkInputs);
-            
-            // Initial check in case inputs have default values
-            checkInputs();
-        });
-
-        
         document.addEventListener("DOMContentLoaded", function() {
             function toggleAlertImage() {
                 const alertImage = document.getElementById("cpsulogoImage");

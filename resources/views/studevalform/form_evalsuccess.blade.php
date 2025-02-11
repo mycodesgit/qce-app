@@ -249,7 +249,8 @@
                                     <h5>Your feedback is valuable in improving the quality of education.</h5>
                                     <h5>You may return to the dashboard or close this window.</h5>
                                     
-                                    <a href="{{ route('evalsubjfacStore') }}" class="btn btn-secondary form-control form-control-md mt-3">Go Back to Dashboard</a>
+                                    {{-- <a href="{{ route('evalsubjfacStore') }}" class="btn btn-secondary form-control form-control-md mt-3">Go Back to Dashboard</a> --}}
+                                    <h5 class="mt-3">Redirecting in <span id="countdown">5</span> seconds...</h5>
                                 </div>
                             </div>
                         </div>
@@ -302,6 +303,23 @@
                 });
             @endif
         });
+    </script>
+
+    <script>
+        let countdown = 6;
+        let countdownElement = document.getElementById("countdown");
+
+        function updateCountdown() {
+            if (countdown > 0) {
+                countdown--;
+                countdownElement.textContent = countdown;
+            } else {
+                window.location.href = "{{ route('evalsubjfacStore') }}"; // Redirect after 5 seconds
+            }
+        }
+
+        // Run countdown every second
+        setInterval(updateCountdown, 1000);
     </script>
 </body>
 </html>
