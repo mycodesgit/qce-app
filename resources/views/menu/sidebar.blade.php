@@ -62,7 +62,7 @@
                 </li>
             @endif
 
-            @if(in_array(Auth::guard('web')->user()->role, [0, 1, 2, 3, 4]))
+            {{-- @if(in_array(Auth::guard('web')->user()->role, [0, 1, 2, 3, 4]))
                 <li class="nav-item ripple-effect">
                     <a href="{{ route('indexformpdf') }}" class="nav-link  {{$current_route=='indexformpdf'?'active':''}}">
                         <i class="nav-icon fas fa-file"></i>
@@ -80,7 +80,7 @@
                         Preview
                     </p>
                 </a>
-            </li>
+            </li> --}}
 
             @if(in_array(Auth::guard('web')->user()->role, [0]))
                 <li class="nav-item ripple-effect">
