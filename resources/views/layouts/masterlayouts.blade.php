@@ -41,6 +41,10 @@
             background-color: #32ac71 !important;
             color: white;
         }
+        .breadcrumbactive{
+            color: #32ac71 !important;
+            font-weight: bold;
+        }
         .nav-item{
             cursor: pointer !important;
         }
