@@ -34,11 +34,11 @@
 
     <style>
         .sidebar-dark-primary .nav-sidebar>.nav-item>.nav-link.active, .sidebar-light-primary .nav-sidebar>.nav-item>.nav-link.active{
-            background-color: #04401f !important ;
+            background-color: #1f5036 !important ;
             color: white;
         }
         [class*="sidebar-dark-"] .nav-treeview>.nav-item>.nav-link.active, [class*="sidebar-dark-"] .nav-treeview>.nav-item>.nav-link.active:hover, [class*="sidebar-dark-"] .nav-treeview>.nav-item>.nav-link.active:focus {
-            background-color: #04401f !important;
+            background-color: #1f5036 !important;
             color: white;
         }
         .breadcrumbactive{
