@@ -63,6 +63,9 @@
             transform: scale(1.1);  /* Enlarge the icon on hover */
             color: #000;  /* Change color when hovered */
         }
+        .content-wrapper {
+            background-color: #f4f6f9 !important;
+        }
     </style>
 </head>
 
