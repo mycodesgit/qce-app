@@ -117,7 +117,7 @@
                     <form action="{{ route('empstudlogin') }}" method="post">
                         @csrf
                         <div class="input-group mb-3">
-                            <input type="email" name="email" class="form-control form-control-lg bg-light fs-6" placeholder="Email address">
+                            <input type="email" name="email" class="form-control form-control-lg bg-light fs-6" placeholder="Email address" autofocus>
                         </div>
                         <div class="input-group mb-1">
                             <input type="password" name="password" class="form-control form-control-lg bg-light fs-6" placeholder="Password">
