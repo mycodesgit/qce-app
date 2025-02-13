@@ -137,29 +137,24 @@ $(document).ready(function() {
                 data: 'id',
                 render: function(data, type, row) {
                     if (type === 'display') {
-                        var dropdown = `
-                            <div class="d-inline-block">
-                                <a class="btn btn-primary btn-sm dropdown-toggle dropdown-icon" data-toggle="dropdown"></a>
-                                <div class="dropdown-menu">
-                                    <a href="#" class="dropdown-item btn-viewpdf"
-                                        data-id="${row.id}"  
-                                        data-program="${row.progCod}" 
-                                        data-year="${row.studYear}" 
-                                        data-section="${row.studSec}" 
-                                        data-schlyear="${row.schlyear}" 
-                                        data-semester="${row.semester}" 
-                                        data-campus="${row.campus}" 
-                                        data-studidno="${row.studidno}">
-                                        <i class="fas fa-file-pdf"></i> View in PDF
-                                    </a>
-                                </div>
-                            </div>`;
-                        return dropdown;
+                        return `
+                            <button class="btn btn-primary btn-sm btn-viewpdf"
+                                data-id="${row.id}"  
+                                data-program="${row.progCod}" 
+                                data-year="${row.studYear}" 
+                                data-section="${row.studSec}" 
+                                data-schlyear="${row.schlyear}" 
+                                data-semester="${row.semester}" 
+                                data-campus="${row.campus}" 
+                                data-studidno="${row.studidno}" 
+                                title="View PDF">
+                                <i class="fas fa-eye"></i>
+                            </button>`;
                     } else {
                         return data;
                     }
                 }
-            },
+            }
         ],
         "createdRow": function (row, data, index) {
             $(row).attr('id', 'tr-' + data.fctyid); 
