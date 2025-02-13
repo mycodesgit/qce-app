@@ -94,8 +94,8 @@
 	<div>
 		@php
 		    // Define default placeholders for the underline length
-		    $underlineLengthFrom = 26; // Adjust based on your layout
-		    $underlineLengthTo = 39; // Adjust based on your layout
+		    $underlineLengthFrom = 23; // Adjust based on your layout
+		    $underlineLengthTo = 35; // Adjust based on your layout
 
 		    // Fetch and format the rating period, centering within the underline
 		    $ratingFrom = $currsem->first()->qceratingfrom ?? '';
@@ -110,8 +110,8 @@
 
 		@php
 		    // Define the underline lengths for proper alignment
-		    $underlineLengthName = 26; // Adjust as needed
-		    $underlineLengthRank = 27; // Adjust as needed
+		    $underlineLengthName = 23; // Adjust as needed
+		    $underlineLengthRank = 23; // Adjust as needed
 
 		    // Fetch faculty name and rank
 		    $facultyName = $facrated->first()->qcefacname ?? '';

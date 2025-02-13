@@ -152,7 +152,7 @@
                 <iframe id="pdfIframe" src="" style="width: 100%; height: 500px;" frameborder="0" class="mt-3"></iframe>
             </div>
             <div class="modal-footer">
-                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
                 <form id="editInstForm">
                     <input type="text" name="id" id="viewEvalRatePDFId" hidden>
                     <button type="submit" class="btn btn-primary" id="btnDonePrint">Done Print</button>
