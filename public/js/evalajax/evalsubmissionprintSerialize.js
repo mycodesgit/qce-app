@@ -1,7 +1,7 @@
 toastr.options = {
     "closeButton": true,
     "progressBar": true,
-    "positionClass": "toast-top-right"
+    "positionClass": "toast-bottom-left"
 };
 $(document).ready(function() {
 
@@ -136,22 +136,28 @@ $(document).ready(function() {
                 data: 'id',
                 render: function(data, type, row) {
                     if (type === 'display') {
-                        var dropdown = '<div class="d-inline-block">' +
-                            '<a class="btn btn-primary btn-sm dropdown-toggle dropdown-icon" data-toggle="dropdown"></a>' +
-                            '<div class="dropdown-menu">' +
-                            '<a href="#" class="dropdown-item btn-viewpdf" data-id="' + row.id + '" data-flname="' + row.lname + '" data-ffname="' + row.fname + '" data-fmname="' + row.mname + '" data-fxname="' + row.ext + '" data-adrname="' + row.adrID + '" data-deptname="' + row.dept + '" data-email="' + row.email + '">' +
-                            '<i class="fas fa-file-pdf"></i> View in PDF' +
-                            '</a>' +
-                            '<a href="#" class="dropdown-item btn-viewexcel" data-id="' + row.id + '" data-flname="' + row.lname + '" data-ffname="' + row.fname + '" data-fmname="' + row.mname + '" data-fxname="' + row.ext + '" data-adrname="' + row.adrID + '" data-deptname="' + row.dept + '" data-email="' + row.email + '">' +
-                            '<i class="fas fa-file-excel"></i> Export in Excel' +
-                            '</a>' +
-                            '</div>' +
-                            '</div>';
+                        var dropdown = `
+                            <div class="d-inline-block">
+                                <a class="btn btn-primary btn-sm dropdown-toggle dropdown-icon" data-toggle="dropdown"></a>
+                                <div class="dropdown-menu">
+                                    <a href="#" class="dropdown-item btn-viewpdf"
+                                        data-id="${row.id}"  
+                                        data-program="${row.progCod}" 
+                                        data-year="${row.studYear}" 
+                                        data-section="${row.studSec}" 
+                                        data-schlyear="${row.schlyear}" 
+                                        data-semester="${row.semester}" 
+                                        data-campus="${row.campus}" 
+                                        data-studidno="${row.studidno}">
+                                        <i class="fas fa-file-pdf"></i> View in PDF
+                                    </a>
+                                </div>
+                            </div>`;
                         return dropdown;
                     } else {
                         return data;
                     }
-                },
+                }
             },
         ],
         "createdRow": function (row, data, index) {
@@ -163,56 +169,66 @@ $(document).ready(function() {
     }, 3000);
 });
 
-
-$(document).ready(function() {
-    $('#submitevalTable').on('click', '.btn-viewpdf', function() {
+$(document).ready(function () {
+    $('#submitevalTable').on('click', '.btn-viewpdf', function () {
+        var id = $(this).data('id');
         var programCode = $(this).data('program');
-        var studYear = $(this).data('year');  // Possible issue: data attribute mismatch
-        var studSec = $(this).data('section'); // Possible issue: missing data attribute
+        var studYear = $(this).data('year');
+        var studSec = $(this).data('section');
         var schlyear = $(this).data('schlyear');
         var semester = $(this).data('semester');
-        var campus = $(this).data('campus');  // Ensure this is included
+        var campus = $(this).data('campus');
         var studidno = $(this).data('studidno');
 
-        // Debugging: Log all extracted values
-        console.log('Program Code:', programCode);
-        console.log('Class Year:', studYear);
-        console.log('Class Section:', studSec);
-        console.log('School Year:', schlyear);
-        console.log('Semester:', semester);
-        console.log('Campus:', campus);
-        console.log('Student ID:', studidno);
+        console.log({
+            id, programCode, studYear, studSec, schlyear, semester, campus, studidno
+        });
 
-        // Check if any value is undefined
-        if (!programCode || !studYear || !studSec || !schlyear || !semester || !campus) {
-            alert("Missing required data. Check your button attributes.");
+        if (!programCode || !studYear || !studSec || !schlyear || !semester || !campus || !studidno) {
+            alert("Missing required data. Please check your inputs.");
             return;
         }
 
-        var pdfUrl = studentevalsubPDFReadRoute + 
-                     "?progCod=" + programCode + 
-                     "&studYear=" + studYear + 
-                     "&studSec=" + studSec + 
-                     "&schlyear=" + schlyear + 
-                     "&semester=" + semester +
-                     "&campus=" + campus +
-                     "&studidno=" + studidno;
+        var pdfUrl = `${studentevalsubPDFReadRoute}?id=${encodeURIComponent(id)}&progCod=${encodeURIComponent(programCode)}&studYear=${encodeURIComponent(studYear)}&studSec=${encodeURIComponent(studSec)}&schlyear=${encodeURIComponent(schlyear)}&semester=${encodeURIComponent(semester)}&campus=${encodeURIComponent(campus)}&studidno=${encodeURIComponent(studidno)}`;
 
-        //console.log("PDF URL:", pdfUrl); // Debugging URL
+        $('#pdfIframe').attr('src', pdfUrl);
+        $('#viewEvalRatePDFId').val(id);
+        $('#viewEvalRatePDFModal').modal('show');
+    });
+
+    $('#btnDonePrint').on('click', function (event) {
+        event.preventDefault();
+        var id = $('#viewEvalRatePDFId').val();
 
         $.ajax({
-            url: pdfUrl,
-            method: 'GET',
-            success: function(response) {
-                //console.log("PDF Response:", response);
-                $('#pdfIframe').attr('src', pdfUrl);
-                $('#viewEvalRatePDFModal').modal('show');
+            url: studentevalsubPDFprintUpdateReadRoute,
+            type: "POST",
+            data: {
+                id: id,
             },
-            error: function(xhr) {
-                //console.log("PDF Request Error:", xhr.responseText);
-                alert('An error occurred while fetching the enrollment.');
+            headers: {
+                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+            },
+            success: function(response) {
+                if(response.success) {
+                    toastr.success(response.message);
+                    $('#viewEvalRatePDFModal').modal('hide');
+                } else {
+                    toastr.error(response.message);
+                }
+            },
+            error: function(xhr, status, error, message) {
+                var errorMessage = xhr.responseText ? JSON.parse(xhr.responseText).message : 'An error occurred';
+                toastr.error(errorMessage);
             }
         });
     });
+
+    $('.btn-close-modal').on('click', function () {
+        $('#viewEvalRatePDFModal').modal('hide');
+    });
 });
+
+
+
 

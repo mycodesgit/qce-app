@@ -216,49 +216,75 @@ class ReportsController extends Controller
 
     public function exportPrintEvalPDF(Request $request)
     {
+        $id = $request->query('id');
         $semester = $request->query('semester');
         $schlyear = $request->query('schlyear');
         $campus = $request->query('campus');
         $progCod = $request->query('progCod');
-        $studYear = $request->query('studYear'); // Fix: Read studYear
+        $studYear = $request->query('studYear');
         $studSec = $request->query('studSec');
-        $studidno = $request->query('studidno');   // Fix: Read studSec
+        $studidno = $request->query('studidno');
 
         // Debugging logs
-        // \Log::info("Received Parameters: ", [
+        // \Log::info("PDF Parameters:", [
+        //     'id' => $id,
         //     'progCod' => $progCod,
         //     'studYear' => $studYear,
         //     'studSec' => $studSec,
         //     'schlyear' => $schlyear,
         //     'semester' => $semester,
         //     'campus' => $campus,
+        //     'studidno' => $studidno,
         // ]);
 
-        // Check if required parameters are missing
-        if (!$progCod || !$studYear || !$studSec || !$schlyear || !$semester || !$campus) {
+        // Validate parameters
+        if (!$id || !$progCod || !$studYear || !$studSec || !$schlyear || !$semester || !$campus || !$studidno) {
             return response()->json(['error' => 'Missing required parameters'], 400);
         }
 
+        // Fetch necessary data
+        $facrated = QCEfevalrate::where('id', $id)
+            ->where('semester', $semester)
+            ->where('schlyear', $schlyear)
+            ->where('campus', $campus)
+            ->where('studidno', $studidno)
+            ->get();
+
+        if ($facrated->isEmpty()) {
+            return response()->json(['error' => 'No data found for the provided parameters'], 404);
+        }
+
+        // Fetch supporting data
         $inst = QCEinstruction::orderBy('inst_scale', 'DESC')->get();
         $currsem = QCEsemester::where('qcesemstat', 2)->get();
         $quest = QCEquestion::join('qcecategory', 'qcequestion.catName_id', '=', 'qcecategory.id')
-                ->select('qcecategory.catName', 'qcequestion.*')
-                ->get();
-        $facratedQuery = QCEfevalrate::where('semester', $semester)
-            ->where('schlyear', $schlyear)
-            ->where('campus', $campus);
+            ->select('qcecategory.catName', 'qcequestion.*')
+            ->get();
 
-        if (!empty($studidno)) {
-            $facratedQuery->where('studidno', '=', $studidno);
-        }
-
-        $facrated = $facratedQuery->get();
-
-        // Load PDF
+        // Generate the PDF
         $pdf = PDF::loadView('formpdf.qceformpdfrated', compact(
             'inst', 'currsem', 'quest', 'facrated', 'progCod', 'studYear', 'studSec', 'schlyear', 'semester', 'campus'
         ))->setPaper('Legal', 'portrait');
 
         return $pdf->stream('evaluation.pdf');
     }
+
+    public function updateStatprint(Request $request) 
+    {
+        $request->validate([
+            'id' => 'required',
+        ]);
+
+        try {
+
+            $prinrate = QCEfevalrate::findOrFail($request->input('id'));
+            $prinrate->update([
+                'statprint' => 2,
+        ]);
+            return response()->json(['success' => true, 'message' => 'Done Print'], 200);
+        } catch (\Exception $e) {
+            return response()->json(['error' => true, 'message' => 'Error'], 404);
+        }
+    }
+
 }

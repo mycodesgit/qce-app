@@ -95,7 +95,8 @@ Route::group(['middleware'=>['login_empauth']],function(){
         Route::get('/view/search/result/eval/submission/ajax', [ReportsController::class, 'getevalsubratelistRead'])->name('getevalsubratelistRead');
         Route::get('/view/search/result/eval/submission/printedajax', [ReportsController::class, 'getevalsubrateprintedlistRead'])->name('getevalsubrateprintedlistRead');
         Route::get('/info/getcourseyrsec/ajax', [ReportsController::class, 'getCoursesyearsec'])->name('getCoursesyearsec');
-        Route::get('/info/getevalpdf/print/ajax', [ReportsController::class, 'exportPrintEvalPDF'])->name('exportPrintEvalPDF');
+        Route::get('/info/getevalpdf/print/evaluation', [ReportsController::class, 'exportPrintEvalPDF'])->name('exportPrintEvalPDF');
+        Route::post('/info/getevalpdf/print/evaluation/update-statprint', [ReportsController::class, 'updateStatprint'])->name('updateStatprint');
     });
 });
 

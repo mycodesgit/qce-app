@@ -295,7 +295,7 @@
                                                 <div class="form-row">
                                                     <div class="col-md-12">
                                                         <label>Name of Faculty:</label>
-                                                        <input type="text" name="qcefacname" class="form-control required-input" placeholder="Name of Faculty" value="{{ request('qcefacname') }}" required readonly>
+                                                        <input type="text" name="qcefacname" class="form-control required-input" placeholder="Name of Faculty" value="{{ request('qcefacname') }}" required>
                                                     </div>
                                                 </div>
                                             </div>

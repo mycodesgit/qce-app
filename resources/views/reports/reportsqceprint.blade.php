@@ -11,7 +11,7 @@
                 </div>
                 <div class="col-sm-6">
                     <ol class="breadcrumb float-sm-right">
-                        <li class="breadcrumb-item"><a href="{{ route('dash') }}">Dashboard</a></li>
+                        <li class="breadcrumb-item breadcrumbactive"><a href="{{ route('dash') }}">Dashboard</a></li>
                         <li class="breadcrumb-item active">Submissions Print</li>
                     </ol>
                 </div>
@@ -24,11 +24,6 @@
             <div class="row">
                 <div class="col-lg-12">
                     <div class="card">
-                        <div class="card-header">
-                            <h5 class="card-title">
-                                <i class="fas fa-search"></i> Search
-                            </h5>
-                        </div>
                         <div class="card-body">
                             <form method="GET" action="{{ route('subprint_searchresultStore') }}" id="enrollStud">
                                 @csrf

@@ -45,6 +45,10 @@
             color: #32ac71 !important;
             font-weight: bold;
         }
+        .breadcrumbactive{
+            color: #32ac71 !important;
+            font-weight: bold;
+        }
         .nav-item{
             cursor: pointer !important;
         }
@@ -104,7 +108,7 @@
             @endif
         </nav>
 
-        <aside class="main-sidebar sidebar-dark-primary elevation-4" style="background-color: #222d32;">
+        <aside class="main-sidebar sidebar-dark-primary elevation-4">
             <a href="index3.html" class="brand-link" style="background-color: #1f5036;">
                 <img src="{{ asset('template/img/CPSU_L.png') }}" alt="AdminLTE Logo" class="brand-image img-circle elevation-3" style="opacity: .8">
                 <span class="brand-text font-weight-light">Faculty QCE</span>
