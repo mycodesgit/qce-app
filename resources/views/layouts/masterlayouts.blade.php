@@ -45,7 +45,7 @@
             color: #32ac71 !important;
             font-weight: bold;
         }
-        .breadcrumbactive{
+        .breadcrumbactive a{
             color: #32ac71 !important;
             font-weight: bold;
         }
