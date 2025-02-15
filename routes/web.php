@@ -5,6 +5,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\LoginController;
 
 use App\Http\Controllers\DashboardController;
+use App\Http\Controllers\FacultyController;
 use App\Http\Controllers\InstructionController;
 use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\QuestionController;
@@ -63,6 +64,11 @@ Route::group(['middleware'=>['login_empauth']],function(){
         Route::post('/semester/insert', [SemesterController::class,'semesterCreate'])->name('semesterCreate');
         Route::post('/semester/update', [SemesterController::class,'semesterUpdate'])->name('semesterUpdate');
         Route::post('/semester/delete{id}', [SemesterController::class,'semesterDelete'])->name('semesterDelete');
+
+        Route::get('/faculty/view', [FacultyController::class,'facultyStore'])->name('facultyStore');
+        Route::get('/faculty/view/search', [FacultyController::class,'facultyFilter'])->name('facultyFilter');
+        Route::get('/faculty/search/ajax', [FacultyController::class, 'getfacultylistRead'])->name('getfacultylistRead');
+        Route::post('/faculty/search/view/upload/image', [FacultyController::class, 'facultyUploadImage'])->name('facultyUploadImage');
     });
 
     Route::prefix('/conf')->group(function () {

@@ -24,6 +24,15 @@
                 </a>
             </li>
 
+            <li class="nav-item ripple-effect">
+                <a href="{{ route('facultyStore') }}" class="nav-link {{ request()->is('conf/faculty*') ? 'active' : '' }}">
+                    <i class="nav-icon fas fa-person-chalkboard"></i>
+                    <p>
+                        Faculty
+                    </p>
+                </a>
+            </li>
+
             @if(in_array(Auth::guard('web')->user()->role, [0, 1, 2]))
                 <li class="nav-item {{ $current_route == 'instructionStore' || $current_route == 'categoryStore' || $current_route == 'questionStore' || $current_route == 'semesterStore' ? 'menu-open' : '' }}">
                     <a href="#" class="nav-link">

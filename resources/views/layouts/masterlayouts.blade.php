@@ -70,6 +70,12 @@
         .content-wrapper {
             background-color: #f4f6f9 !important;
         }
+        .table-avatar {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            object-fit: cover;
+        }
     </style>
 </head>
 
@@ -211,6 +217,9 @@
 
 
     <!-- Ajax -->
+    @if(request()->routeIs('facultyFilter'))
+        <script src="{{ asset('js/evalajax/facultySerialize.js') }}"></script>
+    @endif
     @if(request()->routeIs('instructionStore'))
         <script src="{{ asset('js/evalajax/instructionSerialize.js') }}"></script>
     @endif
