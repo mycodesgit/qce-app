@@ -76,6 +76,23 @@
             border-radius: 50%;
             object-fit: cover;
         }
+        .page-item.active .page-link {
+            z-index: 3;
+            color: #fff !important;
+            background-color: #ffc107 !important;
+            border-color: #ffc107 !important;
+        }
+
+        .page-link {
+            position: relative;
+            display: block;
+            padding: 0.5rem 0.75rem;
+            margin-left: -1px;
+            line-height: 1.25;
+            color: #1f5036 !important;
+            background-color: #fff;
+            border: 1px solid #dee2e6;
+        }
     </style>
 </head>
 
