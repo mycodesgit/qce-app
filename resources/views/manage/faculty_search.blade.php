@@ -25,10 +25,17 @@
                 <div class="col-lg-12">
                     <div class="" style="background-color: #d9dcdf; border-radius: 5px;">
                         <div class="">
+                            
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-12">
+                    <div class="card">
+                        <div class="card-header">
                             <form method="GET" action="{{ route('facultyFilter') }}" id="enrollStud">
                                 @csrf
 
-                                <div class="form-group" style="padding: 10px">
+                                <div class="form-group" style="">
                                     <div class="form-row">
                                         <div class="col-md-6">
                                             <label><span class="badge badge-secondary">Campus</span></label>
@@ -56,15 +63,6 @@
                                 </div>
                             </form>
                         </div>
-                    </div>
-                </div>
-                <div class="col-md-12">
-                    <div class="card">
-                        <div class="card-header">
-                            <h5 class="card-title">
-                                <i class="fas fa-list"></i> List
-                            </h5>
-                        </div>
                         <div class="card-body">
                             <div class="">
                                 <table id="facltyTable" class="table table-hover">
@@ -91,18 +89,18 @@
     </div>
 </div>
 
-<div class="modal fade" id="editFacultyModal" role="dialog" aria-labelledby="editFacultyModalLabel" aria-hidden="true">
+<div class="modal fade" id="uploadfacPhotoModal" role="dialog" aria-labelledby="uploadfacPhotoModalLabel" aria-hidden="true">
     <div class="modal-dialog modal-lg" role="document">
         <div class="modal-content">
             <div class="modal-header">
-                <h5 class="modal-title" id="editFundModalLabel">Upload Image</h5>
+                <h5 class="modal-title" id="editFundModalLabel">Upload Photo</h5>
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                     <span aria-hidden="true">&times;</span>
                 </button>
             </div>
-            <form id="editFacultyForm" enctype="multipart/form-data">
+            <form id="uploadfacPhotoForm" enctype="multipart/form-data">
                 <div class="modal-body">
-                    <input type="hidden" name="facidprof" id="editFacultyId" readonly>
+                    <input type="hidden" name="facidprof" id="uploadfacPhotoId" readonly>
 
                     <div class="form-group">
                         <div class="form-row">
@@ -129,7 +127,7 @@
                         <div class="form-row">
                             <div class="col-md-6">
                                 <div class="form-group">
-                                    <label for="editImage" class="font-weight-bold">Upload Image</label>
+                                    <label for="editImage" class="font-weight-bold">Upload Photo</label>
                                     <div id="dropZone" class="file-drop-zone" 
                                         style="border: 2px dashed #47b656; border-radius: 10px; padding: 40px; text-align: center; cursor: pointer; position: relative;">
                                         <input type="file" class="custom-file-input" id="editImage" name="profimage" accept=".png, .jpg" 
@@ -152,11 +150,11 @@
                             
                             <div class="col-md-6">
                                 <div class="form-group">
-                                    <label for="imagePreview" class="font-weight-bold">Image Preview</label>
+                                    <label for="imagePreview" class="font-weight-bold">Photo Preview</label>
                                     <div class="image-preview-container" style="position: relative; width: 100%; height: 200px; border: 1px solid #ddd; border-radius: 5px; overflow: hidden;">
                                         <img id="imagePreview" src="#" alt="Image Preview" style="display: none; width: 100%; height: 100%; object-fit: cover;"/>
                                         <div class="image-preview-overlay" style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0, 0, 0, 0.5); color: #fff; display: flex; align-items: center; justify-content: center; font-size: 1.2em;">
-                                            No Image
+                                            No Photo
                                         </div>
                                     </div>
                                 </div>
@@ -166,7 +164,50 @@
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                    <button type="submit" class="btn btn-primary">Save changes</button>
+                    <button type="submit" class="btn btn-primary">Yes, upload photo</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+<div class="modal fade" id="viewUploadedPhotoModal" role="dialog" aria-labelledby="viewUploadedPhotoModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-sm" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="viewUploadedPhotoModalLabel">Uploaded Photo</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <form>
+                <div class="modal-body">
+                    <input type="hidden" name="id" id="viewUploadedPhotoId">
+                    <div class="form-group">
+                        <table class="table table-borderless">
+                            <thead>
+                                <tr>
+                                    <th style="text-align: left; font-size: 13pt;"><i></i>
+                                        <p id="fullName" class="font-weight-bold" style="font-size: 16px; text-align: center;"></p>
+                                    </th>
+                                </tr>
+                            </thead>
+                        </table>
+                    </div>
+                    <div class="form-group" style="text-align: center">
+                        <input type="hidden" id="viewUploadedPhoto" class="form-control form-control-sm" >
+                        <img id="uploadedPhoto" class="img-cirle" width="50%" src="" alt="Image">
+
+                        <div class="image-preview-container" id="noPhoto" style="position: relative; width: 100%; height: 200px; border: 1px solid #ddd; border-radius: 5px; overflow: hidden;">
+                            <img id="imagePreview" src="#" alt="Image Preview" style="display: none; width: 100%; height: 100%; object-fit: cover;"/>
+                            <div class="image-preview-overlay" style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0, 0, 0, 0.5); color: #fff; display: flex; align-items: center; justify-content: center; font-size: 1.2em;">
+                                <p style="text-align: center;" class="big-text">No Photo</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
                 </div>
             </form>
         </div>

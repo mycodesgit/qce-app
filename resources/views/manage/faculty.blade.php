@@ -23,12 +23,12 @@
         <div class="container-fluid">
             <div class="row">
                 <div class="col-lg-12">
-                    <div class="" style="background-color: #d9dcdf; border-radius: 5px;">
-                        <div class="">
+                    <div class="card">
+                        <div class="card-body">
                             <form method="GET" action="{{ route('facultyFilter') }}" id="enrollStud">
                                 @csrf
 
-                                <div class="form-group" style="padding: 10px">
+                                <div class="form-group" style="">
                                     <div class="form-row">
                                         <div class="col-md-6">
                                             <label><span class="badge badge-secondary">Campus</span></label>
@@ -55,33 +55,6 @@
                                     </div>
                                 </div>
                             </form>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-md-12">
-                    <div class="card">
-                        <div class="card-header">
-                            <h5 class="card-title">
-                                <i class="fas fa-list"></i> List
-                            </h5>
-                        </div>
-                        <div class="card-body">
-                            <div class="">
-                                <table id="" class="table table-hover">
-                                    <thead>
-                                        <tr>
-                                            <th>Name</th>
-                                            <th>Salutation</th>
-                                            <th>College</th>
-                                            <th>Campus</th>
-                                            <th>Action</th>
-                                        </tr>
-                                    </thead>
-                                    <tbody>
-                                        
-                                    </tbody>
-                                </table>
-                            </div>
                         </div>
                     </div>
                 </div>

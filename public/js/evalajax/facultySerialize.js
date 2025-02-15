@@ -62,23 +62,46 @@ $(document).ready(function() {
                 render: function(data, type, row) {
                     if (type === 'display') {
                         return `
-                            <button class="btn btn-primary btn-sm btn-facultyedit"
-                                data-id="${row.fctyid}"  
-                                data-flname="${row.lname}" 
-                                data-ffname="${row.fname}" 
-                                data-fmname="${row.mname}" 
-                                data-fxname="${row.ext}" 
-                                data-adrname="${row.adrID}" 
-                                data-deptname="${row.dept}" 
-                                data-email="${row.email}" 
-                                title="View Photo">
-                                <i class="fas fa-eye"></i>
-                            </button>`;
+                            <div class="dropdown">
+                                <button class="btn btn-primary btn-sm dropdown-toggle" type="button" id="dropdownMenu${row.fctyid}" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                    <i class="fas fa-camera"></i> Photo
+                                </button>
+                                <div class="dropdown-menu" aria-labelledby="dropdownMenu${row.fctyid}">
+                                    <a class="dropdown-item btn-upload-photo" 
+                                        href="#" 
+                                        data-id="${row.fctyid}" 
+                                        data-flname="${row.lname}" 
+                                        data-ffname="${row.fname}" 
+                                        data-fmname="${row.mname}" 
+                                        data-fxname="${row.ext}" 
+                                        data-adrname="${row.adrID}" 
+                                        data-deptname="${row.dept}" 
+                                        data-email="${row.email}">
+                                        <i class="fas fa-upload"></i> Upload Photo
+                                    </a>
+                                    <a class="dropdown-item btn-view-photo" 
+                                        href="#" 
+                                        data-id="${row.fctyid}" 
+                                        data-flname="${row.lname}" 
+                                        data-ffname="${row.fname}" 
+                                        data-fmname="${row.mname}" 
+                                        data-photo="${row.profimage}">
+                                        <i class="fas fa-eye"></i> View Photo
+                                    </a>
+                                    <a class="dropdown-item btn-update-photo" 
+                                        href="#" 
+                                        data-id="${row.fctyid}" 
+                                        data-photo="${row.profimage}">
+                                        <i class="fas fa-edit"></i> Update Photo
+                                    </a>
+                                </div>
+                            </div>`;
                     } else {
                         return data;
                     }
                 }
             }
+            
         ],
         "createdRow": function (row, data, index) {
             $(row).attr('id', 'tr-' + data.fctyid); 
@@ -89,7 +112,7 @@ $(document).ready(function() {
     });
 });
 
-$(document).on('click', '.btn-facultyedit', function() {
+$(document).on('click', '.btn-upload-photo', function() {
     var id = $(this).data('id');
     var lName = $(this).data('flname');
     var fName = $(this).data('ffname');
@@ -108,10 +131,10 @@ $(document).on('click', '.btn-facultyedit', function() {
     $('#college_room').val(deptName);
     $('#editEmail').val(email);
 
-    $('#editFacultyModal').modal('show');
+    $('#uploadfacPhotoModal').modal('show');
 });
 
-$('#editFacultyForm').submit(function(event) {
+$('#uploadfacPhotoForm').submit(function(event) {
     event.preventDefault();
     var formData = new FormData(this);
 
@@ -127,7 +150,8 @@ $('#editFacultyForm').submit(function(event) {
         success: function(response) {
             if(response.success) {
                 toastr.success(response.message);
-                $('#editFacultyModal').modal('hide');
+                $('#uploadfacPhotoModal').modal('hide');
+                $(document).trigger('facAdded');
             } else {
                 toastr.error(response.message);
             }
@@ -137,6 +161,37 @@ $('#editFacultyForm').submit(function(event) {
             toastr.error(errorMessage);
         }
     });
+});
+
+$(document).on('click', '.btn-view-photo', function() {
+    var id = $(this).data('id');
+    var lName = $(this).data('flname');
+    var fName = $(this).data('ffname');
+    var mName = $(this).data('fmname');
+    var photo = $(this).data('photo');
+
+    var fullName = `${fName} ${mName ? mName + ' ' : ''}${lName}`;
+
+    $('#editUploadPhotoId').val(id);
+    $('#viewLastname').val(lName);
+    $('#viewFirstname').val(fName);
+    $('#viewMiddlename').val(mName);
+    $('#uploadedPhoto').val(photo);
+    
+    $('#fullName').text(fullName);
+
+
+    if (photo) {
+        $('#uploadedPhoto').attr('src', photoStorage + "/" + photo).show();
+        $('#uploadedPhoto').removeAttr('alt');
+        $('#noPhoto').hide();
+    } else {
+        $('#uploadedPhoto').attr('src', '').hide();
+        $('#noPhoto').show();
+        $('#noPhoto').css('font-size', '15px');
+    }
+
+    $('#viewUploadedPhotoModal').modal('show');
 });
 
 
