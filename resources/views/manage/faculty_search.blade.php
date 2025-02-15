@@ -102,7 +102,7 @@
             </div>
             <form id="editFacultyForm" enctype="multipart/form-data">
                 <div class="modal-body">
-                    <input type="text" name="facidprof" id="editFacultyId">
+                    <input type="hidden" name="facidprof" id="editFacultyId" readonly>
 
                     <div class="form-group">
                         <div class="form-row">
