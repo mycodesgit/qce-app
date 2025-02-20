@@ -115,7 +115,7 @@
 
             <li class="nav-header text-gray">Reports</li>
 
-            <li class="nav-item {{ $current_route == 'subprintStore' || $current_route == 'subprint_searchresultStore' ? 'menu-open' : '' }}">
+            <li class="nav-item {{ $current_route == 'subprintStore' || $current_route == 'subprint_searchresultStore' || $current_route == 'summaryEvalStore' ? 'menu-open' : '' }}">
                 <a href="#" class="nav-link">
                     <i class="nav-icon fas fa-laptop-code"></i>
                     <p>
@@ -125,7 +125,7 @@
                 </a>
                 <ul class="nav nav-treeview">
                     <li class="nav-item">
-                        <a href="{{ route('subprintStore') }}" class="nav-link {{ request()->is('qce/report*') ? 'active' : '' }}">
+                        <a href="{{ route('subprintStore') }}" class="nav-link {{ request()->is('qce/report/view*') ? 'active' : '' }}">
                             <i class="fas fa-file-pdf nav-icon"></i>
                             <p>QCE Submissions Print</p>
                         </a>
@@ -134,6 +134,12 @@
                         <a href="" class="nav-link">
                             <i class="fas fa-file-excel nav-icon"></i>
                             <p>QS Student Satisfaction</p>
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="{{ route('summaryEvalStore') }}" class="nav-link {{ request()->is('qce/report/effect*') ? 'active' : '' }}">
+                            <i class="fas fa-file-pdf nav-icon"></i>
+                            <p>Summary of Evaluation</p>
                         </a>
                     </li>
                 </ul>

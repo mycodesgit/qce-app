@@ -91,7 +91,13 @@ $(document).ready(function() {
                                     <a class="dropdown-item btn-update-photo" 
                                         href="#" 
                                         data-id="${row.fctyid}" 
-                                        data-photo="${row.profimage}">
+                                        data-flname="${row.lname}" 
+                                        data-ffname="${row.fname}" 
+                                        data-fmname="${row.mname}" 
+                                        data-fxname="${row.ext}" 
+                                        data-adrname="${row.adrID}" 
+                                        data-deptname="${row.dept}" 
+                                        data-email="${row.email}">
                                         <i class="fas fa-edit"></i> Update Photo
                                     </a>
                                 </div>
@@ -192,6 +198,28 @@ $(document).on('click', '.btn-view-photo', function() {
     }
 
     $('#viewUploadedPhotoModal').modal('show');
+});
+
+$(document).on('click', '.btn-update-photo', function() {
+    var id = $(this).data('id');
+    var lName = $(this).data('flname');
+    var fName = $(this).data('ffname');
+    var mName = $(this).data('fmname');
+    var exName = $(this).data('fxname');
+    var salName = $(this).data('adrname');
+    var deptName = $(this).data('deptname');
+    var email = $(this).data('email');
+
+    $('#editFacultyId').val(id);
+    $('#editLastname').val(lName);
+    $('#editFirstname').val(fName);
+    $('#editMiddlename').val(mName);
+    $('#editExtname').val(exName);
+    $('#editSalutation').val(salName);
+    $('#college_room').val(deptName);
+    $('#editEmail').val(email);
+
+    $('#updatefacPhotoModal').modal('show');
 });
 
 

@@ -75,7 +75,7 @@ class FacultyController extends Controller
             'facidprof' => 'required',
             'lname' => 'required',
             'fname' => 'required',
-            'profimage' => 'required|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
+            //'profimage' => 'required|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
         ]);
 
         if ($validator->fails()) {

@@ -32,7 +32,7 @@ use App\Models\ScheduleDB\Faculty;
 use App\Models\ScheduleDB\Subject;
 use App\Models\ScheduleDB\SubjectOffered;
 
-class ReportsController extends Controller
+class ReportsPrintSubmissionController extends Controller
 {
     public function subprintStore()
     {

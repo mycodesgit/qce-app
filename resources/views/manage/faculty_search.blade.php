@@ -214,6 +214,88 @@
     </div>
 </div>
 
+<div class="modal fade" id="updatefacPhotoModal" role="dialog" aria-labelledby="updatefacPhotoModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="updatefacPhotoModalLabel">Update Photo</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <form id="updatefacPhotoForm" enctype="multipart/form-data">
+                <div class="modal-body">
+                    <input type="hidden" name="facidprof" id="updatefacPhotoId" readonly>
+
+                    <div class="form-group">
+                        <div class="form-row">
+                            <div class="col-md-3">
+                                <label for="editLastname">Lastname</label>
+                                <input type="text" class="form-control form-control-sm" id="editLastname" name="lname" oninput="var words = this.value.split(' '); for(var i = 0; i < words.length; i++){ words[i] = words[i].substr(0,1).toUpperCase() + words[i].substr(1); } this.value = words.join(' ');" readonly>
+                            </div>
+                            <div class="col-md-3">
+                                <label for="editFirstname">Firstname</label>
+                                <input type="text" class="form-control form-control-sm" id="editFirstname" name="fname" oninput="var words = this.value.split(' '); for(var i = 0; i < words.length; i++){ words[i] = words[i].substr(0,1).toUpperCase() + words[i].substr(1); } this.value = words.join(' ');" readonly>
+                            </div>
+                            <div class="col-md-3">
+                                <label for="editMiddlename">Middlename</label>
+                                <input type="text" class="form-control form-control-sm" id="editMiddlename" name="mname" oninput="var words = this.value.split(' '); for(var i = 0; i < words.length; i++){ words[i] = words[i].substr(0,1).toUpperCase() + words[i].substr(1); } this.value = words.join(' ');" readonly>
+                            </div>
+                            <div class="col-md-3">
+                                <label for="editExtname">Ext</label>
+                                <input type="number" class="form-control form-control-sm" id="editExtname" name="ext" readonly>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <div class="form-row">
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label for="editImage" class="font-weight-bold">Upload Photo</label>
+                                    <div id="dropZone" class="file-drop-zone" 
+                                        style="border: 2px dashed #47b656; border-radius: 10px; padding: 40px; text-align: center; cursor: pointer; position: relative;">
+                                        <input type="file" class="custom-file-input" id="editImage" name="profimage" accept=".png, .jpg" 
+                                            onchange="previewImage(event)" style="opacity: 0; position: absolute; top: 0; left: 0; width: 100%; height: 100%; cursor: pointer;">
+                                        <div class="file-upload-content">
+                                            <div class="upload-icon" style="font-size: 3em; color: #47b656;">
+                                                <i class="fas fa-cloud-upload-alt"></i>
+                                            </div>
+                                            <p class="upload-text" style="margin: 10px 0; color: #47b656;">Browse Files to upload</p>
+                                        </div>
+                                    </div>
+                                    <div class="file-info mt-2" style="text-align: center; color: #555;">
+                                        <i class="fas fa-file"></i> <span id="fileNameDisplay">No selected file -</span>
+                                        <button type="button" class="btn btn-sm btn-outline-danger btn-sm ml-2" onclick="clearFile()">
+                                            <i class="fas fa-times"></i>
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label for="imagePreview" class="font-weight-bold">Photo Preview</label>
+                                    <div class="image-preview-container" style="position: relative; width: 100%; height: 200px; border: 1px solid #ddd; border-radius: 5px; overflow: hidden;">
+                                        <img id="imagePreview" src="#" alt="Image Preview" style="display: none; width: 100%; height: 100%; object-fit: cover;"/>
+                                        <div class="image-preview-overlay" style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0, 0, 0, 0.5); color: #fff; display: flex; align-items: center; justify-content: center; font-size: 1.2em;">
+                                            No Photo
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                    <button type="submit" class="btn btn-primary">Yes, upload photo</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
 <script>
     var facultyReadRoute = "{{ route('getfacultylistRead') }}";
     var facultyUploadRoute = "{{ route('facultyUploadImage') }}";

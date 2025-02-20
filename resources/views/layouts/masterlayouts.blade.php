@@ -34,7 +34,7 @@
 
     <style>
         .sidebar-dark-primary .nav-sidebar>.nav-item>.nav-link.active, .sidebar-light-primary .nav-sidebar>.nav-item>.nav-link.active{
-            background-color: #1f5036 !important ;
+            background-color: #007B3A !important ;
             color: white;
         }
         [class*="sidebar-dark-"] .nav-treeview>.nav-item>.nav-link.active, [class*="sidebar-dark-"] .nav-treeview>.nav-item>.nav-link.active:hover, [class*="sidebar-dark-"] .nav-treeview>.nav-item>.nav-link.active:focus {
@@ -257,6 +257,9 @@
     @endif
     @if(request()->routeIs('subprint_searchresultStore'))
         <script src="{{ asset('js/evalajax/evalsubmissionprintSerialize.js') }}"></script>
+    @endif
+    @if(request()->routeIs('summaryEvalStore'))
+        <script src="{{ asset('js/evalajax/getfacultySerialize.js') }}"></script>
     @endif
 
     <!-- Validation -->

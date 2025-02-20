@@ -12,7 +12,8 @@ use App\Http\Controllers\QuestionController;
 use App\Http\Controllers\SemesterController;
 use App\Http\Controllers\QceformController;
 use App\Http\Controllers\UserController;
-use App\Http\Controllers\ReportsController;
+use App\Http\Controllers\ReportsPrintSubmissionController;
+use App\Http\Controllers\ReportsSummaryEvalController;
 
 use App\Http\Controllers\QCEevalformController;
 /*
@@ -96,13 +97,17 @@ Route::group(['middleware'=>['login_empauth']],function(){
     });
 
     Route::prefix('/qce/report')->group(function () {
-        Route::get('/view/search', [ReportsController::class, 'subprintStore'])->name('subprintStore');
-        Route::get('/view/search/result', [ReportsController::class, 'subprint_searchresultStore'])->name('subprint_searchresultStore');
-        Route::get('/view/search/result/eval/submission/ajax', [ReportsController::class, 'getevalsubratelistRead'])->name('getevalsubratelistRead');
-        Route::get('/view/search/result/eval/submission/printedajax', [ReportsController::class, 'getevalsubrateprintedlistRead'])->name('getevalsubrateprintedlistRead');
-        Route::get('/info/getcourseyrsec/ajax', [ReportsController::class, 'getCoursesyearsec'])->name('getCoursesyearsec');
-        Route::get('/info/getevalpdf/print/evaluation', [ReportsController::class, 'exportPrintEvalPDF'])->name('exportPrintEvalPDF');
-        Route::post('/info/getevalpdf/print/evaluation/update-statprint', [ReportsController::class, 'updateStatprint'])->name('updateStatprint');
+        Route::get('/view/search', [ReportsPrintSubmissionController::class, 'subprintStore'])->name('subprintStore');
+        Route::get('/view/search/result', [ReportsPrintSubmissionController::class, 'subprint_searchresultStore'])->name('subprint_searchresultStore');
+        Route::get('/view/search/result/eval/submission/ajax', [ReportsPrintSubmissionController::class, 'getevalsubratelistRead'])->name('getevalsubratelistRead');
+        Route::get('/view/search/result/eval/submission/printedajax', [ReportsPrintSubmissionController::class, 'getevalsubrateprintedlistRead'])->name('getevalsubrateprintedlistRead');
+        Route::get('/info/getcourseyrsec/ajax', [ReportsPrintSubmissionController::class, 'getCoursesyearsec'])->name('getCoursesyearsec');
+        Route::get('/info/getevalpdf/print/evaluation', [ReportsPrintSubmissionController::class, 'exportPrintEvalPDF'])->name('exportPrintEvalPDF');
+        Route::post('/info/getevalpdf/print/evaluation/update-statprint', [ReportsPrintSubmissionController::class, 'updateStatprint'])->name('updateStatprint');
+
+        Route::get('/effect/srch/summary', [ReportsSummaryEvalController::class, 'summaryEvalStore'])->name('summaryEvalStore');
+        Route::get('/effect/srch/summary/resultlist', [ReportsSummaryEvalController::class, 'summaryEvalFilter'])->name('summaryEvalFilter');
+        Route::get('/effect/srch/getfaclty/ajax', [ReportsSummaryEvalController::class, 'getFacultycamp'])->name('getFacultycamp');
     });
 });
 

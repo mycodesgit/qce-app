@@ -6,10 +6,12 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="csrf-token" content="{{ csrf_token() }}">
     
-    <title>CPSU OFES - Login</title>
+    <title>CPSU Campus Wi-Fi - Login</title>
 
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css" integrity="sha384-rbsA2VBKQhggwzxH7pPCaAqO46MgnOM80zW1RWuH61DGLwZJEdK2Kadq2F9CUG65" crossorigin="anonymous">
     {{-- <link rel="stylesheet" href="style.css"> --}}
+    <!-- Font Awesome Icons -->
+    <link rel="stylesheet" href="{{ asset('template/plugins/fontawesome-free-v6/css/all.min.css')}}">
     <!-- Toastr -->
     <link rel="stylesheet" href="{{ asset('template/plugins/toastr/toastr.min.css') }}">
     <!-- Logo -->
@@ -66,65 +68,160 @@
              }
 
         }
-        .center-top {
-            position: absolute;
-            top: 130px;
-            left: 50%;
-            transform: translateX(-50%);
-        }
-        #cpsulogoImage {
-            display: none; /* Default: Hidden */
-        }
 
-        @media (max-width: 768px) { 
+        
+
+        @media (min-width: 769px) { 
             #cpsulogoImage {
-                display: block !important; /* Ensure it's shown on mobile */
+                display: none !important; /* Default: Hidden */
             }
-        }
-        #cpsulogoleftsideImage {
-            display: block; /* Default: Hidden */
         }
 
         @media (max-width: 768px) { 
             #cpsulogoleftsideImage {
-                display: none !important; /* Ensure it's shown on mobile */
+                display: none !important; Ensure it's shown on mobile
             }
         }
+        #particles-js {
+            position: fixed;
+            width: 100%;
+            height: 100%;
+            /* background-image: url('{{ asset('template/img/bg-campuswifi.png') }}'); */
+            background-repeat: no-repeat;
+            background-size: cover;
+            background-position: 100%;
+            z-index: -1;
+        }
+
+        /* Numeric Keyboard Container */
+        .keyboard-container {
+            position: fixed;
+            bottom: 20px;
+            left: 50%;
+            transform: translateX(-50%);
+            background: #ffffff;
+            border: 3px solid #007B3A;
+            border-radius: 10px;
+            padding: 15px;
+            display: flex;
+            gap: 10px;
+            box-shadow: 0 6px 10px rgba(0, 0, 0, 0.4);
+            z-index: 999;
+            /* display: none; */
+
+            /* Animation properties */
+            opacity: 0;
+            transform: translate(-50%, 50px);
+            transition: all 0.5s ease;
+            pointer-events: none;
+        }
+
+        .keyboard-container.show {
+            opacity: 1;
+            transform: translate(-50%, 0);
+            pointer-events: auto;
+        }
+
+        /* Key Buttons */
+        .key-btn {
+            width: 50px;
+            height: 50px;
+            font-size: 1.6rem;
+            text-align: center;
+            cursor: pointer;
+            background: #007B3A;
+            color: #fff;
+            border: none;
+            border-radius: 5px;
+            transition: transform 0.2s;
+        }
+
+        .key-btn.clicked {
+            animation: haptic-animation 0.3s ease !important;
+        }
+
+        .goback.clicked {
+            animation: haptic-animation 0.3s ease !important;
+        }
+
+        @keyframes haptic-animation {
+            0% {
+                transform: scale(1);
+            }
+            50% {
+                transform: scale(1.1);
+            }
+            100% {
+                transform: scale(1);
+            }
+        }
+
+        /* Control Buttons (Backspace & Clear) */
+        .key-control {
+            background: #DC3545;
+        }
+
+        .key-control:hover {
+            background: #c82333;
+        }
+
+        .key-control-dash {
+            background: #e9b10a;
+        }
+
+        .key-control-dash:hover {
+            background: #e9b10a;
+        }
+
+        .key-letter {
+            background: #6c757d;
+        }
+
+        .key-letter:hover {
+            background: #6c757d;
+        }
+
+        /* Hide Keyboard on Mobile */
+        @media (max-width: 768px) {
+            .keyboard-container {
+                display: none !important;
+            }
+        }
+
     </style>
 </head>
 <body>
     <div class="container d-flex justify-content-center align-items-center min-vh-100">
         <div class="row border rounded-5 p-3 bg-white shadow box-area">
-            <div id="cpsulogoImage" style="z-index: 999">
-                <img src="{{ asset('template/img/cpsulogov4.png') }}" style="width:100px;" class="center-top">
-            </div>
-           <div class="col-md-6 rounded-4 d-flex justify-content-center align-items-center flex-column left-box" style="background: #04401f;">
+            <div class="col-md-6 rounded-4 d-flex justify-content-center align-items-center flex-column left-box" style="background: #04401f;">
+                {{-- <div id="particles-js"></div> --}}
                 <div class="featured-image mb-3">
-                    <center><img src="{{ asset('template/img/cpsulogov4.png') }}" class="img-fluid" id="cpsulogoleftsideImage" style="width: 100px; padding-top: 0px;"></center>
-                    {{-- <img src="{{ asset('template/img/1.png') }}" class="img-fluid" id="markuplogoImage" style="width: 250px; margin-top: -10px;"> --}}
-                    <p class="text-white fs-2" style="font-family: 'Courier New', Courier, monospace; font-weight: 600;">CPSU OFES</p>
+                    <center><img src="{{ asset('template/img/cpsulogov4.png') }}" class="img-fluid" id="" style="width: 100px; padding-top: 0px;"></center>
+                    <p class="text-white" style="font-family: 'Courier New', Courier, monospace; font-weight: 600; font-size: 1.5em !important">CPSU OFES</p>
                 </div>
-                <small class="text-white text-wrap text-center" style="width: 17rem;font-family: 'Courier New', Courier, monospace;">Join experienced our Online Faculty Evaluation System (OFES)</small><br><br>
-           </div> 
+                <small class="text-white text-wrap text-center" style="width: 17rem;font-family: 'Courier New', Courier, monospace;">Join and experienced</br></small>
+                {{-- <center><img src="{{ asset('template/img/cpsulogov4.png') }}" class="img-fluid" id="cpsulogoleftsideImage" style="width: 80%; padding-top: 0px;"></center> --}}
+            </div> 
         
             <div class="col-md-6 right-box">
                 <div class="row align-items-center">
                     <div class="header-text mb-4 text-center">
-                         <h2>Hello,Again</h2>
-                         <p>Sign in to start your session</p>
+                        <img src="{{ asset('template/img/cpsulogov4.png') }}" style="width:100px; margin-top: -250px" id="cpsulogoImage">
+                        <h2>Hi, Cenphilian</h2>
+                        <p>Sign in to start session</p>
 
                     </div>
                     <form action="{{ route('empstudlogin') }}" method="post">
                         @csrf
                         <div class="input-group mb-3">
-                            <input type="text" name="studid" class="form-control form-control-lg bg-light fs-6" placeholder="Student ID number">
+                            <input type="text" name="studid" class="form-control form-control-lg bg-light fs-6" placeholder="Student ID number" id="studentIdInput">
                         </div>
                         <div class="input-group mb-1">
-                            <input type="password" name="password" class="form-control form-control-lg bg-light fs-6" placeholder="Password">
+                            <input type="password" name="password" class="form-control form-control-lg bg-light fs-6" placeholder="Password" id="studentPassInput">
                         </div>
                         <div class="input-group mb-5 d-flex justify-content-between">
                             <div class="form-check">
-                                <input type="checkbox" class="form-check-input" id="formCheck">
+                                <input type="checkbox" class="form-check-input" id="formCheck" onclick="myFunction()">
                                 <label for="formCheck" class="form-check-label text-secondary"><small>Show Password</small></label>
                             </div>
                             <div class="forgot">
@@ -147,6 +244,11 @@
     <script src="{{ asset('template/plugins/moment/moment.min.js') }}"></script>
     <!-- Toastr -->
     <script src="{{ asset('template/plugins/toastr/toastr.min.js') }}"></script>
+    {{-- <script src="{{ asset('particles/particles.js') }}"></script>
+    <script src="{{ asset('particles/app.js') }}"></script> --}}
+    <!-- Context -->
+    <script src="{{ asset('js/basic/contextmenu.js') }}"></script>
+    
 
     <script>
         $(document).ready(function() {
@@ -168,6 +270,16 @@
                 });
             @endif
         });
+
+        function myFunction() {
+            var x = document.getElementById("studentPassInput");
+            if (x.type === "password") {
+                x.type = "text";
+            } else {
+                x.type = "password";
+            }
+        }
     </script>
+
 </body>
 </html>
