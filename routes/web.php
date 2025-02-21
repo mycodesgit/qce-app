@@ -108,6 +108,10 @@ Route::group(['middleware'=>['login_empauth']],function(){
         Route::get('/effect/srch/summary', [ReportsSummaryEvalController::class, 'summaryEvalStore'])->name('summaryEvalStore');
         Route::get('/effect/srch/summary/resultlist', [ReportsSummaryEvalController::class, 'summaryEvalFilter'])->name('summaryEvalFilter');
         Route::get('/effect/srch/getfaclty/ajax', [ReportsSummaryEvalController::class, 'getFacultycamp'])->name('getFacultycamp');
+        Route::get('/effect/srch/summary/resultlist/view/Summary/pdfeval', [ReportsSummaryEvalController::class, 'gensummaryevalPDF'])->name('gensummaryevalPDF');
+        Route::get('/effect/srch/summary/resultlist/view/Comments/pdfeval', [ReportsSummaryEvalController::class, 'gencommentsevalPDF'])->name('gencommentsevalPDF');
+        Route::get('/effect/srch/summary/resultlist/view/Points/pdfeval', [ReportsSummaryEvalController::class, 'genpointsevalPDF'])->name('genpointsevalPDF');
+        Route::get('/effect/srch/summary/resultlist/view/Sheet/pdfeval', [ReportsSummaryEvalController::class, 'gensumsheetevalPDF'])->name('gensumsheetevalPDF');
     });
 });
 

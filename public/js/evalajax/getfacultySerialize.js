@@ -12,7 +12,7 @@ $(document).ready(function() {
                     $('#faclty').empty();
                     $('#faclty').append('<option disabled selected>Select a Faculty</option>');
                     $.each(data, function(key, value) {
-                        $('#faclty').append('<option value="' + value.id + '">' + value.lname + ', ' + value.fname + '</option>');
+                        $('#faclty').append('<option value="' + value.fctyid + '">' + value.lname + ', ' + value.fname + '</option>');
                     });
                 }
             });
