@@ -7,7 +7,7 @@
         $title         = 'Points';
         $title2        = 'FACULTY RATING';
         $fac_name      =  $fcs->first()->qcefacname;        
-        $fac_pos       = $facDesignateId->designation . ', ' . $facDesignateId->college_name;
+        $fac_pos       = 'FACULTY POSITION';
         $campus        = '';
         if (request('campus') === 'MC') {
             $campus = 'CPSU MAIN CAMPUS';
@@ -36,7 +36,7 @@
         $sem_range     = '2nd Semester';                   
         $sch_yr        = request('schlyear');
         $reviewer      = 'REVIEWER NAME';
-        $reviewer_pos  = 'Reviewer Position';
+        $reviewer_pos  =  $facDesignateId->designation . ', ' . $facDesignateId->college_name = str_replace(' Of ', ' of ', ucwords(strtolower($facDesignateId->college_name)));        ;
         $date_signed   = 'July 1, 2024';
         $endorser      = 'FERNANDO D. ABELLO, Ph. D.';
         $endorser_pos  = 'Endorser Position';

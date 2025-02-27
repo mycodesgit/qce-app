@@ -153,10 +153,17 @@ class ReportsSummaryEvalController extends Controller
         $facId = DB::connection('schedule')->table('faculty')
             ->where('id', $faclty)
             ->first();
-
+                    
+        $facDean = QCEfevalrate::where('schlyear', $schlyear)
+            ->where('semester', $semester)
+            ->where('qcefacID', $faclty)
+            ->first();
+        
         $facDesignateId = DB::connection('schedule')->table('fac_designation')
             ->join('college', 'fac_designation.facdept', '=', 'college.college_abbr')
-            ->where('fac_id', $faclty)
+            ->where('schlyear', $schlyear)
+            ->where('semester', $semester)
+            ->where('facdept', $facDean->prog)
             ->first();
 
         $fcs = QCEfevalrate::where('campus', $campus)
