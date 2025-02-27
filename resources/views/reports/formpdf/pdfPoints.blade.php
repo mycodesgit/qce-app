@@ -25,7 +25,7 @@
             $campus = 'CPSU CANDONI CAMPUS';
         } elseif (request('campus') === 'CC') {
             $campus = 'CPSU CAUAYAN CAMPUS';
-        } elseif (request('campus') === 'SC') {a
+        } elseif (request('campus') === 'SC') {
             $campus = 'CPSU SIPALAY CAMPUS';
         } elseif (request('campus') === 'HinC') {
             $campus = 'CPSU HINOBAAN CAMPUS';
