@@ -29,6 +29,7 @@ use App\Models\ScheduleDB\College;
 use App\Models\ScheduleDB\Department;
 use App\Models\ScheduleDB\EnPrograms;
 use App\Models\ScheduleDB\Faculty;
+use App\Models\ScheduleDB\FacDesignation;
 use App\Models\ScheduleDB\Subject;
 use App\Models\ScheduleDB\SubjectOffered;
 
@@ -153,6 +154,11 @@ class ReportsSummaryEvalController extends Controller
             ->where('id', $faclty)
             ->first();
 
+        $facDesignateId = DB::connection('schedule')->table('fac_designation')
+            ->join('college', 'fac_designation.facdept', '=', 'college.college_abbr')
+            ->where('fac_id', $faclty)
+            ->first();
+
         $fcs = QCEfevalrate::where('campus', $campus)
             ->where('schlyear', $schlyear)
             ->where('semester', $semester)
@@ -275,6 +281,7 @@ class ReportsSummaryEvalController extends Controller
             'total_student_eval' => $total_student_eval,
             'supervisor_total' => $supervisor_total,
             'facId' => $facId,
+            'facDesignateId' => $facDesignateId,
         ];
 
         $pdf = PDF::loadView('reports.formpdf.pdfPoints', $data)->setPaper('Legal', 'landscape');
