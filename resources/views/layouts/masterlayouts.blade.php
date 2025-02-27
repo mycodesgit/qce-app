@@ -96,7 +96,7 @@
         .nav-tabs .nav-link.active {
             color: #000000 !important;
             background-color: #ffffff;
-            border-top: 3px solid #32ac71;
+            border-top: 2px solid #32ac71;
             border-color: #32ac71 #32ac71 #ffffff;
         }
     </style>

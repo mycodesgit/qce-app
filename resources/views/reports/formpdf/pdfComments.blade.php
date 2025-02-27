@@ -67,9 +67,9 @@
 			@php
 			$evaluations = ['1. Student evaluation', '2. Student evaluation', '3. Student evaluation'];
 			@endphp
-			@foreach ($evaluations as $evaluation)
+			@foreach ($studcomments as $datastudcomments)
 				<tr>
-					<td style="padding-left: 10px;">{{ $evaluation }}</td>
+					<td style="padding-left: 10px;">{{ $datastudcomments->studidno }}. {{ $datastudcomments->qcecomments }}</td>
 				</tr>
 			@endforeach
 		</table>
@@ -78,10 +78,19 @@
 	<b style="font-weight: bold; margin-left: 20px; font-size: 11pt;">Supervisor:</b>
 	
 	<div id="table2" class="table">
-		<table border="1" width="94%" style="margin-bottom: 20px; margin-left: 20px; margin-right: 20px; border-collapse: collapse;">		
-			<tr>
-				<td style="height: 20px; padding-left: 10px;"> 1. Supervisor evaluation</td>
-			</tr>
+		<table border="1" width="94%" style="margin-bottom: 20px; margin-left: 20px; margin-right: 20px; border-collapse: collapse;">	
+			@if ($supercomments->isNotEmpty()) 
+				@foreach ($supercomments as $datasupercomments)
+					<tr>
+						<td style="height: 20px; padding-left: 10px;"> 1. {{ $datasupercomments->qcecomments }}</td>
+					</tr>
+				@endforeach
+			@else
+				<tr>
+					<td style="height: 20px; padding-left: 10px;"> 1. </td>
+				</tr>
+			@endif
+	
 		</table>
 	</div>    
 

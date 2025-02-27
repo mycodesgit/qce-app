@@ -6,17 +6,39 @@
 	@php
         $title         = 'Points';
         $title2        = 'FACULTY RATING';
-        $fac_name      =  $facsum->first()->qcefacname;        
-        $fac_pos       = 'FACULTY POSITION';
-        $campus        = 'CPSU MAIN CAMPUS';
-        $dept          = 'CCS';
+        $fac_name      =  $fcs->first()->qcefacname;        
+        $fac_pos       = '.';
+        $campus        = '';
+        if (request('campus') === 'MC') {
+            $campus = 'CPSU MAIN CAMPUS';
+        } elseif (request('campus') === 'VC') {
+            $campus = 'CPSU VICTORIAS CAMPUS';
+        } elseif (request('campus') === 'SCC') {
+            $campus = 'CPSU SAN CARLOS CAMPUS';
+        } elseif (request('campus') === 'HC') {
+            $campus = 'CPSU HINIGARAN CAMPUS';
+        } elseif (request('campus') === 'MP') {
+            $campus = 'CPSU MOISES PADILLA CAMPUS';
+        } elseif (request('campus') === 'IC') {
+            $campus = 'CPSU ILOG CAMPUS';
+        } elseif (request('campus') === 'CA') {
+            $campus = 'CPSU CANDONI CAMPUS';
+        } elseif (request('campus') === 'CC') {
+            $campus = 'CPSU CAUAYAN CAMPUS';
+        } elseif (request('campus') === 'SC') {
+            $campus = 'CPSU SIPALAY CAMPUS';
+        } elseif (request('campus') === 'HinC') {
+            $campus = 'CPSU HINOBAAN CAMPUS';
+        }
+        
+        $dept          = $facId->dept;
         $rate_period   = 'February 2024 - June 2024';   
         $sem_range     = '2nd Semester';                   
-        $sch_yr        = '2023-2024';
+        $sch_yr        = request('schlyear');
         $reviewer      = 'REVIEWER NAME';
         $reviewer_pos  = 'Reviewer Position';
         $date_signed   = 'July 1, 2024';
-        $endorser      = 'ENDORSER NAME';
+        $endorser      = 'FERNANDO D. ABELLO, Ph. D.';
         $endorser_pos  = 'Endorser Position';
 	@endphp
 	<title>{{ $title2 }}</title>
@@ -75,6 +97,11 @@
     </div>
 
 	<div id="table1" class="table">
+        @php
+            $total_studentEval = $total_student_eval * 0.6 * 0.6;
+            $total_supervisorEval = $supervisor_total * 0.4 * 0.6;
+            $overalltotal_points = 0;
+        @endphp
         <table border="1" width="94%" style="margin-bottom: 20px; margin-left: 20px; margin-right: 20px; border-collapse: collapse;">		
             <tr>
                 <th rowspan="2" style="width: 20%">KRA 1 - INSTRUCTION</th>
@@ -92,10 +119,10 @@
             </tr>
             <tr>
                 <td style="font-weight: bold;">1.1 STUDENT EVAL'N. (60%)</td>
-                <td style="text-align: center;">&nbsp;</td>
-                <td style="text-align: center;">93.11</td>
-                <td style="text-align: center;">93.11</td>
-                <td style="text-align: center;">33.52</td>
+                <td style="text-align: center;"></td>
+                <td style="text-align: center;">{{ $total_student_eval }}</td>
+                <td style="text-align: center;">{{ $total_student_eval }}</td>
+                <td style="text-align: center;">{{ $total_studentEval }}</td>
             </tr>
             <tr>
                 <td>&nbsp;</td>
@@ -107,16 +134,16 @@
             <tr>
                 <td style="font-weight: bold;">1.2 SUPERVISOR EVAL'N. (40%)</td>
                 <td style="text-align: center;">&nbsp;</td>
-                <td style="text-align: center;">93.11</td>
-                <td style="text-align: center;">83.00</td>
-                <td style="text-align: center;">19.92</td>
+                <td style="text-align: center;">{{ $supervisor_total }}</td>
+                <td style="text-align: center;">{{ $supervisor_total }}</td>
+                <td style="text-align: center;">{{ $total_supervisorEval }}</td>
             </tr>
             <tr>
                 <td style="font-weight: bold; text-align: center;">TOTAL POINTS</td>
                 <td style="text-align: center;"></td>
                 <td style="text-align: center;"></td>
                 <td style="text-align: center;"></td>
-                <td style="text-align: center;">53.44</td>
+                <td style="text-align: center;">{{ $overalltotal_points = $total_studentEval + $total_supervisorEval }}</td>
             </tr>            
         </table>
 	</div>    
