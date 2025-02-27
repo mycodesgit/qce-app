@@ -161,6 +161,7 @@ class ReportsSummaryEvalController extends Controller
         
         $facDesignateId = DB::connection('schedule')->table('fac_designation')
             ->join('college', 'fac_designation.facdept', '=', 'college.college_abbr')
+            ->join('faculty', 'fac_designation.fac_id', '=', 'faculty.id')
             ->where('schlyear', $schlyear)
             ->where('semester', $semester)
             ->where('facdept', $facDean->prog)
