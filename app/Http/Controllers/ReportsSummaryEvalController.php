@@ -84,14 +84,22 @@ class ReportsSummaryEvalController extends Controller
         $semester = $request->query('semester');
         $faclty = $request->query('faclty');
 
+        $fcs = QCEfevalrate::where('campus', $campus)
+            ->where('schlyear', $schlyear)
+            ->where('semester', $semester)
+            ->where('qcefacID', $faclty)
+            ->first(); // Use get() to handle multiple records
+
+        // Fetch all evaluations where the evaluator role is 'Student'
         $facsum = QCEfevalrate::where('campus', $campus)
             ->where('schlyear', $schlyear)
             ->where('semester', $semester)
             ->where('qcefacID', $faclty)
-            ->first();
+            ->where('qceevaluator', 'Student') // Ensure only Student responses are fetched
+            ->get(); // Use get() to handle multiple records
 
-        if (!$facsum) {
-            return response()->json(['error' => 'No record found'], 404);
+        if ($facsum->isEmpty()) {
+            return response()->json(['error' => 'No Student records found'], 404);
         }
 
         // Initialize an array to store students' data
@@ -189,8 +197,12 @@ class ReportsSummaryEvalController extends Controller
             'semester' => $semester,
         ]);
 
+        // Pass data to view
         $data = [
-            'facsum' => $facsum,
+            'fcs' => $fcs,
+            'students' => $students,
+            'category_totals' => $category_totals,
+            'supervisor' => $supervisor,
             'total_student_eval' => $total_student_eval,
             'supervisor_total' => $supervisor_total,
         ];

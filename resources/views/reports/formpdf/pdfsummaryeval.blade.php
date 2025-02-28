@@ -6,8 +6,8 @@
 	@php
 		$title = 'Summary of Evaluation for Instruction/Teaching Effectiveness';
 		$title2 = 'SUMMARY';
-		$fac_name = $facsum->first()->qcefacname;
-		$rate_period = $facsum->first()->ratingfromto;
+		$fac_name = $fcs->first()->qcefacname;
+		$rate_period = $fcs->first()->ratingfromto;
 		$fac_pos = 'FACULTY POSITION';
 		$studentRating = 4.5;
 		$supervisorRating = 3.5;
@@ -88,8 +88,8 @@
 	<div id="table1">
 		@php
             $total_studentEval = $total_student_eval / 20 * 0.60;
-            $total_supervisorEval = $supervisor_total * 0.4 * 0.6;
-            $overalltotal_points = 0;
+            $total_supervisorEval = $supervisor_total / 20 * 0.40;
+            $overallmean_points = 0;
         @endphp
 
 		<table border="1" width="94%" style="margin-top: 20px; margin-bottom: 20px; margin-left: 20px; margin-right: 20px; border-collapse: collapse;">			
@@ -98,16 +98,31 @@
 				<th style="height: 40px;">Rating</th>
 				<th style="height: 40px;">Interpretation</th>
 			</tr>	
-			@foreach ($evaluations as $evaluation)
+			{{-- @foreach ($evaluations as $evaluation)
 				@php
 					$style = isset($evaluation['bold']) && $evaluation['bold'] ? 'font-weight: bold;' : '';
 				@endphp
 				<tr style="{{ $style }}">
 					<td style="height: 40px; padding-left: 10px;">{{ $evaluation['evaluator'] }}</td>
-					<td style="height: 40px; text-align: center;"></td>
+					<td style="height: 40px; text-align: center;">{{ $total_studentEval }}</td>
 					<td style="height: 40px; text-align: center;">{{ getInterpretation(floatval(strip_tags($evaluation['rating']))) }}</td>
 				</tr>
-			@endforeach
+			@endforeach --}}
+				<tr style="">
+					<td style="height: 40px; padding-left: 10px;">Student</td>
+					<td style="height: 40px; text-align: center;">{{ $total_student_eval }} ({{ number_format($total_studentEval, 2) }})</td>
+					<td style="height: 40px; text-align: center;"></td>
+				</tr>
+				<tr style="">
+					<td style="height: 40px; padding-left: 10px;">Supervisor</td>
+					<td style="height: 40px; text-align: center;">{{ $supervisor_total }} ({{ number_format($total_supervisorEval, 2) }})</td>
+					<td style="height: 40px; text-align: center;"></td>
+				</tr>
+				<tr style="">
+					<td style="height: 40px; padding-left: 10px;"><b>Overall Mean</b></td>
+					<td style="height: 40px; text-align: center;">{{ number_format($overallmean_points =  $total_studentEval + $total_supervisorEval, 2) }}</td>
+					<td style="height: 40px; text-align: center;"></td>
+				</tr>
 			</tr>
 		</table>
 	</div>
