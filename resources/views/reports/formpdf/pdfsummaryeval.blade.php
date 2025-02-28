@@ -86,6 +86,12 @@
 	</div>
 
 	<div id="table1">
+		@php
+            $total_studentEval = $total_student_eval / 20 * 0.60;
+            $total_supervisorEval = $supervisor_total * 0.4 * 0.6;
+            $overalltotal_points = 0;
+        @endphp
+
 		<table border="1" width="94%" style="margin-top: 20px; margin-bottom: 20px; margin-left: 20px; margin-right: 20px; border-collapse: collapse;">			
 			<tr>
 				<th style="height: 40px;">Evaluator</th>
@@ -98,7 +104,7 @@
 				@endphp
 				<tr style="{{ $style }}">
 					<td style="height: 40px; padding-left: 10px;">{{ $evaluation['evaluator'] }}</td>
-					<td style="height: 40px; text-align: center;">{!! $evaluation['rating'] !!}</td>
+					<td style="height: 40px; text-align: center;"></td>
 					<td style="height: 40px; text-align: center;">{{ getInterpretation(floatval(strip_tags($evaluation['rating']))) }}</td>
 				</tr>
 			@endforeach
