@@ -230,7 +230,7 @@
                                         <div class="form-row">
                                             <div class="col-md-12">
                                                 <label>Academic Rank:</label>
-                                                <input type="text" name="name" class="form-control required-input" placeholder="Academic Rank:" value="{{ $facdetail->first()->rank }}" required readonly>
+                                                <input type="text" name="name" class="form-control" placeholder="Academic Rank:" value="{{ $facdetail->first()->rank ?? '' }}" readonly>
                                             </div>
                                         </div>
                                     </div>
@@ -359,7 +359,7 @@
 
                         <div class="progress-section d-flex align-items-center justify-content-between mt-3">
                             <button type="button" class="btn btn-default" id="back-btn" onclick="prevCard(currentCard - 1)" style="display: none;">Back</button>
-                            <button type="button" class="btn btn-primary" id="next-btn" onclick="nextCard(currentCard + 1)" style="display: none;" disabled>Next</button>
+                            <button type="button" class="btn btn-primary" id="next-btn" onclick="nextCard(currentCard + 1)" style="display: none;">Next</button>
                             {{-- <button type="button" class="btn btn-info" id="ok-btn">OK</button> --}}
                             <button type="submit" class="btn btn-primary" id="submit-btn" style="display: none;">Submit</button>
 

@@ -205,9 +205,9 @@
 
         <footer class="main-footer">
             <div class="float-right d-none d-sm-inline">
-                Anything you want
+                
             </div>
-            <strong>Copyright &copy; 2014-2021</strong> All rights reserved.
+            CPSU OFES V.1.0: Maintained and Managed by Management Information System Office (MISO) under the Leadership of Dr. Aladino C. Moraca.
         </footer>
 
     </div>
@@ -306,21 +306,7 @@
     </script>
 
     <script>
-        $(document).ready(function () {
-            function checkInputs() {
-                let allFilled = true;
-                $('.required-input').each(function () {
-                    if ($(this).val().trim() === '') {
-                        allFilled = false;
-                        return false; // Break out of loop
-                    }
-                });
-                $('#next-btn').prop('disabled', !allFilled);
-            }
-
-            $('.required-input').on('input', checkInputs);
-            checkInputs(); // Initial check in case inputs have default values
-        });
+        
     </script>
     <script>
         $(document).ready(function() {
