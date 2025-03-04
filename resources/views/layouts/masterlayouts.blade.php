@@ -11,6 +11,8 @@
     <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700&display=fallback">
     <!-- Font Awesome Icons -->
     <link rel="stylesheet" href="{{ asset('template/plugins/fontawesome-free-V6/css/all.min.css') }}">
+    <!-- icheck bootstrap -->
+    <link rel="stylesheet" href="{{ asset('template/plugins/icheck-bootstrap/icheck-bootstrap.min.css') }}">
     <!-- Theme style -->
     <link rel="stylesheet" href="{{ asset('template/dist/css/qce-style.css') }}">
     <link rel="stylesheet" href="{{ asset('template/dist/css/custom.css') }}">
@@ -37,9 +39,12 @@
             background-color: #007B3A !important ;
             color: white;
         }
-        [class*="sidebar-dark-"] .nav-treeview>.nav-item>.nav-link.active, [class*="sidebar-dark-"] .nav-treeview>.nav-item>.nav-link.active:hover, [class*="sidebar-dark-"] .nav-treeview>.nav-item>.nav-link.active:focus {
-            background-color: #1f5036 !important;
+        [class*="sidebar-light-"] .nav-treeview>.nav-item>.nav-link.active, [class*="sidebar-light-"] .nav-treeview>.nav-item>.nav-link.active:hover, [class*="sidebar-light-"] .nav-treeview>.nav-item>.nav-link.active:focus {
+            background-color: #007B3A !important;
             color: white;
+        }
+        [class*="sidebar-light-"] .nav-treeview>.nav-item>.nav-link {
+            color: #343a40;
         }
         .breadcrumbactive{
             color: #32ac71 !important;
@@ -99,6 +104,10 @@
             border-top: 2px solid #32ac71;
             border-color: #32ac71 #32ac71 #ffffff;
         }
+
+        [class*="sidebar-dark-"] {
+            background-color: #4b545c !important;
+        }
     </style>
 </head>
 
@@ -137,10 +146,10 @@
             @endif
         </nav>
 
-        <aside class="main-sidebar sidebar-dark-primary elevation-4">
+        <aside class="main-sidebar sidebar-light-primary elevation-4">
             <a href="index3.html" class="brand-link" style="background-color: #1f5036;">
                 <img src="{{ asset('template/img/CPSU_L.png') }}" alt="AdminLTE Logo" class="brand-image img-circle elevation-3" style="opacity: .8">
-                <span class="brand-text font-weight-light">Faculty QCE</span>
+                <span class="brand-text font-weight-light text-light">Faculty QCE</span>
             </a>
 
             <div class="sidebar">
@@ -162,7 +171,7 @@
                                 @endif
                             @endauth
                         </a>
-                        <span style="font-size: 10pt; color: #ccc;">
+                        <span style="font-size: 10pt; color: #1f1f1f;">
                             <i class="fa fa-circle text-success" style="font-size: 8pt"></i>
                             @php
                                 $roles = [
@@ -272,10 +281,29 @@
     <script src="{{ asset('js/validation/manage/catValidation.js') }}"></script>
     <script src="{{ asset('js/validation/manage/questValidation.js') }}"></script>
     <script src="{{ asset('js/validation/manage/semesterValidation.js') }}"></script>
-    @if(request()->routeIs('previewStore'))
+    @if(request()->routeIs('evalsubjfacStore', 'evalformStore'))
         <script src="{{ asset('js/validation/evalstud/evalValidation.js') }}"></script>
         <script src="{{ asset('js/validation/evalstud/evalSubmitValidation.js') }}"></script>
     @endif
+
+    <script>
+        document.addEventListener("DOMContentLoaded", function() {
+            function toggleAlertImage() {
+                const alertImage = document.getElementById("cpsulogoImage");
+                if (!alertImage) return; // Prevents errors if element is missing
+
+                if (window.innerWidth <= 768) {
+                    alertImage.style.display = "block"; // Show on mobile
+                } else {
+                    alertImage.style.display = "none"; // Hide on larger screens
+                }
+            }
+
+            toggleAlertImage(); // Run on page load
+            window.addEventListener("resize", toggleAlertImage); // Run on window resize
+        });
+
+    </script>
 
     <script>
         $(document).ready(function () {

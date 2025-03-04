@@ -6,8 +6,8 @@
 	@php
 		$title = 'Summary of Evaluation for Instruction/Teaching Effectiveness';
 		$title2 = 'SUMMARY';
-		$fac_name = $fcs->first()->qcefacname;
-		$rate_period = $fcs->first()->ratingfromto;
+		$fac_name = $fcs->qcefacname;
+		$rate_period = $fcs->ratingfromto;
 		$fac_pos = 'FACULTY POSITION';
 		$studentRating = 4.5;
 		$supervisorRating = 3.5;

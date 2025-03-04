@@ -6,7 +6,7 @@
 	@php
         $title         = 'Points';
         $title2        = 'FACULTY RATING';
-        $fac_name      =  $fcs->first()->qcefacname;        
+        $fac_name      =  $fcs->qcefacname;        
         $fac_pos       = 'FACULTY POSITION';
         $campus        = '';
         if (request('campus') === 'MC') {
@@ -35,9 +35,9 @@
         $rate_period   = 'February 2024 - June 2024';   
         $sem_range     = '2nd Semester';                   
         $sch_yr        = request('schlyear');
-        $reviewer      = $fcs->fname . ' ' . substr($fcs->mname, 0, 1) . ' ' . $fcs->lname . ', ' . $fcs->rankcomma;
-        /*$reviewer_pos  =  $facDesignateId->designation . ', ' . $facDesignateId->college_name = str_replace(' Of ', ' of ', ucwords(strtolower($facDesignateId->college_name))); */
-        $reviewer_pos  = '';
+        $reviewer      = $facDesignateId->fname . ' ' . substr($facDesignateId->mname, 0, 1) . ' ' . $facDesignateId->lname . ', ' . $facDesignateId->rankcomma;
+        $reviewer_pos  =  $facDesignateId->designation . ', ' . $facDesignateId->college_name = str_replace(' Of ', ' of ', ucwords(strtolower($facDesignateId->college_name)));
+        //$reviewer_pos  = '';
         $date_signed   = 'July 1, 2024';
         $endorser      = 'FERNANDO D. ABELLO, Ph. D.';
         $endorser_pos  = 'Endorser Position';

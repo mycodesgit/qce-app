@@ -59,7 +59,7 @@ class LoginController extends Controller
         //     return redirect()->route('homefaculty')->with('success', 'You have successfully logged in.');
         // } 
         elseif($validatedStudent) {
-            return redirect()->route('dash')->with('success', 'You have successfully logged in.');
+            return redirect()->route('evalsubjfacStore')->with('success', 'You have successfully logged in.');
         } 
         else {
             return redirect()->back()->with('error', 'Invalid Credentials');

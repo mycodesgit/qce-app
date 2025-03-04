@@ -4,10 +4,10 @@
 	<meta charset="utf-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1">
 	@php
-		$fac_name = $facsum->first()->qcefacname;
-		$rate_period = $facsum->first()->ratingfromto;		
+		$fac_name = $facsum->qcefacname;
+		$rate_period = $facsum->ratingfromto;		
 		$sem_range = 'Second Semester';
-		$sch_yr = $facsum->first()->schlyear;	
+		$sch_yr = $facsum->schlyear;	
 		$title = 'Comments';
 		$title2 = 'FACULTY EVALUATION COMMENTS';
 		$drafter = 'MARY GRACE NOREEN P. LEDUNA-JARANILLA, Ph. D.';

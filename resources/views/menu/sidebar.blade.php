@@ -4,6 +4,7 @@
 
 <nav class="mt-2">
     <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu" data-accordion="false">
+        @auth('web')
         <li class="nav-header text-gray">Main Navigation</li>
         <li class="nav-item ripple-effect">
             <a href="{{ route('dash') }}" class="nav-link {{$current_route=='dash'?'active':''}}">
@@ -13,6 +14,7 @@
                 </p>
             </a>
         </li>
+        @endauth
 
         @auth('web')
             <li class="nav-item ripple-effect">
