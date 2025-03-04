@@ -175,6 +175,7 @@
                         <input type="hidden" name="evaluatorname" value="{{ Auth::guard('kioskstudent')->user()->student->fname }} {{ Auth::guard('kioskstudent')->user()->student->lname }}">
                         <input type="hidden" name="evaluatorID" value="{{ Auth::guard('kioskstudent')->user()->id }}">
                         <input type="hidden" name="studidno" value="{{ Auth::guard('kioskstudent')->user()->student->stud_id }}">
+                        <input type="hidden" name="prog" value="{{ $facdetail->first()->dept }}">
 
                         <div id="card-1">
                             <p>
@@ -216,7 +217,7 @@
                                         <div class="form-row">
                                             <div class="col-md-12">
                                                 <label>Name of Faculty:</label>
-                                                <input type="text" name="qcefacname" class="form-control required-input" placeholder="Name of Faculty" value="{{ request('qcefacname') }}" required>
+                                                <input type="text" name="qcefacname" class="form-control required-input" placeholder="Name of Faculty" value="{{ request('qcefacname') }}" required readonly>
                                             </div>
                                         </div>
                                     </div>
@@ -229,7 +230,7 @@
                                         <div class="form-row">
                                             <div class="col-md-12">
                                                 <label>Academic Rank:</label>
-                                                <input type="text" name="name" class="form-control required-input" placeholder="Academic Rank:" value="Instructor I" required>
+                                                <input type="text" name="name" class="form-control required-input" placeholder="Academic Rank:" value="{{ $facdetail->first()->rank }}" required readonly>
                                             </div>
                                         </div>
                                     </div>
@@ -242,6 +243,23 @@
                             <div class="sticky-column" style="z-index: 999">
                                 <div class="card">
                                     <div class="card-body">
+                                        <div class="form-group">
+                                            <div class="form-row">
+                                                <div class="col-md-6">
+                                                    <label>Name of Faculty:</label>
+                                                    <input type="text" name="qcefacname" class="form-control required-input" placeholder="Name of Faculty" value="{{ request('qcefacname') }}" required readonly>
+                                                </div>
+                                                <div class="col-md-6">
+                                                    <label>Academic Rank:</label>
+                                                    <input type="text" name="name" class="form-control required-input" placeholder="Academic Rank:" value="{{ $facdetail->first()->rank }}" required readonly>
+                                                </div>
+                                                <div class="col-md-12">
+                                                    <label>Subject:</label>
+                                                    <input type="text" name="name" class="form-control required-input" placeholder="Academic Rank:" value="{{ $mysubjstarteval->first()->subSec }} | {{ $mysubjstarteval->first()->sub_name }} - {{ $mysubjstarteval->first()->sub_title }}" required readonly>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <hr>
                                         <label>Instruction: Please evaluate the faculty using the scale below. Encircle your rating.</label>
                                         <table id="table">
                                             <thead>

@@ -50,6 +50,7 @@ class QCEevalformController extends Controller
                             'coasv2_db_schedule.sub_offered.schlyear',
                             'coasv2_db_schedule.sub_offered.semester',
                             'coasv2_db_schedule.sub_offered.campus',
+                            'coasv2_db_schedule.faculty.rank',
                             'coasv2_db_schedule.faculty.fname',
                             'coasv2_db_schedule.faculty.lname',
                             'coasv2_db_schedule.faculty.id',
@@ -59,11 +60,19 @@ class QCEevalformController extends Controller
                         ->where('studgrades.studID', '=', Auth::guard('kioskstudent')->user()->studid)
                         ->groupBy('studgrades.subjID')
                         ->get();
-        return view('studevalform.formevalsubjfac', compact('mysubj'));
+
+        $disabledsubj = QCEfevalrate::where('qceformevalrate.studidno', '=', Auth::guard('kioskstudent')->user()->studid)
+                        ->whereIn('qceformevalrate.statprint', [1,2])
+                        ->get();
+
+        return view('studevalform.formevalsubjfac', compact('mysubj', 'disabledsubj'));
     }
 
-    public function evalformStore()
+    public function evalformStore(Request $request)
     {
+        $subjsIDselected = $request->query('id');
+        $qcefacID = $request->query('qcefacID');
+
         $inst = QCEinstruction::orderBy('inst_scale', 'DESC')->get();
         $currsem = QCEsemester::where('qcesemstat', 2)->get();
 
@@ -73,8 +82,31 @@ class QCEevalformController extends Controller
                 ->orderBy('qcequestion.id') // Order questions properly
                 ->get()
                 ->groupBy('catName');
+        
+        $facdetail = Faculty::where('id', $qcefacID)->get();
 
-        return view('studevalform.form_eval', compact('inst', 'currsem', 'question'));
+        $mysubjstarteval = Grade::join('coasv2_db_schedule.sub_offered', 'studgrades.subjID', '=', 'coasv2_db_schedule.sub_offered.id')
+                        ->leftJoin('coasv2_db_schedule.subjects', 'coasv2_db_schedule.sub_offered.subCode', '=', 'coasv2_db_schedule.subjects.sub_code')
+                        ->leftJoin('coasv2_db_schedule.scheduleclass', 'studgrades.subjID', '=', 'coasv2_db_schedule.scheduleclass.subject_id')
+                        ->select(
+                            'studgrades.*',
+                            'studgrades.id as stugdeID',
+                            'coasv2_db_schedule.subjects.sub_name',
+                            'coasv2_db_schedule.subjects.subjCollege',
+                            'coasv2_db_schedule.subjects.sub_title',
+                            'coasv2_db_schedule.sub_offered.subSec',
+                            'coasv2_db_schedule.sub_offered.schlyear',
+                            'coasv2_db_schedule.sub_offered.semester',
+                            'coasv2_db_schedule.sub_offered.campus',
+                        )
+                        ->where('coasv2_db_schedule.sub_offered.semester', 2)
+                        ->where('coasv2_db_schedule.sub_offered.schlyear', '=', '2024-2025')
+                        ->where('studgrades.studID', '=', Auth::guard('kioskstudent')->user()->studid)
+                        ->where('studgrades.subjID', $subjsIDselected)
+                        ->groupBy('studgrades.subjID')
+                        ->get();
+
+        return view('studevalform.form_eval', compact('inst', 'currsem', 'question', 'facdetail', 'mysubjstarteval'));
     }
 
     public function facevalrateformCreate(Request $request)
@@ -99,7 +131,7 @@ class QCEevalformController extends Controller
                 // ],
             ]);
             
-            //try {
+            try {
                 // $existingSurvey = QCEfevalrate::where([
                 //     ['title_id', '=', $request->input('title_id')],
                 //     ['name', '=', $request->input('name')],
@@ -126,12 +158,13 @@ class QCEevalformController extends Controller
                     'evaluatorname' => $request->input('evaluatorname'),
                     'evaluatorID' => Auth::guard('kioskstudent')->user()->id,
                     'studidno' => $request->input('studidno'),
+                    'prog' => $request->input('prog'),
                 ]);
 
                 return redirect()->route('successfacevalrateform')->with('success', 'Survey Submitted Successfully');
-            //} catch (\Exception $e) {
+            } catch (\Exception $e) {
                 return back()->with('error', 'Failed to Submit Survey');
-            //}
+            }
         }
     }
 

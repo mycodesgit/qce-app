@@ -12,6 +12,7 @@ class QCEfevalrate extends Model
     protected $table = 'qceformevalrate';
 
     protected $fillable = [
+        'subjidrate',
         'campus',
         'prog',
         'statprint',
