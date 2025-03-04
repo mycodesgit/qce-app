@@ -234,10 +234,40 @@
     </div>
 </div>
 
+<div class="modal fade" id="changeUserPassModal" tabindex="-1" role="dialog" aria-labelledby="changeUserPassModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="changeUserPassModalLabel">Change Password</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <form id="changeUserPassForm">
+                <div class="modal-body">
+                    <input type="hidden" name="id" id="changeUserPassId">
+                    <div class="form-group">
+                        <label for="editpasswordInput">Password</label>
+                        <input type="text" class="form-control" name="password" id="editpasswordInput">
+                    </div>
+                </div>
+                <div class="modal-footer justify-content-between">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                    <button type="button" id="editgeneratePassword" class="btn btn-success">
+                        <i class="fas fa-key"></i> Generate Pass
+                    </button>
+                    <button type="submit" class="btn btn-primary">Save changes</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
 <script>
     var userReadRoute = "{{ route('getUserRead') }}";
     var userCreateRoute = "{{ route('userCreate') }}";
     var userUpdateRoute = "{{ route('userUpdate', ['id' => ':id']) }}";
+    var passuserUpdateRoute = "{{ route('passUpdate', ['id' => ':studkiosid']) }}";
     var userDeleteRoute = "{{ route('userDelete', ['id' => ':id']) }}";
 </script>
         

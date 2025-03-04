@@ -110,6 +110,26 @@ class UserController extends Controller
         }
     }
 
+    public function passUpdate(Request $request) 
+    {
+        $request->validate([
+            'id' => 'required',
+            'password' => 'required',
+        ]);
+
+        try {
+            $passuser = User::findOrFail($request->input('id'));
+            $passuser->resetcount = $passuser->resetcount + 1;
+            $passuser->update([
+                'password' => Hash::make($request->input('password')),
+                'resetcount' => $passuser->resetcount,
+        ]);
+            return response()->json(['success' => true, 'message' => 'Password in Kiosk Updated successfully'], 200);
+        } catch (\Exception $e) {
+            return response()->json(['error' => true, 'message' => 'Failed to Update Password'], 404);
+        }
+    }
+
     public function userDelete($id) 
     {
         $qceuser = User::find($id);

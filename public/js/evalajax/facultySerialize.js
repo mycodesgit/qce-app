@@ -34,29 +34,35 @@ $(document).ready(function() {
             {
                 data: 'profimage',
                 render: function(data, type, row) {
-                    // Define the default image URL outside the condition
-                    let imageUrldef = `${photoStoragedef}`;
-            
-                    if (data) {
-                        // Construct the image URL correctly
-                        let imageUrl = `${photoStorage}/${data}`;
-                        return `
-                            <ul class="list-inline">
-                                <li class="list-inline-item">
-                                    <img alt="Avatar" class="table-avatar" src="${imageUrl}" width="50" height="50">
-                                </li>
-                            </ul>`;
-                    } else {
-                        // Use the default image URL when no profile image exists
-                        return `
-                            <ul class="list-inline">
-                                <li class="list-inline-item">
-                                    <img alt="Avatar" class="table-avatar" src="${imageUrldef}" width="50" height="50">
-                                </li>
-                            </ul>`;
-                    }
+                    return data ? 'Yes, there is an Photo' : 'No Photo';
                 }
-            },                       
+            },
+            // {
+            //     data: 'profimage',
+            //     render: function(data, type, row) {
+            //         // Define the default image URL outside the condition
+            //         let imageUrldef = `${photoStoragedef}`;
+            
+            //         if (data) {
+            //             // Construct the image URL correctly
+            //             let imageUrl = `${photoStorage}/${data}`;
+            //             return `
+            //                 <ul class="list-inline">
+            //                     <li class="list-inline-item">
+            //                         <img alt="Avatar" class="table-avatar" src="${imageUrl}" width="50" height="50">
+            //                     </li>
+            //                 </ul>`;
+            //         } else {
+            //             // Use the default image URL when no profile image exists
+            //             return `
+            //                 <ul class="list-inline">
+            //                     <li class="list-inline-item">
+            //                         <img alt="Avatar" class="table-avatar" src="${imageUrldef}" width="50" height="50">
+            //                     </li>
+            //                 </ul>`;
+            //         }
+            //     }
+            // },                       
             {
                 data: 'fcamp',
                 render: function(data, type, row) {
@@ -64,7 +70,7 @@ $(document).ready(function() {
                         return `
                             <div class="dropdown">
                                 <button class="btn btn-primary btn-sm dropdown-toggle" type="button" id="dropdownMenu${row.fctyid}" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                    <i class="fas fa-camera"></i> Photo
+                                    <i class="fas fa-pen"></i> 
                                 </button>
                                 <div class="dropdown-menu" aria-labelledby="dropdownMenu${row.fctyid}">
                                     <a class="dropdown-item btn-upload-photo" 
@@ -99,6 +105,18 @@ $(document).ready(function() {
                                         data-deptname="${row.dept}" 
                                         data-email="${row.email}">
                                         <i class="fas fa-edit"></i> Update Photo
+                                    </a>
+                                    <a class="dropdown-item btn-update-rank" 
+                                        href="#" 
+                                        data-id="${row.fctyid}" 
+                                        data-felname="${row.lname}" 
+                                        data-fefname="${row.fname}" 
+                                        data-femname="${row.mname}" 
+                                        data-fexname="${row.ext}" 
+                                        data-adrname="${row.adrID}" 
+                                        data-deptname="${row.dept}" 
+                                        data-email="${row.email}">
+                                        <i class="fas fa-pen"></i> Academinc Rank
                                     </a>
                                 </div>
                             </div>`;
@@ -210,16 +228,38 @@ $(document).on('click', '.btn-update-photo', function() {
     var deptName = $(this).data('deptname');
     var email = $(this).data('email');
 
-    $('#editFacultyId').val(id);
-    $('#editLastname').val(lName);
-    $('#editFirstname').val(fName);
-    $('#editMiddlename').val(mName);
-    $('#editExtname').val(exName);
-    $('#editSalutation').val(salName);
+    $('#updatefacnewPhotoId').val(id);
+    $('#editnewLastname').val(lName);
+    $('#editnewFirstname').val(fName);
+    $('#editnewMiddlename').val(mName);
+    $('#editnewExtname').val(exName);
+    $('#editnewSalutation').val(salName);
     $('#college_room').val(deptName);
     $('#editEmail').val(email);
 
     $('#updatefacPhotoModal').modal('show');
+});
+
+$(document).on('click', '.btn-update-rank', function() {
+    var id = $(this).data('id');
+    var llName = $(this).data('felname');
+    var ffName = $(this).data('fefname');
+    var mmName = $(this).data('femname');
+    var eexName = $(this).data('fexname');
+    var salName = $(this).data('adrname');
+    var deptName = $(this).data('deptname');
+    var email = $(this).data('email');
+
+    $('#eeditFacultyId').val(id);
+    $('#eeditLastname').val(llName);
+    $('#eeditFirstname').val(ffName);
+    $('#eeditMiddlename').val(mmName);
+    $('#eeditExtname').val(eexName);
+    $('#eeditSalutation').val(salName);
+    $('#college_room').val(deptName);
+    $('#editEmail').val(email);
+
+    $('#editFacultyModal').modal('show');
 });
 
 

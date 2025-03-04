@@ -225,25 +225,25 @@
             </div>
             <form id="updatefacPhotoForm" enctype="multipart/form-data">
                 <div class="modal-body">
-                    <input type="hidden" name="facidprof" id="updatefacPhotoId" readonly>
+                    <input type="hidden" name="facidprof" id="updatefacnewPhotoId" readonly>
 
                     <div class="form-group">
                         <div class="form-row">
                             <div class="col-md-3">
-                                <label for="editLastname">Lastname</label>
-                                <input type="text" class="form-control form-control-sm" id="editLastname" name="lname" oninput="var words = this.value.split(' '); for(var i = 0; i < words.length; i++){ words[i] = words[i].substr(0,1).toUpperCase() + words[i].substr(1); } this.value = words.join(' ');" readonly>
+                                <label for="editnewLastname">Lastname</label>
+                                <input type="text" class="form-control form-control-sm" id="editnewLastname" name="lname" oninput="var words = this.value.split(' '); for(var i = 0; i < words.length; i++){ words[i] = words[i].substr(0,1).toUpperCase() + words[i].substr(1); } this.value = words.join(' ');" readonly>
                             </div>
                             <div class="col-md-3">
-                                <label for="editFirstname">Firstname</label>
-                                <input type="text" class="form-control form-control-sm" id="editFirstname" name="fname" oninput="var words = this.value.split(' '); for(var i = 0; i < words.length; i++){ words[i] = words[i].substr(0,1).toUpperCase() + words[i].substr(1); } this.value = words.join(' ');" readonly>
+                                <label for="editnewFirstname">Firstname</label>
+                                <input type="text" class="form-control form-control-sm" id="editnewFirstname" name="fname" oninput="var words = this.value.split(' '); for(var i = 0; i < words.length; i++){ words[i] = words[i].substr(0,1).toUpperCase() + words[i].substr(1); } this.value = words.join(' ');" readonly>
                             </div>
                             <div class="col-md-3">
-                                <label for="editMiddlename">Middlename</label>
-                                <input type="text" class="form-control form-control-sm" id="editMiddlename" name="mname" oninput="var words = this.value.split(' '); for(var i = 0; i < words.length; i++){ words[i] = words[i].substr(0,1).toUpperCase() + words[i].substr(1); } this.value = words.join(' ');" readonly>
+                                <label for="editnewMiddlename">Middlename</label>
+                                <input type="text" class="form-control form-control-sm" id="editnewMiddlename" name="mname" oninput="var words = this.value.split(' '); for(var i = 0; i < words.length; i++){ words[i] = words[i].substr(0,1).toUpperCase() + words[i].substr(1); } this.value = words.join(' ');" readonly>
                             </div>
                             <div class="col-md-3">
-                                <label for="editExtname">Ext</label>
-                                <input type="number" class="form-control form-control-sm" id="editExtname" name="ext" readonly>
+                                <label for="editnewExtname">Ext</label>
+                                <input type="number" class="form-control form-control-sm" id="editnewExtname" name="ext" readonly>
                             </div>
                         </div>
                     </div>
@@ -290,6 +290,69 @@
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
                     <button type="submit" class="btn btn-primary">Yes, upload photo</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+<div class="modal fade" id="editFacultyModal" role="dialog" aria-labelledby="editFacultyModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="editFundModalLabel">Edit</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <form id="editFacultyForm">
+                <div class="modal-body">
+                    <input type="hidden" name="id" id="eeditFacultyId">
+                    <div class="form-group">
+                        <label for="eeditLastname">Lastname</label>
+                        <input type="text" class="form-control form-control-sm" id="eeditLastname" name="lname" oninput="var words = this.value.split(' '); for(var i = 0; i < words.length; i++){ words[i] = words[i].substr(0,1).toUpperCase() + words[i].substr(1); } this.value = words.join(' ');" readonly>
+                    </div>
+                    <div class="form-group">
+                        <label for="eeditFirstname">Firstname</label>
+                        <input type="text" class="form-control form-control-sm" id="eeditFirstname" name="fname" oninput="var words = this.value.split(' '); for(var i = 0; i < words.length; i++){ words[i] = words[i].substr(0,1).toUpperCase() + words[i].substr(1); } this.value = words.join(' ');" readonly>
+                    </div>
+                    <div class="form-group">
+                        <label for="eeditMiddlename">Middlename</label>
+                        <input type="text" class="form-control form-control-sm" id="eeditMiddlename" name="mname" oninput="var words = this.value.split(' '); for(var i = 0; i < words.length; i++){ words[i] = words[i].substr(0,1).toUpperCase() + words[i].substr(1); } this.value = words.join(' ');" readonly>
+                    </div>
+                    <div class="form-group">
+                        <label for="eeditExtname">Ext</label>
+                        <input type="number" class="form-control form-control-sm" id="eeditExtname" name="ext" readonly>
+                    </div>
+                    <div class="form-group">
+                        <label for="eeditacadrank">Academic Rank</label>
+                        <select name="rank" id="eeditacadrank" class="form-control form-control-sm">
+                            <option disabled selected> --Select Rank-- </option>
+                            <option value=""> --None-- </option>
+                            <option value="Professor VI">Professor VI</option>
+                            <option value="Professor V">Professor V</option>
+                            <option value="Professor IV">Professor IV</option>
+                            <option value="Professor III">Professor III</option>
+                            <option value="Professor II">Professor II</option>
+                            <option value="Professor I">Professor I</option>
+                            <option value="Associate Professor V">Associate Professor V</option>
+                            <option value="Associate Professor IV">Associate Professor IV</option>
+                            <option value="Associate Professor III">Associate Professor III</option>
+                            <option value="Associate Professor II">Associate Professor II</option>
+                            <option value="Associate Professor I">Associate Professor I</option>
+                            <option value="Assistant Professor IV">Assistant Professor IV</option>
+                            <option value="Assistant Professor III">Assistant Professor III</option>
+                            <option value="Assistant Professor II">Assistant Professor II</option>
+                            <option value="Assistant Professor I">Assistant Professor I</option>
+                            <option value="Instructor III">Instructor III</option>
+                            <option value="Instructor II">Instructor II</option>
+                            <option value="Instructor I">Instructor I</option>
+                        </select>                        
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                    <button type="submit" class="btn btn-primary">Save changes</button>
                 </div>
             </form>
         </div>

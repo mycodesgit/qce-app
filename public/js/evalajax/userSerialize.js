@@ -101,6 +101,9 @@ $(document).ready(function() {
                             '<a href="#" class="dropdown-item btn-useredit" data-id="' + row.id + '" data-fname="' + row.fname + '" data-mname="' + row.mname + '" data-lname="' + row.lname + '" data-ext="' + row.ext + '" data-email="' + row.email + '" data-campus="' + row.campus + '" data-dept="' + row.dept + '" data-role="' + row.role + '">' +
                             '<i class="fas fa-pen"></i> Edit' +
                             '</a>' +
+                            '<a href="#" class="dropdown-item btn-changepass" data-id="' + row.id + '">' +
+                            '<i class="fas fa-lock"></i> Change Pass' +
+                            '</a>' +
                             '<button type="button" value="' + data + '" class="dropdown-item user-delete">' +
                             '<i class="fas fa-trash"></i> Delete' +
                             '</button>' +
@@ -173,6 +176,41 @@ $('#edituserForm').submit(function(event) {
     });
 });
 
+$(document).on('click', '.btn-changepass', function() {
+    var id = $(this).data('id');
+
+    $('#changeUserPassId').val(id);
+
+    $('#changeUserPassModal').modal('show');
+});
+
+$('#changeUserPassForm').submit(function(event) {
+    event.preventDefault();
+    var formData = $(this).serialize();
+
+    $.ajax({
+        url: passuserUpdateRoute,
+        type: "POST",
+        data: formData,
+        headers: {
+            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+        },
+        success: function(response) {
+            if(response.success) {
+                toastr.success(response.message);
+                $('#changeUserPassModal').modal('hide');
+                $(document).trigger('userAdded');
+            } else {
+                toastr.error(response.message);
+            }
+        },
+        error: function(xhr, status, error, message) {
+            var errorMessage = xhr.responseText ? JSON.parse(xhr.responseText).message : 'An error occurred';
+            toastr.error(errorMessage);
+        }
+    });
+});
+
 $(document).on('click', '.user-delete', function(e) {
     var id = $(this).val();
     $.ajaxSetup({
@@ -210,4 +248,23 @@ $(document).on('click', '.user-delete', function(e) {
             });
         }
     })
+});
+
+
+$(document).ready(function() {
+    function editgeneratePassword() {
+        var length = Math.floor(Math.random() * 2) + 8; // Generates either 8 or 9
+        var charset = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789!@#$&*";
+        var password = "";
+        for (var i = 0; i < length; i++) {
+            var randomIndex = Math.floor(Math.random() * charset.length);
+            password += charset[randomIndex];
+        }
+        return password;
+    }
+
+    $('#editgeneratePassword').click(function() {
+        var editgeneratedPassword = editgeneratePassword();
+        $('#editpasswordInput').val(editgeneratedPassword); 
+    });
 });
