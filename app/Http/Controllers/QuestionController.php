@@ -16,7 +16,7 @@ use App\Models\EvaluationDB\QCEquestion;
 
 class QuestionController extends Controller
 {
-    public function questionStore($value='')
+    public function questionStore()
     {
         $qcecat = QCEcategory::all();
         return view('manage.question', compact('qcecat'));

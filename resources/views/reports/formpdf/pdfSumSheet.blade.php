@@ -105,7 +105,8 @@
                 <td>{{ $category_totals['Knowledge of Subject'] }}</td>
                 <td>{{ $category_totals['Teaching for Independent Learning'] }}</td>
                 <td>{{ $category_totals['Management of Learning'] }}</td>
-                <td>{{ array_sum($category_totals) }}</td>
+                {{-- <td>{{ array_sum($category_totals) }}</td> --}}
+                <td>{{ number_format(array_sum($category_totals), 2, '.', '') }}</td>
             </tr>
         
             <!-- SUPERVISOR Row -->
@@ -189,7 +190,7 @@
     </div>
 
     <div class="footer">
-        <center><img src="{{ public_path('img/footer.png') }}" width="55%" style="text-align: center !important;"></center>
+        {{-- <center><img src="{{ public_path('img/footer.png') }}" width="55%" style="text-align: center !important;"></center> --}}
     </div>
 </body>
 </html>
