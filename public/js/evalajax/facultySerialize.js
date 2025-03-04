@@ -25,10 +25,9 @@ $(document).ready(function() {
             {
                 data: null, // This column doesn't map to a single field in your data source
                 render: function(data, type, row) {
-                    return `${row.lname}, ${row.fname} ${row.mname}`;
+                    return `${row.adrDesc} ${row.lname}, ${row.fname} ${row.mname}`;
                 }
             },
-            {data: 'adrDesc'},
             {data: 'college_abbr'},
             {data: 'fcamp'},
             {

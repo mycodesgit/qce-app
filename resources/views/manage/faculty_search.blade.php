@@ -69,7 +69,6 @@
                                     <thead>
                                         <tr>
                                             <th>Name</th>
-                                            <th>Salutation</th>
                                             <th>College</th>
                                             <th>Campus</th>
                                             <th>Image</th>
