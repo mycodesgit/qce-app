@@ -133,13 +133,8 @@
             @else
                 <ul class="navbar-nav ml-auto">
                     <li class="nav-item">
-                        <a class="nav-link" data-widget="fullscreen" href="#" role="button">
-                            <i class="fas fa-expand-arrows-alt" style="color: #ffffff;"></i>
-                        </a>
-                    </li>
-                    <li class="nav-item">
                         <a class="nav-link" href="{{ route('logout') }}" role="button">
-                            <i class="fas fa-power-off" style="color: #ffffff;"></i>
+                            <i class="fas fa-power-off" style="color: #ffffff;"></i> <span style="color: #ffffff;">Sign Out</span>
                         </a>
                     </li>
                 </ul>
