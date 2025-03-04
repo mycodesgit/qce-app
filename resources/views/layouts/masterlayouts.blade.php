@@ -246,6 +246,7 @@
     <!-- jquery-validation -->
     <script src="{{ asset('template/plugins/jquery-validation/jquery.validate.min.js') }}"></script>
     <script src="{{ asset('template/plugins/jquery-validation/additional-methods.min.js') }}"></script>
+    <script src="{{ asset('js/basic/contextmenu.js') }}"></script>
 
 
     <!-- Ajax -->
