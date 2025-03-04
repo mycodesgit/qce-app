@@ -70,7 +70,7 @@ $(document).ready(function() {
                         return `
                             <div class="dropdown">
                                 <button class="btn btn-primary btn-sm dropdown-toggle" type="button" id="dropdownMenu${row.fctyid}" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                    <i class="fas fa-pen"></i> 
+                                    <i class="fas fa-user-gear"></i> 
                                 </button>
                                 <div class="dropdown-menu" aria-labelledby="dropdownMenu${row.fctyid}">
                                     <a class="dropdown-item btn-upload-photo" 
@@ -260,6 +260,33 @@ $(document).on('click', '.btn-update-rank', function() {
     $('#editEmail').val(email);
 
     $('#editFacultyModal').modal('show');
+});
+
+$('#editFacultyForm').submit(function(event) {
+    event.preventDefault();
+    var formData = $(this).serialize();
+
+    $.ajax({
+        url: facultyrankUpdateRoute,
+        type: "POST",
+        data: formData,
+        headers: {
+            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+        },
+        success: function(response) {
+            if(response.success) {
+                toastr.success(response.message);
+                $('#editFacultyModal').modal('hide');
+                $(document).trigger('facAdded');
+            } else {
+                toastr.error(response.message);
+            }
+        },
+        error: function(xhr, status, error, message) {
+            var errorMessage = xhr.responseText ? JSON.parse(xhr.responseText).message : 'An error occurred';
+            toastr.error(errorMessage);
+        }
+    });
 });
 
 

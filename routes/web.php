@@ -70,6 +70,7 @@ Route::group(['middleware'=>['login_empauth']],function(){
         Route::get('/faculty/view/search', [FacultyController::class,'facultyFilter'])->name('facultyFilter');
         Route::get('/faculty/search/ajax', [FacultyController::class, 'getfacultylistRead'])->name('getfacultylistRead');
         Route::post('/faculty/search/view/upload/image', [FacultyController::class, 'facultyUploadImage'])->name('facultyUploadImage');
+        Route::post('/faculty/search/view/update/rank', [FacultyController::class, 'facultyrankUpdate'])->name('facultyrankUpdate');
     });
 
     Route::prefix('/conf')->group(function () {

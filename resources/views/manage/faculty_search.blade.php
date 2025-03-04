@@ -364,6 +364,8 @@
     var facultyUploadRoute = "{{ route('facultyUploadImage') }}";
     var photoStorage = "{{ asset('storage/') }}";
     var photoStoragedef = "{{ asset('template/img/user.png') }}";
+
+    var facultyrankUpdateRoute = "{{ route('facultyrankUpdate', ['id' => ':id']) }}";
 </script>
 
 <script>

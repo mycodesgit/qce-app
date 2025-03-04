@@ -124,7 +124,7 @@ class UserController extends Controller
                 'password' => Hash::make($request->input('password')),
                 'resetcount' => $passuser->resetcount,
         ]);
-            return response()->json(['success' => true, 'message' => 'Password in Kiosk Updated successfully'], 200);
+            return response()->json(['success' => true, 'message' => 'Password Updated successfully'], 200);
         } catch (\Exception $e) {
             return response()->json(['error' => true, 'message' => 'Failed to Update Password'], 404);
         }

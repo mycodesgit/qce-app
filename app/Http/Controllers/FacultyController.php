@@ -26,16 +26,6 @@ class FacultyController extends Controller
 
     public function facultyFilter(Request $request)
     {   
-        $campus = $request->query('campus');
-
-        // $data = Faculty::join('addressee', 'faculty.adrID', '=', 'addressee.id')
-        //         ->join('college', 'faculty.dept', '=', 'college.college_abbr')
-        //         ->leftJoin(DB::connection('mysql')->table('faculty_profile'), 'faculty.id', '=', 'faculty_profile.facidprof')
-        //         ->where('faculty.campus', $campus)
-        //         ->select('faculty.*', 'faculty.id as fctyid', 'faculty.campus as fcamp', 'college.*', 'addressee.*', 'addressee.id as adrid', 'faculty_profile.*')
-        //         ->orderBy('faculty.lname')
-        //         ->get();
-
         return view('manage.faculty_search');
     }
 
@@ -105,6 +95,23 @@ class FacultyController extends Controller
         $facultyProfile->save();
 
         return response()->json(['success' => true, 'message' => 'Faculty profile Uploded successfully'], 200);
+    }
+
+    public function facultyrankUpdate(Request $request) 
+    {
+        $request->validate([
+            'id' => 'required',
+        ]);
+
+        try {
+            $facrank = Faculty::findOrFail($request->input('id'));
+            $facrank->update([
+                'rank' => $request->input('rank'),
+        ]);
+            return response()->json(['success' => true, 'message' => 'Academic Rank Updated successfully'], 200);
+        } catch (\Exception $e) {
+            return response()->json(['error' => true, 'message' => 'Failed to Update Academic Rank'], 404);
+        }
     }
 
 }
