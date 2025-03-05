@@ -37,10 +37,10 @@
 
                                 <div class="form-group" style="">
                                     <div class="form-row">
-                                        <div class="col-md-6">
+                                        <div class="col-md-10">
                                             <label><span class="badge badge-secondary">Campus</span></label>
                                             <select class="form-control form-control-sm" name="campus" id="campus">
-                                                <option disabled selected> --Select-- </option>
+                                                <option disabled selected> -- Select Campus to Search -- </option>
                                                 <option value="MC">Main</option>
                                                 <option value="VC">Victorias</option>
                                                 <option value="SCC">San Carlos</option>
