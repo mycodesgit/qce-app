@@ -10,6 +10,7 @@ use App\Http\Controllers\InstructionController;
 use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\QuestionController;
 use App\Http\Controllers\SemesterController;
+use App\Http\Controllers\SettingController;
 use App\Http\Controllers\QceformController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\ReportsPrintSubmissionController;
@@ -65,6 +66,9 @@ Route::group(['middleware'=>['login_empauth']],function(){
         Route::post('/semester/insert', [SemesterController::class,'semesterCreate'])->name('semesterCreate');
         Route::post('/semester/update', [SemesterController::class,'semesterUpdate'])->name('semesterUpdate');
         Route::post('/semester/delete{id}', [SemesterController::class,'semesterDelete'])->name('semesterDelete');
+
+        Route::get('/settings/view', [SettingController::class,'setevalStore'])->name('setevalStore');
+        Route::post('/settings/view/update/statuseval', [SettingController::class,'toggleEval'])->name('toggleEval');
 
         Route::get('/faculty/view', [FacultyController::class,'facultyStore'])->name('facultyStore');
         Route::get('/faculty/view/search', [FacultyController::class,'facultyFilter'])->name('facultyFilter');

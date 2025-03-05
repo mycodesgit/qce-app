@@ -24,20 +24,12 @@
             font-family: 'Poppins', sans-serif;
             background: #ececec;
         }
-
-        /*------------ Login container ------------*/
-
         .box-area{
             width: 930px;
         }
-
-        /*------------ Right box ------------*/
-
         .right-box{
             padding: 40px 30px 40px 40px;
         }
-
-        /*------------ Custom Placeholder ------------*/
 
         ::placeholder{
             font-size: 16px;
@@ -50,11 +42,7 @@
             border-radius: 30px;
         }
 
-
-        /*------------ For small screens------------*/
-
         @media only screen and (max-width: 768px){
-
              .box-area{
                 margin: 0 10px;
 
@@ -66,11 +54,7 @@
              .right-box{
                 padding: 20px;
              }
-
         }
-
-        
-
         @media (min-width: 769px) { 
             #cpsulogoImage {
                 display: none !important; /* Default: Hidden */
@@ -187,7 +171,6 @@
                 display: none !important;
             }
         }
-
     </style>
 </head>
 <body>
@@ -205,33 +188,52 @@
         
             <div class="col-md-6 right-box">
                 <div class="row align-items-center">
+                    @php 
+                        use App\Models\EvaluationDB\QCEsetting;
+                        $setevalmode = QCEsetting::first();
+                    @endphp
+
                     <div class="header-text mb-4 text-center">
                         <img src="{{ asset('template/img/cpsulogov4.png') }}" style="width:100px; margin-top: -250px" id="cpsulogoImage">
                         <h2>Hi, Cenphilian</h2>
-                        <p>Sign in to start session</p>
-
+                        @if($setevalmode->statuseval === 'Off')
+                            <p>just wait</p>
+                        @else
+                            <p>Sign in to start session</p>
+                        @endif
                     </div>
-                    <form action="{{ route('empstudlogin') }}" method="post">
-                        @csrf
-                        <div class="input-group mb-3">
-                            <input type="text" name="studid" class="form-control form-control-lg bg-light fs-6" placeholder="Student ID number" id="studentIdInput">
-                        </div>
-                        <div class="input-group mb-1">
-                            <input type="password" name="password" class="form-control form-control-lg bg-light fs-6" placeholder="Password" id="studentPassInput">
-                        </div>
-                        <div class="input-group mb-5 d-flex justify-content-between">
-                            <div class="form-check">
-                                <input type="checkbox" class="form-check-input" id="formCheck" onclick="myFunction()">
-                                <label for="formCheck" class="form-check-label text-secondary"><small>Show Password</small></label>
+
+                    @if($setevalmode->statuseval === 'Off')
+                        <form>
+                            @csrf
+                            <div class="input-group mb-3">
+                                <h1>Faculty Evaluation is not yet Started</h1>
                             </div>
-                            <div class="forgot">
-                                {{-- <small><a href="#">Forgot Password?</a></small> --}}
+                            <br><br><br>
+                        </form>
+                    @else
+                        <form action="{{ route('empstudlogin') }}" method="post">
+                            @csrf
+                            <div class="input-group mb-3">
+                                <input type="text" name="studid" class="form-control form-control-lg bg-light fs-6" placeholder="Student ID number" id="studentIdInput">
                             </div>
-                        </div>
-                        <div class="input-group mb-3">
-                            <button class="btn btn-lg btn-success w-100 fs-6">Login</button>
-                        </div>
-                    </form>
+                            <div class="input-group mb-1">
+                                <input type="password" name="password" class="form-control form-control-lg bg-light fs-6" placeholder="Password" id="studentPassInput">
+                            </div>
+                            <div class="input-group mb-5 d-flex justify-content-between">
+                                <div class="form-check">
+                                    <input type="checkbox" class="form-check-input" id="formCheck" onclick="myFunction()">
+                                    <label for="formCheck" class="form-check-label text-secondary"><small>Show Password</small></label>
+                                </div>
+                                <div class="forgot">
+                                    {{-- <small><a href="#">Forgot Password?</a></small> --}}
+                                </div>
+                            </div>
+                            <div class="input-group mb-3">
+                                <button class="btn btn-lg btn-success w-100 fs-6">Login</button>
+                            </div>
+                        </form>
+                    @endif
                 </div>
             </div> 
             <span style="font-size: 9pt; text-align: center; margin-top: 10px;">Maintained and Managed by Management Information System Office (MISO) under the Leadership of Dr. Aladino C. Moraca.</span>

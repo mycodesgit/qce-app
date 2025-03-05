@@ -8,6 +8,8 @@ use Illuminate\Support\Facades\Redirect;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Str;
 
+use App\Models\EvaluationDB\QCEsetting;
+
 class LoginController extends Controller
 {
     public function login()
@@ -17,7 +19,9 @@ class LoginController extends Controller
 
     public function studentLogin()
     {
-        return view('studlogin');
+        $setevalmode = QCEsetting::first();
+
+        return view('studlogin', compact('setevalmode'));
     }
 
     public function empstudlogin(Request $request)

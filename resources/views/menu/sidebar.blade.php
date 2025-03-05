@@ -36,7 +36,7 @@
             </li>
 
             @if(in_array(Auth::guard('web')->user()->id, [1, 2, 3]))
-                <li class="nav-item {{ $current_route == 'instructionStore' || $current_route == 'categoryStore' || $current_route == 'questionStore' || $current_route == 'semesterStore' ? 'menu-open' : '' }}">
+                <li class="nav-item {{ $current_route == 'instructionStore' || $current_route == 'categoryStore' || $current_route == 'questionStore' || $current_route == 'semesterStore' || $current_route == 'setevalStore' ? 'menu-open' : '' }}">
                     <a href="#" class="nav-link">
                         <i class="nav-icon fas fa-cog"></i>
                         <p>
@@ -67,6 +67,12 @@
                             <a href="{{ route('semesterStore') }}" class="nav-link {{ request()->is('conf/semester*') ? 'active' : '' }}">
                                 <i class="fas fa-calendar nav-icon"></i>
                                 <p>Semester</p>
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a href="{{ route('setevalStore') }}" class="nav-link {{ request()->is('conf/settings*') ? 'active' : '' }}">
+                                <i class="fas fa-cog nav-icon"></i>
+                                <p>Settings</p>
                             </a>
                         </li>
                     </ul>
