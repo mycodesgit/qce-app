@@ -41,16 +41,20 @@
                                             <label><span class="badge badge-secondary">Campus</span></label>
                                             <select class="form-control form-control-sm" name="campus" id="campus">
                                                 <option disabled selected> -- Select Campus to Search -- </option>
-                                                <option value="MC">Main</option>
-                                                <option value="VC">Victorias</option>
-                                                <option value="SCC">San Carlos</option>
-                                                <option value="HC">Hinigaran</option>
-                                                <option value="MP">Moises Padilla</option>
-                                                <option value="IC">Ilog</option>
-                                                <option value="CA">Candoni</option>
-                                                <option value="CC">Cauayan</option>
-                                                <option value="SC">Sipalay</option>
-                                                <option value="HinC">Hinobaan</option>
+                                                @foreach([
+                                                    'MC' => 'Main', 
+                                                    'VC' => 'Victorias', 
+                                                    'SCC' => 'San Carlos', 
+                                                    'HC' => 'Hinigaran', 
+                                                    'MP' => 'Moises Padilla', 
+                                                    'IC' => 'Ilog', 
+                                                    'CA' => 'Candoni', 
+                                                    'CC' => 'Cauayan', 
+                                                    'SC' => 'Sipalay', 
+                                                    'HinC' => 'Hinobaan'
+                                                    ] as $code => $name)
+                                                    <option value="{{ encrypt($code) }}">{{ $name }}</option>
+                                                @endforeach
                                             </select>
                                         </div>
 
