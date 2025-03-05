@@ -5,6 +5,9 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
+use App\Models\EnrollmentDB\StudEnrolmentHistory;
+use App\Models\SettingDB\ConfigureCurrent;
+
 class DashboardController extends Controller
 {
     public function getGuard()
@@ -20,7 +23,58 @@ class DashboardController extends Controller
 
     public function dash()
     {
-        return view('home.dashboard');
+        $userCampus = Auth::guard('web')->user()->campus;
+
+        // Fetch the active configuration with set_status = 2
+        $activeConfig = ConfigureCurrent::where('set_status', 2)->first();
+        if (!$activeConfig) {
+            return back()->with('error', 'No active school year found.');
+        }
+        $activeConfigId = $activeConfig->id;
+        
+        $previousConfig = ConfigureCurrent::where('id', '<', $activeConfigId) // Ensure it's before the current active one
+            ->orderBy('id', 'desc') // Get the most recent one
+            ->first();
+
+        $schlyearactiveYear = $activeConfig->schlyear;
+        $schlyearactive = $activeConfig->schlyear;
+        $semesteractive = $activeConfig->semester;
+        $prevsemesteractive = $previousConfig->semester;
+
+        $previousSchlyearYear = $previousConfig ? $previousConfig->schlyear : null;
+
+        if (!$previousSchlyearYear) {
+            return back()->with('error', 'No previous school year found.');
+        }
+        $enrlstudcountfirst = StudEnrolmentHistory::where('program_en_history.studentID', 'NOT LIKE', '%-G%')
+                            ->where('program_en_history.schlyear', 'LIKE', $schlyearactive)
+                            ->where('program_en_history.semester', 'LIKE', $semesteractive)
+                            ->where('program_en_history.studYear', '=', '1')
+                            ->where('program_en_history.campus', '=', $userCampus)
+                            ->count();
+
+
+        $enrlstudcountsecond = StudEnrolmentHistory::where('program_en_history.studentID', 'NOT LIKE', '%-G%')
+                            ->where('program_en_history.schlyear', 'LIKE', $schlyearactive)
+                            ->where('program_en_history.semester', 'LIKE', $semesteractive)
+                            ->where('program_en_history.studYear', '=', '2')
+                            ->where('program_en_history.campus', '=', $userCampus)
+                            ->count();
+
+        $enrlstudcountthird = StudEnrolmentHistory::where('program_en_history.studentID', 'NOT LIKE', '%-G%')
+                            ->where('program_en_history.schlyear', 'LIKE', $schlyearactive)
+                            ->where('program_en_history.semester', 'LIKE', $semesteractive)
+                            ->where('program_en_history.studYear', '=', '3')
+                            ->where('program_en_history.campus', '=', $userCampus)
+                            ->count();
+
+        $enrlstudcountfourth = StudEnrolmentHistory::where('program_en_history.studentID', 'NOT LIKE', '%-G%')
+                            ->where('program_en_history.schlyear', 'LIKE', $schlyearactive)
+                            ->where('program_en_history.semester', 'LIKE', $semesteractive)
+                            ->where('program_en_history.studYear', '=', '4')
+                            ->where('program_en_history.campus', '=', $userCampus)
+                            ->count();
+        return view('home.dashboard', compact('enrlstudcountfirst', 'enrlstudcountsecond', 'enrlstudcountthird', 'enrlstudcountfourth'));
     }
 
     public function logout()
