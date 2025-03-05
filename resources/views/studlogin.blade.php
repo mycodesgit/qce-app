@@ -8,8 +8,10 @@
     
     <title>CPSU OFES V.1.0 - Login</title>
 
+    <!-- Bootstrap -->
     <link rel="stylesheet" href="{{ asset('template/dist/css/bootstrap.min.css') }}" crossorigin="anonymous">
-    {{-- <link rel="stylesheet" href="style.css"> --}}
+    <!-- Login Design -->
+    <link rel="stylesheet" href="{{ asset('template/dist/css/login-style.css') }}">
     <!-- Font Awesome Icons -->
     <link rel="stylesheet" href="{{ asset('template/plugins/fontawesome-free-v6/css/all.min.css')}}">
     <!-- Toastr -->
@@ -17,161 +19,6 @@
     <!-- Logo -->
     <link rel="shortcut icon" type="" href="{{ asset('template/img/CPSU_L.png') }}">
 
-    <style type="text/css">
-        @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;500&display=swap');
-
-        body{
-            font-family: 'Poppins', sans-serif;
-            background: #ececec;
-        }
-        .box-area{
-            width: 930px;
-        }
-        .right-box{
-            padding: 40px 30px 40px 40px;
-        }
-
-        ::placeholder{
-            font-size: 16px;
-        }
-
-        .rounded-4{
-            border-radius: 20px;
-        }
-        .rounded-5{
-            border-radius: 30px;
-        }
-
-        @media only screen and (max-width: 768px){
-             .box-area{
-                margin: 0 10px;
-
-             }
-             .left-box{
-                height: 100px;
-                overflow: hidden;
-             }
-             .right-box{
-                padding: 20px;
-             }
-        }
-        @media (min-width: 769px) { 
-            #cpsulogoImage {
-                display: none !important; /* Default: Hidden */
-            }
-        }
-
-        @media (max-width: 768px) { 
-            #cpsulogoleftsideImage {
-                display: none !important; Ensure it's shown on mobile
-            }
-        }
-        #particles-js {
-            position: fixed;
-            width: 100%;
-            height: 100%;
-            /* background-image: url('{{ asset('template/img/bg-campuswifi.png') }}'); */
-            background-repeat: no-repeat;
-            background-size: cover;
-            background-position: 100%;
-            z-index: -1;
-        }
-
-        /* Numeric Keyboard Container */
-        .keyboard-container {
-            position: fixed;
-            bottom: 20px;
-            left: 50%;
-            transform: translateX(-50%);
-            background: #ffffff;
-            border: 3px solid #007B3A;
-            border-radius: 10px;
-            padding: 15px;
-            display: flex;
-            gap: 10px;
-            box-shadow: 0 6px 10px rgba(0, 0, 0, 0.4);
-            z-index: 999;
-            /* display: none; */
-
-            /* Animation properties */
-            opacity: 0;
-            transform: translate(-50%, 50px);
-            transition: all 0.5s ease;
-            pointer-events: none;
-        }
-
-        .keyboard-container.show {
-            opacity: 1;
-            transform: translate(-50%, 0);
-            pointer-events: auto;
-        }
-
-        /* Key Buttons */
-        .key-btn {
-            width: 50px;
-            height: 50px;
-            font-size: 1.6rem;
-            text-align: center;
-            cursor: pointer;
-            background: #007B3A;
-            color: #fff;
-            border: none;
-            border-radius: 5px;
-            transition: transform 0.2s;
-        }
-
-        .key-btn.clicked {
-            animation: haptic-animation 0.3s ease !important;
-        }
-
-        .goback.clicked {
-            animation: haptic-animation 0.3s ease !important;
-        }
-
-        @keyframes haptic-animation {
-            0% {
-                transform: scale(1);
-            }
-            50% {
-                transform: scale(1.1);
-            }
-            100% {
-                transform: scale(1);
-            }
-        }
-
-        /* Control Buttons (Backspace & Clear) */
-        .key-control {
-            background: #DC3545;
-        }
-
-        .key-control:hover {
-            background: #c82333;
-        }
-
-        .key-control-dash {
-            background: #e9b10a;
-        }
-
-        .key-control-dash:hover {
-            background: #e9b10a;
-        }
-
-        .key-letter {
-            background: #6c757d;
-        }
-
-        .key-letter:hover {
-            background: #6c757d;
-        }
-
-        /* Hide Keyboard on Mobile */
-        @media (max-width: 768px) {
-            .keyboard-container {
-                display: none !important;
-            }
-        }
-    </style>
 </head>
 <body>
     <div class="container d-flex justify-content-center align-items-center min-vh-100">
@@ -182,7 +29,7 @@
                     <center><img src="{{ asset('template/img/cpsulogov4.png') }}" class="img-fluid" id="" style="width: 100px; padding-top: 0px;"></center>
                     <p class="text-white" style="font-family: 'Courier New', Courier, monospace; font-weight: 600; font-size: 1.5em !important">CPSU OFES</p>
                 </div>
-                <small class="text-white text-wrap text-center" style="width: 17rem;font-family: 'Courier New', Courier, monospace;">Join and experienced</br></small>
+                <small class="text-white text-wrap text-center" style="width: 17rem;font-family: 'Courier New', Courier, monospace;">Online Faculty Evaluation System</br></small>
                 {{-- <center><img src="{{ asset('template/img/cpsulogov4.png') }}" class="img-fluid" id="cpsulogoleftsideImage" style="width: 80%; padding-top: 0px;"></center> --}}
             </div> 
         
