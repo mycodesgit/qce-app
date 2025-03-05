@@ -62,7 +62,7 @@
                             </form> --}}
                             <div class="row">
                                 <div class="col-lg-3 col-6">
-                                    <a href="{{ route('facultyFilter', ['campus' => 'MC']) }}">
+                                    <a href="{{ route('facultyFilter', ['campus' => encrypt('MC')]) }}">
                                         <div class="small-box bg-info d-flex align-items-center justify-content-between pl-3 pr-3 pb-3 pt-3 card-curve" style="background-color: #00bc8c !important">
                                             <div class="text-left">
                                                 <div class="inner">
@@ -79,7 +79,7 @@
                                     </a>
                                 </div>
                                 <div class="col-lg-3 col-6">
-                                    <a href="{{ route('facultyFilter', ['campus' => 'VC']) }}">
+                                    <a href="{{ route('facultyFilter', ['campus' => encrypt('VC')]) }}">
                                         <div class="small-box bg-info d-flex align-items-center justify-content-between pl-3 pr-3 pb-3 pt-3 card-curve" style="background-color: #00bc8c !important">
                                             <div class="text-left">
                                                 <div class="inner">
@@ -96,7 +96,7 @@
                                     </a>
                                 </div>
                                 <div class="col-lg-3 col-6">
-                                    <a href="{{ route('facultyFilter', ['campus' => 'SCC']) }}">
+                                    <a href="{{ route('facultyFilter', ['campus' => encrypt('SCC')]) }}">
                                         <div class="small-box bg-info d-flex align-items-center justify-content-between pl-3 pr-3 pb-3 pt-3 card-curve" style="background-color: #00bc8c !important">
                                             <div class="text-left">
                                                 <div class="inner">
@@ -113,7 +113,7 @@
                                     </a>
                                 </div>
                                 <div class="col-lg-3 col-6">
-                                    <a href="{{ route('facultyFilter', ['campus' => 'HC']) }}">
+                                    <a href="{{ route('facultyFilter', ['campus' => encrypt('HC')]) }}">
                                         <div class="small-box bg-info d-flex align-items-center justify-content-between pl-3 pr-3 pb-3 pt-3 card-curve" style="background-color: #00bc8c !important">
                                             <div class="text-left">
                                                 <div class="inner">
@@ -130,7 +130,7 @@
                                     </a>
                                 </div>
                                 <div class="col-lg-3 col-6">
-                                    <a href="{{ route('facultyFilter', ['campus' => 'MP']) }}">
+                                    <a href="{{ route('facultyFilter', ['campus' => encrypt('MP')]) }}">
                                         <div class="small-box bg-info d-flex align-items-center justify-content-between pl-3 pr-3 pb-3 pt-3 card-curve" style="background-color: #00bc8c !important">
                                             <div class="text-left">
                                                 <div class="inner">
@@ -147,7 +147,7 @@
                                     </a>
                                 </div>
                                 <div class="col-lg-3 col-6">
-                                    <a href="{{ route('facultyFilter', ['campus' => 'IC']) }}">
+                                    <a href="{{ route('facultyFilter', ['campus' => encrypt('IC')]) }}">
                                         <div class="small-box bg-info d-flex align-items-center justify-content-between pl-3 pr-3 pb-3 pt-3 card-curve" style="background-color: #00bc8c !important">
                                             <div class="text-left">
                                                 <div class="inner">
@@ -164,7 +164,7 @@
                                     </a>
                                 </div>
                                 <div class="col-lg-3 col-6">
-                                    <a href="{{ route('facultyFilter', ['campus' => 'CA']) }}">
+                                    <a href="{{ route('facultyFilter', ['campus' => encrypt('CA')]) }}">
                                         <div class="small-box bg-info d-flex align-items-center justify-content-between pl-3 pr-3 pb-3 pt-3 card-curve" style="background-color: #00bc8c !important">
                                             <div class="text-left">
                                                 <div class="inner">
@@ -181,7 +181,7 @@
                                     </a>
                                 </div>
                                 <div class="col-lg-3 col-6">
-                                    <a href="{{ route('facultyFilter', ['campus' => 'CC']) }}">
+                                    <a href="{{ route('facultyFilter', ['campus' => encrypt('CC')]) }}">
                                         <div class="small-box bg-info d-flex align-items-center justify-content-between pl-3 pr-3 pb-3 pt-3 card-curve" style="background-color: #00bc8c !important">
                                             <div class="text-left">
                                                 <div class="inner">
@@ -198,7 +198,7 @@
                                     </a>
                                 </div>
                                 <div class="col-lg-3 col-6">
-                                    <a href="{{ route('facultyFilter', ['campus' => 'SP']) }}">
+                                    <a href="{{ route('facultyFilter', ['campus' => encrypt('SP')]) }}">
                                         <div class="small-box bg-info d-flex align-items-center justify-content-between pl-3 pr-3 pb-3 pt-3 card-curve" style="background-color: #00bc8c !important">
                                             <div class="text-left">
                                                 <div class="inner">
@@ -215,7 +215,7 @@
                                     </a>
                                 </div>
                                 <div class="col-lg-3 col-6">
-                                    <a href="{{ route('facultyFilter', ['campus' => 'HinC']) }}">
+                                    <a href="{{ route('facultyFilter', ['campus' => encrypt('HinC')]) }}">
                                         <div class="small-box bg-info d-flex align-items-center justify-content-between pl-3 pr-3 pb-3 pt-3 card-curve" style="background-color: #00bc8c !important">
                                             <div class="text-left">
                                                 <div class="inner">

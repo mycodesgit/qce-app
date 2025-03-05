@@ -7,6 +7,7 @@ use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Facades\Redirect;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Crypt;
 use Illuminate\Support\Str;
 use Carbon\Carbon;
 
@@ -32,11 +33,12 @@ class FacultyController extends Controller
     public function getfacultylistRead(Request $request) 
     {
         $campus = $request->query('campus');
+        $decryptedCampus = Crypt::decrypt($campus);
 
         // Step 1: Get faculty data
         $facultyData = Faculty::join('addressee', 'faculty.adrID', '=', 'addressee.id')
             ->join('college', 'faculty.dept', '=', 'college.college_abbr')
-            ->where('faculty.campus', $campus)
+            ->where('faculty.campus', $decryptedCampus)
             ->select('faculty.*', 'faculty.id as fctyid', 'faculty.campus as fcamp', 'college.*', 'addressee.*', 'addressee.id as adrid')
             ->orderBy('faculty.lname')
             ->get();
