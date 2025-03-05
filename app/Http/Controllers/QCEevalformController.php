@@ -159,6 +159,7 @@ class QCEevalformController extends Controller
                     'evaluatorID' => Auth::guard('kioskstudent')->user()->id,
                     'studidno' => $request->input('studidno'),
                     'prog' => $request->input('prog'),
+                    'subjidrate' => $request->input('subjidrate'),
                 ]);
 
                 return redirect()->route('successfacevalrateform')->with('success', 'Survey Submitted Successfully');

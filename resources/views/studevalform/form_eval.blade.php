@@ -176,6 +176,7 @@
                         <input type="hidden" name="evaluatorID" value="{{ Auth::guard('kioskstudent')->user()->id }}">
                         <input type="hidden" name="studidno" value="{{ Auth::guard('kioskstudent')->user()->student->stud_id }}">
                         <input type="hidden" name="prog" value="{{ $facdetail->first()->dept }}">
+                        <input type="hidden" name="subjidrate" value="{{ request('id') }}">
 
                         <div id="card-1">
                             <p>
