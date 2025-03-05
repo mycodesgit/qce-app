@@ -35,7 +35,7 @@
                 </a>
             </li>
 
-            @if(in_array(Auth::guard('web')->user()->role, [0, 1, 2]))
+            @if(in_array(Auth::guard('web')->user()->id, [1, 2, 3]))
                 <li class="nav-item {{ $current_route == 'instructionStore' || $current_route == 'categoryStore' || $current_route == 'questionStore' || $current_route == 'semesterStore' ? 'menu-open' : '' }}">
                     <a href="#" class="nav-link">
                         <i class="nav-icon fas fa-cog"></i>
