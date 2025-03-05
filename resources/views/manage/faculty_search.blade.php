@@ -69,6 +69,7 @@
                                     <thead>
                                         <tr>
                                             <th>Name</th>
+                                            <th>Academic Rank</th>
                                             <th>College</th>
                                             <th>Campus</th>
                                             <th>Image</th>

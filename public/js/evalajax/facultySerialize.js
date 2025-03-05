@@ -28,6 +28,7 @@ $(document).ready(function() {
                     return `${row.adrDesc} ${row.lname}, ${row.fname} ${row.mname}`;
                 }
             },
+            {data: 'rank'},
             {data: 'college_abbr'},
             {data: 'fcamp'},
             {
@@ -277,6 +278,7 @@ $('#editFacultyForm').submit(function(event) {
                 toastr.success(response.message);
                 $('#editFacultyModal').modal('hide');
                 $(document).trigger('facAdded');
+                $('select[name="rank"]').val('');
             } else {
                 toastr.error(response.message);
             }
