@@ -138,7 +138,7 @@ $(document).ready(function() {
                 render: function(data, type, row) {
                     if (type === 'display') {
                         return `
-                            <button class="btn btn-primary btn-sm btn-viewpdf"
+                            <button class="btn btn-primary btn-sm btn-viewdonepdf"
                                 data-id="${row.id}"  
                                 data-program="${row.progCod}" 
                                 data-year="${row.studYear}" 
@@ -218,6 +218,39 @@ $(document).ready(function () {
                 toastr.error(errorMessage);
             }
         });
+    });
+
+    $('.btn-close-modal').on('click', function () {
+        $('#viewEvalRatePDFModal').modal('hide');
+    });
+});
+
+
+$(document).ready(function () {
+    $('#doneprintTable').on('click', '.btn-viewdonepdf', function () {
+        var id = $(this).data('id');
+        var programCode = $(this).data('program');
+        var studYear = $(this).data('year');
+        var studSec = $(this).data('section');
+        var schlyear = $(this).data('schlyear');
+        var semester = $(this).data('semester');
+        var campus = $(this).data('campus');
+        var studidno = $(this).data('studidno');
+
+        console.log({
+            id, programCode, studYear, studSec, schlyear, semester, campus, studidno
+        });
+
+        if (!programCode || !studYear || !studSec || !schlyear || !semester || !campus || !studidno) {
+            alert("Missing required data. Please check your inputs.");
+            return;
+        }
+
+        var pdfUrl = `${studentevalsubPDFReadRoute}?id=${encodeURIComponent(id)}&progCod=${encodeURIComponent(programCode)}&studYear=${encodeURIComponent(studYear)}&studSec=${encodeURIComponent(studSec)}&schlyear=${encodeURIComponent(schlyear)}&semester=${encodeURIComponent(semester)}&campus=${encodeURIComponent(campus)}&studidno=${encodeURIComponent(studidno)}`;
+
+        $('#pdfIframe').attr('src', pdfUrl);
+        $('#viewEvalRatePDFId').val(id);
+        $('#viewEvalRatePDFModal').modal('show');
     });
 
     $('.btn-close-modal').on('click', function () {
