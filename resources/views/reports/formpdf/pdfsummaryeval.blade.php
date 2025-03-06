@@ -111,7 +111,7 @@
 				<tr style="">
 					<td style="height: 40px; padding-left: 10px;">Student</td>
 					<td style="height: 40px; text-align: center;">{{ $total_student_eval }} ({{ number_format($total_studentEval, 2) }})</td>
-					<td style="height: 40px; text-align: center;"></td>
+					<td style="height: 40px; text-align: center;">{{ getInterpretation($total_studentEval) }}</td>
 				</tr>
 				<tr style="">
 					<td style="height: 40px; padding-left: 10px;">Supervisor</td>
