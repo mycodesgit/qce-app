@@ -231,7 +231,7 @@
                                         <div class="form-row">
                                             <div class="col-md-12">
                                                 <label>Academic Rank:</label>
-                                                <input type="text" name="name" class="form-control" placeholder="Academic Rank:" value="{{ $facdetail->first()->rank ?? '' }}" readonly>
+                                                <input type="text" name="name" class="form-control" placeholder="Academic Rank:" value="{{ $facdetail->first()->rank ?? 'Part-time' }}" readonly>
                                             </div>
                                         </div>
                                     </div>
