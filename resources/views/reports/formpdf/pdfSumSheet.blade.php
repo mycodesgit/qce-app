@@ -15,10 +15,10 @@
         $recorder_date = 'July 1, 2024';
 
         $endorser = 'FERNANDO D. ABELLO, Ph. D.';
-        $endorser_pos = 'Endorser Position';
+        $endorser_pos  = 'Vice President for Academic Affairs';
 
-        $reviewer = 'DEAN';
-        $reviewer_pos = 'Reviewer Position';
+        $reviewer = $facDesignateId->fname . ' ' . substr($facDesignateId->mname, 0, 1) . ' ' . $facDesignateId->lname . ', ' . $facDesignateId->rankcomma;
+        $reviewer_pos  =  $facDesignateId->designation . ', ' . $facDesignateId->college_name = str_replace(' Of ', ' of ', ucwords(strtolower($facDesignateId->college_name)));
         $reviewer_date = 'July 2, 2024';
 
     @endphp

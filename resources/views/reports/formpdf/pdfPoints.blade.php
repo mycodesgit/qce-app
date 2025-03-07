@@ -40,7 +40,7 @@
         //$reviewer_pos  = '';
         $date_signed   = 'July 1, 2024';
         $endorser      = 'FERNANDO D. ABELLO, Ph. D.';
-        $endorser_pos  = 'Endorser Position';
+        $endorser_pos  = 'Vice President for Academic Affairs';
 	@endphp
 	<title>{{ $title2 }}</title>
 	<style>
@@ -174,7 +174,7 @@
         <div class="details" >
             <span style="display: inline-block; width: 210px; vertical-align: top;">Position:</span>
             <div style="display: inline-block; margin-left: 20px; vertical-align: top; text-align: center; width: 250px;">
-                <span>Vice President for Academic Affairs</span>
+                <span>{{ $endorser_pos }}</span>
             </div>
             
         </div>

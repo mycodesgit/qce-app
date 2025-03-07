@@ -417,6 +417,19 @@ class ReportsSummaryEvalController extends Controller
             ->where('semester', $semester)
             ->where('qcefacID', $faclty)
             ->first(); // Use get() to handle multiple records
+        
+        $facDean = QCEfevalrate::where('schlyear', $schlyear)
+        ->where('semester', $semester)
+        ->where('qcefacID', $faclty)
+        ->first();
+        
+        $facDesignateId = DB::connection('schedule')->table('fac_designation')
+            ->join('college', 'fac_designation.facdept', '=', 'college.college_abbr')
+            ->join('faculty', 'fac_designation.fac_id', '=', 'faculty.id')
+            ->where('fac_designation.schlyear', $schlyear)
+            ->where('fac_designation.semester', $semester)
+            ->where('fac_designation.facdept', $facDean->prog)
+            ->first();
 
         // Fetch all evaluations where the evaluator role is 'Student'
         $facsum = QCEfevalrate::where('campus', $campus)
@@ -521,6 +534,7 @@ class ReportsSummaryEvalController extends Controller
             'students' => $students,
             'category_totals' => $category_totals,
             'supervisor' => $supervisor,
+            'facDesignateId' => $facDesignateId,
         ];
 
         $pdf = PDF::loadView('reports.formpdf.pdfSumSheet', $data)->setPaper('Legal', 'portrait');
