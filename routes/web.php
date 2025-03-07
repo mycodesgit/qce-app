@@ -33,8 +33,8 @@ Route::group(['middleware'=>['guest']],function(){
         return view('studlogin');
     });
 
-    Route::get('/emp/admin/login', [LoginController::class,'login'])->name('login');
-    Route::get('/student/signin', [LoginController::class,'studentLogin'])->name('studentLogin');
+    Route::get('/empqa', [LoginController::class,'login'])->name('login');
+    Route::get('/student', [LoginController::class,'studentLogin'])->name('studentLogin');
     Route::post('/log/success/emp/stud', [LoginController::class,'empstudlogin'])->name('empstudlogin');
 });
 
