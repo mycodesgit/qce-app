@@ -102,6 +102,10 @@ class ReportsSummaryEvalController extends Controller
             return response()->json(['error' => 'No Student records found'], 404);
         }
 
+        $facRanck = DB::connection('schedule')->table('faculty')
+            ->where('faculty.id', $faclty)
+            ->get();
+
         // Initialize an array to store students' data
         $students = [];
 
@@ -205,6 +209,7 @@ class ReportsSummaryEvalController extends Controller
             'supervisor' => $supervisor,
             'total_student_eval' => $total_student_eval,
             'supervisor_total' => $supervisor_total,
+            'facRanck' => $facRanck
         ];
 
         $pdf = PDF::loadView('reports.formpdf.pdfsummaryeval', $data)->setPaper('Legal', 'portrait');
@@ -293,6 +298,10 @@ class ReportsSummaryEvalController extends Controller
         if ($facsum->isEmpty()) {
             return response()->json(['error' => 'No Student records found'], 404);
         }
+
+        $facRanck = DB::connection('schedule')->table('faculty')
+            ->where('faculty.id', $faclty)
+            ->get();
 
         // Initialize an array to store students' data
         $students = [];
@@ -399,6 +408,7 @@ class ReportsSummaryEvalController extends Controller
             'supervisor_total' => $supervisor_total,
             'facId' => $facId,
             'facDesignateId' => $facDesignateId,
+            'facRanck' => $facRanck
         ];
 
         $pdf = PDF::loadView('reports.formpdf.pdfPoints', $data)->setPaper('Legal', 'landscape');

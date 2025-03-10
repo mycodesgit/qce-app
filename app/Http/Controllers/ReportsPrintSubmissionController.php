@@ -254,6 +254,10 @@ class ReportsPrintSubmissionController extends Controller
             return response()->json(['error' => 'No data found for the provided parameters'], 404);
         }
 
+        $facRanck = DB::connection('schedule')->table('faculty')
+            ->where('faculty.id', $facrated->first()->qcefacID)
+            ->get();
+
         // Fetch supporting data
         $inst = QCEinstruction::orderBy('inst_scale', 'DESC')->get();
         $currsem = QCEsemester::where('qcesemstat', 2)->get();
@@ -261,15 +265,9 @@ class ReportsPrintSubmissionController extends Controller
             ->select('qcecategory.catName', 'qcequestion.*')
             ->get();
 
-        $facratedcount = QCEfevalrate::where('id', $id)
-            ->where('semester', $semester)
-            ->where('schlyear', $schlyear)
-            ->where('campus', $campus)
-            ->get();
-
         // Generate the PDF
         $pdf = PDF::loadView('formpdf.qceformpdfrated', compact(
-            'inst', 'currsem', 'quest', 'facrated', 'progCod', 'studYear', 'studSec', 'schlyear', 'semester', 'campus', 'facratedcount'
+            'inst', 'currsem', 'quest', 'facrated', 'progCod', 'studYear', 'studSec', 'schlyear', 'semester', 'campus', 'facRanck'
         ))->setPaper('Legal', 'portrait');
 
         return $pdf->stream('evaluation.pdf');

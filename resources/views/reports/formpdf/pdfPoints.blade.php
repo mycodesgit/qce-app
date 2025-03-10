@@ -7,7 +7,7 @@
         $title         = 'Points';
         $title2        = 'FACULTY RATING';
         $fac_name      =  $fcs->qcefacname;        
-        $fac_pos       = 'FACULTY POSITION';
+        $fac_pos       =  $facRanck->first()->rank;
         $campus        = '';
         if (request('campus') === 'MC') {
             $campus = 'CPSU MAIN CAMPUS';

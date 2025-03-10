@@ -120,7 +120,7 @@
 
 		    // Fetch faculty name and rank
 		    $facultyName = $facrated->first()->qcefacname ?? '';
-		    $academicRank = $facrated->first()->academic_rank ?? '';
+		    $academicRank = $facRanck->first()->rank ?? '';
 
 		    // Center the text within the underline length
 		    $underlineFaculty = str_pad($facultyName, $underlineLengthName, '_', STR_PAD_BOTH);

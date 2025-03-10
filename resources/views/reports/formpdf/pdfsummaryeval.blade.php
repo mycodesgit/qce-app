@@ -8,7 +8,7 @@
 		$title2 = 'SUMMARY';
 		$fac_name = $fcs->qcefacname;
 		$rate_period = $fcs->ratingfromto;
-		$fac_pos = 'FACULTY POSITION';
+		$fac_pos = $facRanck->first()->rank;
 		$studentRating = 4.5;
 		$supervisorRating = 3.5;
 		$overallMean = ($studentRating * 0.6) + ($supervisorRating * 0.4);
