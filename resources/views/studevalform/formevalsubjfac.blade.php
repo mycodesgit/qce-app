@@ -51,7 +51,7 @@
                                     <div class="modal-footer justify-content-between">
                                         <h6 class="widget-user-desc text-dark">
                                             @if(isset($datafacsubprogen->fname) && isset($datafacsubprogen->lname))
-                                                <span class="text-muted">{{ substr($datafacsubprogen->fname, 0, 1) }}. {{ $datafacsubprogen->lname }} {{ $datafacsubprogen->subjCollege }}</span>
+                                                <span class="text-muted">{{ substr($datafacsubprogen->fname, 0, 1) }}. {{ $datafacsubprogen->lname }}</span>
                                                 <strong> (Done Evaluate) </strong>
                                             @else
                                                 No Instructor
@@ -96,7 +96,7 @@
                                         <div class="modal-footer justify-content-between">
                                             <h6 class="widget-user-desc text-dark">
                                                 @if(isset($datafacsubprogen->fname) && isset($datafacsubprogen->lname))
-                                                    {{ substr($datafacsubprogen->fname, 0, 1) }}. {{ $datafacsubprogen->lname }} {{ $datafacsubprogen->subjCollege }}
+                                                    {{ substr($datafacsubprogen->fname, 0, 1) }}. {{ $datafacsubprogen->lname }}
                                                 @else
                                                     No Instructor
                                                 @endif

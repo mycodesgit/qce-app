@@ -12,14 +12,14 @@
 
         $recorder = 'MARY GRACE NOREEN P. LEDUNA-JARANILLA, Ph. D.';
         $recorder_pos = 'Recorder Position';
-        $recorder_date = 'July 1, 2024';
+        $recorder_date = \Carbon\Carbon::now()->format('F d, Y');
 
         $endorser = 'FERNANDO D. ABELLO, Ph. D.';
         $endorser_pos  = 'Vice President for Academic Affairs';
 
         $reviewer = $facDesignateId->fname . ' ' . substr($facDesignateId->mname, 0, 1) . ' ' . $facDesignateId->lname . ', ' . $facDesignateId->rankcomma;
         $reviewer_pos  =  $facDesignateId->designation . ', ' . $facDesignateId->college_name = str_replace(' Of ', ' of ', ucwords(strtolower($facDesignateId->college_name)));
-        $reviewer_date = 'July 2, 2024';
+        $reviewer_date = \Carbon\Carbon::now()->format('F d, Y');
 
     @endphp
 	<title>{{ $title2 }}</title>
@@ -79,7 +79,7 @@
 	<div id="table1" class="table">
         <table border="1" width="94%" style="border-collapse: collapse; text-align:center; margin-top: 40px; margin-left: 20px; margin-right: 20px;">
             <tr>
-                <th>Student ID No.</th>
+                <th>No. of Student</th>
                 <th>Commitment</th>
                 <th>Knowledge of Subject</th>
                 <th>Teaching for Independent Learning</th>

@@ -38,7 +38,7 @@
         $reviewer      = $facDesignateId->fname . ' ' . substr($facDesignateId->mname, 0, 1) . ' ' . $facDesignateId->lname . ', ' . $facDesignateId->rankcomma;
         $reviewer_pos  =  $facDesignateId->designation . ', ' . $facDesignateId->college_name = str_replace(' Of ', ' of ', ucwords(strtolower($facDesignateId->college_name)));
         //$reviewer_pos  = '';
-        $date_signed   = 'July 1, 2024';
+        $date_signed   = \Carbon\Carbon::now()->format('F d, Y');
         $endorser      = 'FERNANDO D. ABELLO, Ph. D.';
         $endorser_pos  = 'Vice President for Academic Affairs';
 	@endphp
