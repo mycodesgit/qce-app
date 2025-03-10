@@ -77,6 +77,11 @@
 </head>
 <body>
 	<div>
+		<div style="margin-top: -30px; text-align: right; color: gray">
+			<p>{{ $facrated->first()->ratecount }}</p>
+		</div>
+	</div>
+	<div>
 		<center>
 			<p>Appendix A</p>
 		</center>

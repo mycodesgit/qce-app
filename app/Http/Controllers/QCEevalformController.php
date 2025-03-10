@@ -143,7 +143,18 @@ class QCEevalformController extends Controller
                 //     return redirect()->route('formRead')->with('error', 'Duplicate entry detected');
                 // }
 
+                $latestRateCount = QCEfevalrate::where('campus', $request->input('campus'))
+                    ->where('semester', $request->input('semester'))
+                    ->where('schlyear', $request->input('schlyear'))
+                    ->where('qcefacname', $request->input('qcefacname'))
+                    ->where('subjidrate', $request->input('subjidrate'))
+                    ->max('ratecount');
+
+                // Increment the latest count or start from 1 if no previous record exists
+                $newRateCount = $latestRateCount ? $latestRateCount + 1 : 1;
+
                 QCEfevalrate::create([
+                    'ratecount' => $newRateCount,
                     'campus' => $request->input('campus'),
                     'qceschlyearsemID' => $request->input('qceschlyearsemID'),
                     'schlyear' => $request->input('schlyear'),

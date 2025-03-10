@@ -15,6 +15,8 @@ return new class extends Migration
     {
         Schema::create('qceformevalrate', function (Blueprint $table) {
             $table->id();
+            $table->integer('[ratecount]')->nullable();
+            $table->integer('[subjidrate]')->nullable();
             $table->string('[prog]')->nullable();
             $table->string('campus')->nullable();
             $table->enum('statprint', ['1', '2'])->default('1');

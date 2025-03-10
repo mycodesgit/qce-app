@@ -466,7 +466,7 @@ class ReportsSummaryEvalController extends Controller
         foreach ($facsum as $record) {
             $ratings = json_decode($record->question_rate, true); // Convert JSON to array
             $student_data = [
-                'id' => $record->studidno, // Use `studidno` for student ID
+                'id' => $record->ratecount, // Use `studidno` for student ID
             ];
 
             $total_score = 0;
