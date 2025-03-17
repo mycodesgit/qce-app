@@ -350,6 +350,7 @@
                             <option value="Instructor III">Instructor III</option>
                             <option value="Instructor II">Instructor II</option>
                             <option value="Instructor I">Instructor I</option>
+                            <option value="Part-Time">Part-Time</option>
                         </select>                        
                     </div>
                 </div>
