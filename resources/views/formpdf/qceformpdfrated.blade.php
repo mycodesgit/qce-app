@@ -77,7 +77,7 @@
 </head>
 <body>
 	<div>
-		<div style="margin-top: -30px; text-align: right; color: gray">
+		<div style="margin-top: -30px; text-align: right; color: gray; z-index: -999">
 			<p>{{ $facrated->first()->ratecount }}</p>
 		</div>
 	</div>
