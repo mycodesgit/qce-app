@@ -81,7 +81,7 @@
 			<p>{{ $facrated->first()->ratecount }}</p>
 		</div>
 	</div>
-	<div>
+	<div style="margin-top: -30px;">
 		<center>
 			<p>Appendix A</p>
 		</center>
