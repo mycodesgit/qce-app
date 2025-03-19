@@ -245,6 +245,9 @@
 
 
     <!-- Ajax -->
+    @if(request()->routeIs('dash'))
+        <script src="{{ asset('js/chart/evalcountprogchart.js') }}"></script>
+    @endif
     @if(request()->routeIs('facultyFilter'))
         <script src="{{ asset('js/evalajax/facultySerialize.js') }}"></script>
     @endif

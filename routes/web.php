@@ -40,6 +40,7 @@ Route::group(['middleware'=>['guest']],function(){
 
 Route::group(['middleware'=>['login_empauth']],function(){
     Route::get('/dash-board', [DashboardController::class,'dash'])->name('dash');
+    Route::get('/dash-board/data', [DashboardController::class,'getEvalData'])->name('getEvalData');
     Route::get('/logout', [DashboardController::class, 'logout'])->name('logout');
 
     Route::prefix('/conf')->group(function () {

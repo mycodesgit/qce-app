@@ -4,9 +4,12 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
 
 use App\Models\EnrollmentDB\StudEnrolmentHistory;
+use App\Models\ScheduleDB\EnPrograms;
 use App\Models\SettingDB\ConfigureCurrent;
+use App\Models\EvaluationDB\QCEfevalrate;
 
 class DashboardController extends Controller
 {
@@ -74,7 +77,58 @@ class DashboardController extends Controller
                             ->where('program_en_history.studYear', '=', '4')
                             ->where('program_en_history.campus', '=', $userCampus)
                             ->count();
+
+        // $evalcountprog = QCEfevalrate::count();
+        // dd($evalcountprog);
+
         return view('home.dashboard', compact('enrlstudcountfirst', 'enrlstudcountsecond', 'enrlstudcountthird', 'enrlstudcountfourth'));
+    }
+
+    public function getEvalData()
+    {
+        // Step 1: Fetch all student IDs from QCEfevalrate
+        $studentIds = DB::table('qceformevalrate')
+            ->pluck('studidno'); // Get only student IDs
+
+        if ($studentIds->isEmpty()) {
+            return response()->json(['labels' => [], 'data' => []]);
+        }
+
+        // Step 2: Get corresponding progCod, studYear, and studSec from program_en_history (enrollment database)
+        $studentPrograms = DB::connection('enrollment')->table('program_en_history')
+            ->whereIn('studentID', $studentIds)
+            ->select('studentID', 'progCod', 'studYear', 'studSec')
+            ->get(); // Get all relevant data
+
+        if ($studentPrograms->isEmpty()) {
+            return response()->json(['labels' => [], 'data' => []]);
+        }
+
+        // Step 3: Get program acronyms from programs (schedule database)
+        $programs = DB::connection('schedule')->table('programs')
+            ->whereIn('progCod', $studentPrograms->pluck('progCod')->unique())
+            ->pluck('progAcronym', 'progCod'); // Map progAcronym to progCod
+
+        // Step 4: Count occurrences per unique program + year + section
+        $programCounts = [];
+
+        foreach ($studentPrograms as $record) {
+            $progAcronym = $programs[$record->progCod] ?? null;
+            if ($progAcronym) {
+                // Format: "progAcronym - progCod (studYear-studSec)"
+                $label = "{$progAcronym} {$record->studYear}-{$record->studSec}";
+
+                if (!isset($programCounts[$label])) {
+                    $programCounts[$label] = 0;
+                }
+                $programCounts[$label]++;
+            }
+        }
+
+        return response()->json([
+            'labels' => array_keys($programCounts),
+            'data' => array_values($programCounts),
+        ]);
     }
 
     public function logout()
