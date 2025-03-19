@@ -241,9 +241,9 @@
 		    <label style="font-weight: bold;">Comments:</label>
 		    <div class="comment-lines">
 		        @php
-		            $comments = explode("\n", wordwrap($facrated->first()->qcecomments ?? '', 500, "\n", true));
+		            $comments = explode("\n", wordwrap($facrated->first()->qcecomments ?? '', 900, "\n", true));
 		        @endphp
-		        @for($i = 0; $i < 7; $i++)
+		        @for($i = 0; $i < 8; $i++)
 		            <div class="line">
 		                {{ isset($comments[$i]) ? $comments[$i] : '' }}
 		            </div>
@@ -256,8 +256,8 @@
 		@php
 			use Carbon\Carbon;
 		    // Define the underline lengths for proper alignment
-		    $underlineLengthName = 26; // Adjust as needed
-		    $underlineLengthRank = 27; // Adjust as needed
+		    $underlineLengthName = 56; // Adjust as needed
+		    $underlineLengthRank = 57; // Adjust as needed
 
 		    // Fetch faculty name and rank
 		    $evaluatorName = $facrated->first()->evaluatorname ?? '';
