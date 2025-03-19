@@ -67,7 +67,7 @@
 			@php
 				$evaluations = ['1. Student evaluation', '2. Student evaluation', '3. Student evaluation'];
 			@endphp
-			@foreach ($studcomments as $datastudcomments)
+			@foreach ($studcomments->sortBy('ratecount') as $datastudcomments)
 				<tr>
 					<td style="padding-left: 10px;">{{ $datastudcomments->ratecount }}. {{ $datastudcomments->qcecomments }}</td>
 				</tr>
