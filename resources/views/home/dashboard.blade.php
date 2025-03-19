@@ -90,7 +90,21 @@
                         </div>
                         <div class="card-body">
                             <div class="chart-container" style="overflow-x: auto; white-space: nowrap;">
-                                <canvas id="enrlmntpercamp-chart" style="height: 330px; min-height: 330px; width: 1200px;"></canvas>
+                                <canvas id="degreeeval-chart" style="height: 330px; min-height: 330px; width: 1200px;"></canvas>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-12">
+                    <div class="card">
+                        <div class="card-header">
+                            <h5 class="card-title">
+                                <i class="fas fa-chart-simple"></i> Evaluated Faculty
+                            </h5>
+                        </div>
+                        <div class="card-body">
+                            <div class="chart-container" style="overflow-x: auto; white-space: nowrap;">
+                                <canvas id="facultyeval-chart" style="height: 330px; min-height: 330px; width: 1200px;"></canvas>
                             </div>
                         </div>
                     </div>
@@ -102,5 +116,7 @@
         
 <script>
     var evalcountchartReadRoute = "{{ route('getEvalData') }}";
+    var evalcountfacchartReadRoute = "{{ route('getEvalFacData') }}";
 </script>
+
 @endsection

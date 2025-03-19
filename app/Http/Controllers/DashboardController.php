@@ -131,6 +131,44 @@ class DashboardController extends Controller
         ]);
     }
 
+    public function getEvalFacData()
+    {
+        // Step 1: Fetch all qcefacID values from QCEfevalrate
+        $facultyIds = DB::table('qceformevalrate')
+            ->pluck('qcefacID'); // Get only qcefacID values
+
+        if ($facultyIds->isEmpty()) {
+            return response()->json(['labels' => [], 'data' => []]);
+        }
+
+        // Step 2: Get matching faculty names from the faculty table (schedule database)
+        $facultyNames = DB::connection('schedule')->table('faculty')
+            ->whereIn('id', $facultyIds)
+            ->pluck('lname', 'id'); // facultyName mapped to facultyID
+
+        if ($facultyNames->isEmpty()) {
+            return response()->json(['labels' => [], 'data' => []]);
+        }
+
+        // Step 3: Count occurrences per faculty
+        $facultyCounts = [];
+        foreach ($facultyIds as $facultyID) {
+            $facultyName = $facultyNames[$facultyID] ?? null;
+            if ($facultyName) {
+                if (!isset($facultyCounts[$facultyName])) {
+                    $facultyCounts[$facultyName] = 0;
+                }
+                $facultyCounts[$facultyName]++;
+            }
+        }
+
+        return response()->json([
+            'labels' => array_keys($facultyCounts), // Faculty Names as Labels
+            'data' => array_values($facultyCounts), // Count of evaluations per faculty
+        ]);
+    }
+
+
     public function logout()
     {
         // if (\Auth::guard('web')->check() || \Auth::guard('faculty')->check()) {
