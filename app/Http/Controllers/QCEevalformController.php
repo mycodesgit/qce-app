@@ -148,7 +148,7 @@ class QCEevalformController extends Controller
                     ->where('semester', $request->input('semester'))
                     ->where('schlyear', $request->input('schlyear'))
                     ->where('qcefacname', $request->input('qcefacname'))
-                    ->where('subjidrate', $request->input('subjidrate'))
+                    // ->where('subjidrate', $request->input('subjidrate'))
                     ->max('ratecount');
 
                 // Increment the latest count or start from 1 if no previous record exists
