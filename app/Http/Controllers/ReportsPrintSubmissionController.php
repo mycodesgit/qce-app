@@ -107,6 +107,7 @@ class ReportsPrintSubmissionController extends Controller
                 ->when($studSec, function ($query) use ($studSec) {
                     return $query->where('studSec', '=', $studSec);
                 })
+                ->select('program_en_history.*')
                 ->pluck('studentID');
 
             if ($studentIds->isEmpty()) {
@@ -124,6 +125,7 @@ class ReportsPrintSubmissionController extends Controller
             return response()->json(['data' => $data]);
 
         } catch (\Exception $e) {
+            //\Log::error('Database Query Error: ' . $e->getMessage());
             return response()->json(['error' => 'Internal Server Error'], 500);
         }
     }
@@ -190,6 +192,7 @@ class ReportsPrintSubmissionController extends Controller
             return response()->json(['data' => $data]);
 
         } catch (\Exception $e) {
+            //\Log::error('Database Query Error: ' . $e->getMessage());
             return response()->json(['error' => 'Internal Server Error'], 500);
         }
     }
