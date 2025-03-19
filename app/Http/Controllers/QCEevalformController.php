@@ -132,16 +132,17 @@ class QCEevalformController extends Controller
             ]);
             
             try {
-                // $existingSurvey = QCEfevalrate::where([
-                //     ['title_id', '=', $request->input('title_id')],
-                //     ['name', '=', $request->input('name')],
-                //     ['office', '=', $request->input('office')],
-                //     ['contact_information', '=', $request->input('contact_information')],
-                // ])->first();
+                $existingSurvey = QCEfevalrate::where('campus', $request->input('campus'))
+                        ->where('semester', $request->input('semester'))
+                        ->where('schlyear', $request->input('schlyear'))
+                        ->where('qcefacname', $request->input('qcefacname'))
+                        ->where('subjidrate', $request->input('subjidrate'))
+                        ->where('evaluatorname', $request->input('evaluatorname'))
+                        ->first();
 
-                // if ($existingSurvey) {
-                //     return redirect()->route('formRead')->with('error', 'Duplicate entry detected');
-                // }
+                if ($existingSurvey) {
+                    return redirect()->route('evalformStore')->with('error', 'You already submitted a survey for this subject and faculty');
+                }
 
                 $latestRateCount = QCEfevalrate::where('campus', $request->input('campus'))
                     ->where('semester', $request->input('semester'))
