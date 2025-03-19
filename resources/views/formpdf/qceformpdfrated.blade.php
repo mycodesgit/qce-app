@@ -243,7 +243,7 @@
 		        @php
 		            $comments = explode("\n", wordwrap($facrated->first()->qcecomments ?? '', 500, "\n", true));
 		        @endphp
-		        @for($i = 0; $i < 4; $i++)
+		        @for($i = 0; $i < 7; $i++)
 		            <div class="line">
 		                {{ isset($comments[$i]) ? $comments[$i] : '' }}
 		            </div>
