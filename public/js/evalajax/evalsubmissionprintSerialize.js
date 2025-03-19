@@ -9,21 +9,7 @@ $(document).ready(function() {
     var schlyear = urlParams.get('schlyear') || ''; 
     var semester = urlParams.get('semester') || '';
     var campus = urlParams.get('campus') || ''; 
-    var progCodRaw = urlParams.get('progCod') || '';
-
-    // Convert `+` into spaces (URL decoding issue)
-    progCodRaw = progCodRaw.replace(/\+/g, ' ');
-
-    // Split at the first space (since + is now a space)
-    var progCodParts = progCodRaw.split(' ');
-
-    // Extract parts
-    var progCod = progCodParts.slice(0, -1).join(' '); // Everything before last part
-    var section = progCodParts.slice(-1)[0] || ''; // Last part
-
-    // Display separately in the console
-    // console.log("ProgCod:", progCod);   // CAS-LHD-001
-    // console.log("Section:", section);
+    var progCod = urlParams.get('progCod') || '';
 
     var dataTable = $('#submitevalTable').DataTable({
         "ajax": {
